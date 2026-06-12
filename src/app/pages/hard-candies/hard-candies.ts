@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
+import { CategoryProducts } from '../../shared/category-products/category-products';
+
 @Component({
   selector: 'app-hard-candies',
-  imports: [],
+  imports: [CategoryProducts],
   templateUrl: './hard-candies.html',
-  styleUrl: './hard-candies.css',
 })
 export class HardCandies {}

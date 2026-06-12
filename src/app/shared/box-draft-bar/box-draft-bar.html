@@ -1,0 +1,48 @@
+@if (!draft) {
+  <div class="alert alert-sweetpop box-draft-bar mb-4" role="region">
+    <p class="mb-2">Para asignar dulces, primero elige una caja.</p>
+    <a routerLink="/cajas" class="btn btn-sweetpop btn-sm">Ir a cajas</a>
+  </div>
+} @else {
+  <div class="box-draft-bar mb-4" role="region" aria-label="Progreso de caja personalizada">
+    <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-2">
+      <div>
+        <h2 class="h5 mb-1">{{ draft.boxName }}</h2>
+        <p class="mb-0 small">Paredes completadas: {{ filled }} de {{ draft.wallsCount }}</p>
+      </div>
+      <a routerLink="/cajas" class="btn btn-outline-light btn-sm">Cambiar caja</a>
+    </div>
+
+    <div class="progress box-draft-progress mb-3" role="progressbar"
+      [attr.aria-valuenow]="progressPercent" aria-valuemin="0" aria-valuemax="100">
+      <div class="progress-bar" [style.width.%]="progressPercent">{{ progressPercent }}%</div>
+    </div>
+
+    @if (assignedWalls.length > 0) {
+      <ul class="box-draft-list small mb-3">
+        @for (wall of assignedWalls; track wall.label) {
+          <li>{{ wall.label }}</li>
+        }
+      </ul>
+    }
+
+    <div class="d-flex flex-wrap gap-2">
+      @if (complete) {
+        <button type="button" class="btn btn-sweetpop btn-sm" (click)="addToCart()">
+          Agregar caja al carrito
+        </button>
+      } @else {
+        <a routerLink="/dulces" class="btn btn-outline-light btn-sm">Ver categorías de dulces</a>
+      }
+    </div>
+
+    @if (feedbackMessage) {
+      <div class="mt-2">
+        <div class="alert mb-0 py-2" [class.alert-success]="feedbackType === 'success'"
+          [class.alert-danger]="feedbackType === 'danger'">
+          {{ feedbackMessage }}
+        </div>
+      </div>
+    }
+  </div>
+}

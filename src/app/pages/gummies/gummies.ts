@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
+import { CategoryProducts } from '../../shared/category-products/category-products';
+
 @Component({
   selector: 'app-gummies',
-  imports: [],
+  imports: [CategoryProducts],
   templateUrl: './gummies.html',
-  styleUrl: './gummies.css',
 })
 export class Gummies {}

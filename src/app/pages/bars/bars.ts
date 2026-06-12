@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
+import { CategoryProducts } from '../../shared/category-products/category-products';
+
 @Component({
   selector: 'app-bars',
-  imports: [],
+  imports: [CategoryProducts],
   templateUrl: './bars.html',
-  styleUrl: './bars.css',
 })
 export class Bars {}

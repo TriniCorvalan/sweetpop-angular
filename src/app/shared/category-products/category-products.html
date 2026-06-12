@@ -1,0 +1,58 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/">Inicio</a></li>
+    <li class="breadcrumb-item"><a routerLink="/dulces">Dulces</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+  </ol>
+</nav>
+
+@if (alertMessage && alertType) {
+  <div class="alert alert-{{ alertType }} mb-4" role="alert">{{ alertMessage }}</div>
+}
+
+<app-box-draft-bar />
+
+<h1 class="h2 mb-4">{{ title }}</h1>
+
+@if (products.length === 0) {
+  <p class="text-center py-4">No hay productos en esta categoría.</p>
+} @else {
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
+    @for (product of products; track product.candy.id) {
+      <div class="col">
+        <article class="card h-100 sweetpop-card"
+          [class.catalog-card-blocked]="product.blocked"
+          [attr.data-product-id]="product.candy.id">
+          <img [src]="product.candy.image" class="card-img-top" [alt]="product.candy.name">
+          <div class="card-body">
+            <h3 class="card-title h5">{{ product.candy.name }}</h3>
+            <p class="card-text">{{ product.candy.description }}</p>
+            <p class="card-text">
+              Tamaño {{ catalog.getSizeLabel(product.candy.size) }}.
+              {{ catalog.formatPrice(product.candy.price) }}
+            </p>
+            <p class="card-text">{{ getDiscountText(product.candy) }}</p>
+            <div class="catalog-product-actions mt-2">
+              @if (product.statusText) {
+                <p class="catalog-meta mb-1" [class]="product.statusClass">{{ product.statusText }}</p>
+              }
+              <button type="button" class="btn btn-sweetpop btn-sm"
+                [disabled]="product.disabled"
+                (click)="assignProduct(product.candy.id)">
+                {{ product.buttonLabel }}
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+    }
+  </div>
+}
+
+<nav class="page-links d-flex flex-wrap gap-2 pt-3 border-top border-light border-opacity-25" aria-label="Enlaces del sitio">
+  <a routerLink="/" class="btn btn-outline-light btn-sm">Volver al inicio</a>
+  <a routerLink="/dulces" class="btn btn-outline-light btn-sm">Volver a dulces</a>
+  @if (nextRoute && nextLabel) {
+    <a [routerLink]="nextRoute" class="btn btn-outline-light btn-sm">{{ nextLabel }}</a>
+  }
+</nav>

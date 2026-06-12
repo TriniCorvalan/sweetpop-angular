@@ -1,1 +1,40 @@
-<p>boxes works!</p>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Inicio</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Cajas</li>
+    </ol>
+  </nav>
+
+  <h1 class="h2 mb-2">Catálogo de cajas</h1>
+  <p class="intro lead mb-4">
+    Cada caja tiene 4 paredes por nivel. Los dulces deben caber en las dimensiones de cada pared.
+  </p>
+
+  <div class="alert alert-sweetpop mb-4" role="region">
+    <h2 class="h5 alert-heading mb-2">Personalización de paredes</h2>
+    <ul class="mb-0">
+      <li>1, 2 o 3 niveles de anidación (caja dentro de caja).</li>
+      <li>4 paredes por nivel: frente, atrás, izquierda, derecha.</li>
+      <li>Elegir dulces del catálogo según tamaño de la pared.</li>
+    </ul>
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
+    @for (box of boxes; track box.id) {
+      <div class="col">
+        <article class="card h-100 sweetpop-card">
+          <img [src]="box.image" class="card-img-top" [alt]="box.name">
+          <div class="card-body">
+            <h3 class="card-title h5">{{ box.name }}</h3>
+            <p class="card-text">{{ box.wallsCount / 4 }} nivel(es) de anidación. {{ box.wallsCount }} paredes.</p>
+            <p class="card-text">Precio base: {{ formatPrice(box.boxPrice) }}</p>
+            <p class="card-text">Descuento: {{ formatDiscount(box.discount) }}</p>
+            <button type="button" class="btn btn-sweetpop btn-sm mt-2"
+              (click)="customizeBox(box.id)">
+              Personalizar esta caja
+            </button>
+          </div>
+        </article>
+      </div>
+    }
+  </div>

@@ -1,1 +1,61 @@
-<p>cart works!</p>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Inicio</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Carrito</li>
+    </ol>
+  </nav>
+
+  <section class="sweetpop-admin-card p-4 p-md-5">
+    <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+      <div>
+        <h1 class="h2 mb-2">Carrito de compras</h1>
+        <p class="mb-0">Revisa tus cajas personalizadas antes de pagar.</p>
+      </div>
+      <a routerLink="/cajas" class="btn btn-outline-light btn-sm">Personalizar otra caja</a>
+    </div>
+
+    @if (alertMessage && alertType) {
+      <div class="alert alert-{{ alertType }} mb-4" role="alert">{{ alertMessage }}</div>
+    }
+
+    @if (cart.length === 0) {
+      <p class="text-center py-4 mb-3">No tienes cajas en el carrito.</p>
+      <div class="cart-empty-actions text-center">
+        <a routerLink="/cajas" class="btn btn-sweetpop w-100">Personalizar una caja</a>
+      </div>
+    } @else {
+      @for (item of cart; track item.cartItemId) {
+        <article class="cart-item-card mb-4">
+          <div class="cart-item-header d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3">
+            <h2 class="h5 mb-0">{{ item.boxName }}</h2>
+            <button type="button" class="btn btn-outline-light btn-sm"
+              (click)="removeItem(item.cartItemId)">Eliminar</button>
+          </div>
+          <ul class="cart-item-walls small mb-3">
+            @for (wall of item.walls; track wall.wallIndex) {
+              <li>
+                Pared {{ wall.wallIndex }}: {{ wall.productName }} ×
+                {{ wall.quantity ?? catalog.getWallQuantityBySize(wall.size!) }}
+                ({{ catalog.formatPrice(getWallLineTotal(wall)) }})
+              </li>
+            }
+          </ul>
+          <dl class="row cart-item-summary mb-0 small">
+            <dt class="col-sm-6">Subtotal dulces</dt>
+            <dd class="col-sm-6 text-sm-end">{{ catalog.formatPrice(item.candiesSubtotal) }}</dd>
+            <dt class="col-sm-6">Precio caja</dt>
+            <dd class="col-sm-6 text-sm-end">{{ catalog.formatPrice(item.boxPrice) }}</dd>
+            <dt class="col-sm-6">Descuento caja ({{ catalog.formatDiscountPercent(item.discount) }})</dt>
+            <dd class="col-sm-6 text-sm-end">−{{ catalog.formatPrice(getDiscountAmount(item)) }}</dd>
+            <dt class="col-sm-6 fw-semibold">Total caja</dt>
+            <dd class="col-sm-6 text-sm-end fw-semibold">{{ catalog.formatPrice(item.total) }}</dd>
+          </dl>
+        </article>
+      }
+
+      <div class="cart-grand-total cart-pay-bar d-flex flex-wrap justify-content-between align-items-center gap-3 pt-3 border-top border-light border-opacity-25">
+        <p class="h5 mb-0">Total a pagar: {{ catalog.formatPrice(grandTotal) }}</p>
+        <button type="button" class="btn btn-sweetpop" (click)="pay()">Pagar</button>
+      </div>
+    }
+  </section>

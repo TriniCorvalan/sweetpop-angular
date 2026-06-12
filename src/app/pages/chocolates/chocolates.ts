@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
+import { CategoryProducts } from '../../shared/category-products/category-products';
+
 @Component({
   selector: 'app-chocolates',
-  imports: [],
+  imports: [CategoryProducts],
   templateUrl: './chocolates.html',
-  styleUrl: './chocolates.css',
 })
 export class Chocolates {}
