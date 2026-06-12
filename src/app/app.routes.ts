@@ -1,4 +1,7 @@
 import { Routes } from '@angular/router';
+
+import { authGuard } from './core/guards/auth.guard';
+import { guestGuard } from './core/guards/guest.guard';
 import { Bars } from './pages/bars/bars';
 import { Boxes } from './pages/boxes/boxes';
 import { Candies } from './pages/candies/candies';
@@ -17,9 +20,21 @@ import { Register } from './pages/register/register';
 
 export const routes: Routes = [
   { path: '', component: Home },
-  { path: 'inicio-sesion', component: Login },
-  { path: 'registro', component: Register },
-  { path: 'recuperar-contrasena', component: RecoverPassword },
+  {
+    path: 'inicio-sesion',
+    component: Login,
+    canActivate: [guestGuard],
+  },
+  {
+    path: 'registro',
+    component: Register,
+    canActivate: [guestGuard],
+  },
+  {
+    path: 'recuperar-contrasena',
+    component: RecoverPassword,
+    canActivate: [guestGuard],
+  },
   { path: 'cerrar-sesion', component: Logout },
   { path: 'cajas', component: Boxes },
   { path: 'dulces', component: Candies },
@@ -27,9 +42,29 @@ export const routes: Routes = [
   { path: 'caramelos', component: HardCandies },
   { path: 'chocolates', component: Chocolates },
   { path: 'gomitas', component: Gummies },
-  { path: 'clientes', component: Customers },
-  { path: 'carrito', component: Cart },
-  { path: 'perfil', component: Profile },
-  { path: 'inventario', component: Inventory },
+  {
+    path: 'clientes',
+    component: Customers,
+    canActivate: [authGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: 'carrito',
+    component: Cart,
+    canActivate: [authGuard],
+    data: { roles: ['user'] },
+  },
+  {
+    path: 'perfil',
+    component: Profile,
+    canActivate: [authGuard],
+    data: { roles: ['user'] },
+  },
+  {
+    path: 'inventario',
+    component: Inventory,
+    canActivate: [authGuard],
+    data: { roles: ['admin'] },
+  },
   { path: '**', redirectTo: '' },
 ];
