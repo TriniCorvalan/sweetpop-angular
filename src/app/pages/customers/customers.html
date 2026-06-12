@@ -1,1 +1,47 @@
-<p>customers works!</p>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/">Inicio</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Clientes</li>
+  </ol>
+</nav>
+
+<section class="sweetpop-admin-card p-4 p-md-5">
+  <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+    <div>
+      <h1 class="h2 mb-2">Clientes registrados</h1>
+      <p class="mb-0">Usuarios con rol cliente registrados en el sitio.</p>
+    </div>
+    <a routerLink="/inventario" class="btn btn-outline-light btn-sm">Ver inventario</a>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table sweetpop-table align-middle mb-0">
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Nickname</th>
+          <th scope="col">Correo</th>
+          <th scope="col">Registro</th>
+          <th scope="col">Dirección</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (customers.length === 0) {
+          <tr>
+            <td colspan="5" class="text-center py-4">Aún no hay clientes registrados.</td>
+          </tr>
+        } @else {
+          @for (customer of customers; track customer.id) {
+            <tr>
+              <td>{{ customer.fullName }}</td>
+              <td>{{ customer.username }}</td>
+              <td>{{ customer.email }}</td>
+              <td>{{ customer.signupDate || '—' }}</td>
+              <td>{{ getAddress(customer) }}</td>
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+  </div>
+</section>
