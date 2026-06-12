@@ -25,7 +25,7 @@ export const routes: Routes = [
   { path: 'dulces', component: Candies },
   { path: 'barritas', component: Bars },
   { path: 'caramelos', component: HardCandies },
-  { path: 'chocolate', component: Chocolates },
+  { path: 'chocolates', component: Chocolates },
   { path: 'gomitas', component: Gummies },
   { path: 'clientes', component: Customers },
   { path: 'carrito', component: Cart },

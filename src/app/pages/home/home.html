@@ -1,1 +1,106 @@
-<p>home works!</p>
+<section class="hero mb-5">
+  <div class="row align-items-center g-4">
+    <div class="col-lg-6 hero-text">
+      <h1 class="display-5 fw-semibold">Cajas anidadas de dulces</h1>
+      <p class="intro lead">
+        Sorprende con cajas con 1, 2 o 3 niveles. Cada nivel con paredes personalizables con dulces y chocolates.
+      </p>
+      <div class="d-flex flex-wrap gap-2">
+        <a [routerLink]="['/cajas']" class="btn btn-sweetpop">Ver cajas</a>
+        <a [routerLink]="['/dulces']" class="btn btn-sweetpop">Ver dulces</a>
+      </div>
+    </div>
+    <div class="col-lg-6 hero-image text-center">
+      <img src="assets/img/hero-candy.png" class="img-fluid" alt="Dulces en caja de regalo">
+    </div>
+  </div>
+</section>
+
+<h2 class="h3 mb-3">Catálogo de cajas</h2>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
+  <div class="col">
+    <article class="card h-100 sweetpop-card">
+      <img src="assets/img/boxes/level-1.jpg" class="card-img-top" alt="Caja simple 1 nivel">
+      <div class="card-body">
+        <h3 class="card-title h5">Caja simple</h3>
+        <p class="card-text">1 nivel, 4 paredes personalizables.</p>
+        <p class="card-text">Descuento: 10%</p>
+        <a [routerLink]="['/cajas']" fragment="simple" class="card-link">Más información</a>
+      </div>
+    </article>
+  </div>
+  <div class="col">
+    <article class="card h-100 sweetpop-card">
+      <img src="assets/img/boxes/level-2.jpg" class="card-img-top" alt="Caja doble 2 niveles">
+      <div class="card-body">
+        <h3 class="card-title h5">Caja doble</h3>
+        <p class="card-text">2 niveles anidados, 8 paredes en total.</p>
+        <p class="card-text">Descuento: 15%</p>
+        <a [routerLink]="['/cajas']" fragment="doble" class="card-link">Más información</a>
+      </div>
+    </article>
+  </div>
+  <div class="col">
+    <article class="card h-100 sweetpop-card">
+      <img src="assets/img/boxes/level-3.jpg" class="card-img-top" alt="Caja triple 3 niveles">
+      <div class="card-body">
+        <h3 class="card-title h5">Caja triple</h3>
+        <p class="card-text">3 niveles anidados, experiencia completa.</p>
+        <p class="card-text">Descuento: 20%</p>
+        <a [routerLink]="['/cajas']" fragment="triple" class="card-link">Más información</a>
+      </div>
+    </article>
+  </div>
+</div>
+
+<h2 class="h3 mb-3">Categorías de dulces</h2>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4 mb-4">
+  <div class="col">
+    <article class="card h-100 sweetpop-card">
+      <a [routerLink]="['/gomitas']">
+        <img src="assets/img/categories/gummies/cat-gummies.jpg" class="card-img-top" alt="Categoría Gomitas">
+      </a>
+      <div class="card-body">
+        <h3 class="card-title h5">Gomitas</h3>
+        <p class="card-text">Descuento: hasta 15%</p>
+        <a [routerLink]="['/gomitas']" class="card-link">Ver categoría</a>
+      </div>
+    </article>
+  </div>
+  <div class="col">
+    <article class="card h-100 sweetpop-card">
+      <a [routerLink]="['/chocolate']">
+        <img src="assets/img/categories/chocolate/cat-chocolate.jpg" class="card-img-top" alt="Categoría Chocolate">
+      </a>
+      <div class="card-body">
+        <h3 class="card-title h5">Chocolate</h3>
+        <p class="card-text">Descuento: hasta 20%</p>
+        <a [routerLink]="['/chocolate']" class="card-link">Ver categoría</a>
+      </div>
+    </article>
+  </div>
+  <div class="col">
+    <article class="card h-100 sweetpop-card">
+      <a [routerLink]="['/caramelos']">
+        <img src="assets/img/categories/hard-candies/cat-hard-candies.jpg" class="card-img-top" alt="Categoría Caramelos">
+      </a>
+      <div class="card-body">
+        <h3 class="card-title h5">Caramelos</h3>
+        <p class="card-text">Descuento: hasta 10%</p>
+        <a [routerLink]="['/caramelos']" class="card-link">Ver categoría</a>
+      </div>
+    </article>
+  </div>
+  <div class="col">
+    <article class="card h-100 sweetpop-card">
+      <a [routerLink]="['/barritas']">
+        <img src="assets/img/categories/bars/cat-bars.jpg" class="card-img-top" alt="Categoría Barritas">
+      </a>
+      <div class="card-body">
+        <h3 class="card-title h5">Barritas</h3>
+        <p class="card-text">Descuento: hasta 15%</p>
+        <a [routerLink]="['/barritas']" class="card-link">Ver categoría</a>
+      </div>
+    </article>
+  </div>
+</div>
