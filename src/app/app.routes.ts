@@ -1,3 +1,35 @@
 import { Routes } from '@angular/router';
+import { Bars } from './pages/bars/bars';
+import { Boxes } from './pages/boxes/boxes';
+import { Candies } from './pages/candies/candies';
+import { Cart } from './pages/cart/cart';
+import { Chocolates } from './pages/chocolates/chocolates';
+import { Customers } from './pages/customers/customers';
+import { Gummies } from './pages/gummies/gummies';
+import { HardCandies } from './pages/hard-candies/hard-candies';
+import { Home } from './pages/home/home';
+import { Inventory } from './pages/inventory/inventory';
+import { Login } from './pages/login/login';
+import { Logout } from './pages/logout/logout';
+import { Profile } from './pages/profile/profile';
+import { RecoverPassword } from './pages/recover-password/recover-password';
+import { Register } from './pages/register/register';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+  { path: '', component: Home },
+  { path: 'inicio-sesion', component: Login },
+  { path: 'registro', component: Register },
+  { path: 'recuperar-contrasena', component: RecoverPassword },
+  { path: 'cerrar-sesion', component: Logout },
+  { path: 'cajas', component: Boxes },
+  { path: 'dulces', component: Candies },
+  { path: 'barritas', component: Bars },
+  { path: 'caramelos', component: HardCandies },
+  { path: 'chocolate', component: Chocolates },
+  { path: 'gomitas', component: Gummies },
+  { path: 'clientes', component: Customers },
+  { path: 'carrito', component: Cart },
+  { path: 'perfil', component: Profile },
+  { path: 'inventario', component: Inventory },
+  { path: '**', redirectTo: '' },
+];
