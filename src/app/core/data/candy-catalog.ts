@@ -3,7 +3,7 @@ import { Candy } from '../models/candy.model';
 export const CANDY_CATALOG: Candy[] = [
   {
     id: 'gom-gummy-bears',
-    name: 'Gummy Bears',
+    name: 'Ositos de gomita',
     category: 'gomitas',
     size: 'small',
     price: 990,
@@ -13,7 +13,7 @@ export const CANDY_CATALOG: Candy[] = [
   },
   {
     id: 'gom-jelly-beans',
-    name: 'Jelly Beans',
+    name: 'Gomitas en forma de semillas',
     category: 'gomitas',
     size: 'small',
     price: 790,
@@ -23,7 +23,7 @@ export const CANDY_CATALOG: Candy[] = [
   },
   {
     id: 'gom-worms',
-    name: 'Worms de azúcar',
+    name: 'Gomitas en forma de serpientes',
     category: 'gomitas',
     size: 'small',
     price: 590,
@@ -33,7 +33,7 @@ export const CANDY_CATALOG: Candy[] = [
   },
   {
     id: 'cho-kisses',
-    name: 'Chocolate Kisses',
+    name: 'Besitos de chocolate',
     category: 'chocolate',
     size: 'small',
     price: 490,
@@ -43,7 +43,7 @@ export const CANDY_CATALOG: Candy[] = [
   },
   {
     id: 'cho-pb-cup',
-    name: 'Peanut Butter Cup',
+    name: 'Chocolate con mantequilla de maní',
     category: 'chocolate',
     size: 'medium',
     price: 290,
@@ -53,7 +53,7 @@ export const CANDY_CATALOG: Candy[] = [
   },
   {
     id: 'cho-trufa',
-    name: 'Trufa Gourmet',
+    name: 'Trufas gourmet',
     category: 'chocolate',
     size: 'large',
     price: 990,
@@ -63,7 +63,7 @@ export const CANDY_CATALOG: Candy[] = [
   },
   {
     id: 'car-lollipop',
-    name: 'Lollipop',
+    name: 'Paletas',
     category: 'caramelos',
     size: 'medium',
     price: 990,
@@ -73,7 +73,7 @@ export const CANDY_CATALOG: Candy[] = [
   },
   {
     id: 'car-chew',
-    name: 'Caramel Chew',
+    name: 'Caramelos masticables',
     category: 'caramelos',
     size: 'medium',
     price: 490,
@@ -83,7 +83,7 @@ export const CANDY_CATALOG: Candy[] = [
   },
   {
     id: 'car-fruit-drop',
-    name: 'Fruit Drop',
+    name: 'Caramelos de fruta',
     category: 'caramelos',
     size: 'large',
     price: 490,
@@ -93,7 +93,7 @@ export const CANDY_CATALOG: Candy[] = [
   },
   {
     id: 'bar-candy',
-    name: 'Candy Bar',
+    name: 'Barritas de chocolate',
     category: 'barritas',
     size: 'large',
     price: 1990,
@@ -103,7 +103,7 @@ export const CANDY_CATALOG: Candy[] = [
   },
   {
     id: 'bar-nougat',
-    name: 'Nougat Bar',
+    name: 'Barritas de nuez',
     category: 'barritas',
     size: 'large',
     price: 1290,
@@ -113,7 +113,7 @@ export const CANDY_CATALOG: Candy[] = [
   },
   {
     id: 'bar-crispy',
-    name: 'Crispy Bar',
+    name: 'Barritas crujientes',
     category: 'barritas',
     size: 'large',
     price: 1890,
