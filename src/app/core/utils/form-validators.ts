@@ -17,7 +17,7 @@ export function getPasswordErrors(password: string, confirm?: string): string[] 
     errors.push('La contraseña debe tener al menos 6 caracteres.');
   }
   if (password.length > 18) {
-    errors.push('La contraseña debe tener menos de 18 caracteres.');
+    errors.push('La contraseña debe tener como máximo 18 caracteres.');
   }
   if (!/[0-9]/.test(password)) {
     errors.push('La contraseña debe incluir un número.');
