@@ -10,5 +10,5 @@ import { NavLinks } from './shared/nav-links/nav-links';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('sweetpop-angular');
+  protected readonly title = signal('Sweetpop');
 }
