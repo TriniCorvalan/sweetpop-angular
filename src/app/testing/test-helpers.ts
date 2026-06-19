@@ -8,6 +8,18 @@ import { User, UserRole } from '../core/models/user.model';
 import { AuthService } from '../core/services/auth.service';
 import { StorageService } from '../core/services/storage.service';
 
+export const VALID_PASSWORD = 'Cliente1!';
+
+export const VALID_REGISTER_FORM = {
+  fullName: 'Nombre Test',
+  username: 'cliente2',
+  email: 'cliente2@test.cl',
+  password: VALID_PASSWORD,
+  passwordConfirm: VALID_PASSWORD,
+  birthdate: '2000-05-15',
+  address: 'Calle 123',
+};
+
 export const SAMPLE_BOX_CALCULATION = {
   boxId: 'box-simple' as const,
   boxName: 'Caja simple',
