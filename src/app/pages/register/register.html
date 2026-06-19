@@ -18,25 +18,24 @@
           <div class="alert alert-{{ alertType }} mb-4" role="alert">{{ alertMessage }}</div>
         }
 
-        <form (ngSubmit)="onSubmit()" (reset)="onReset()" novalidate>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" (reset)="onReset()" novalidate>
           <div class="row g-3">
             <div class="col-12">
               <label for="fullName" class="form-label">Nombre completo <sup>*</sup></label>
-              <input type="text" class="form-control" id="fullName" name="fullName"
-                [(ngModel)]="fullName" required autocomplete="name"
+              <input type="text" class="form-control" id="fullName"
+                formControlName="fullName" autocomplete="name"
                 placeholder="Ej: María Paola González Pérez"
-                [class.is-invalid]="fullNameInvalid"
+                [class.is-invalid]="isInvalid('fullName')"
                 (input)="clearAlerts()">
               <div class="invalid-feedback">El nombre completo es obligatorio.</div>
             </div>
 
             <div class="col-md-6">
               <label for="username" class="form-label">Nickname <sup>*</sup></label>
-              <input type="text" class="form-control" id="username" name="username"
-                [(ngModel)]="username" required autocomplete="username"
-                minlength="6" maxlength="20" pattern="[a-zA-Z0-9_\.\-]+"
+              <input type="text" class="form-control" id="username"
+                formControlName="username" autocomplete="username"
                 placeholder="Ej: mariagp"
-                [class.is-invalid]="usernameInvalid"
+                [class.is-invalid]="isInvalid('username')"
                 (input)="clearAlerts()">
               <div class="form-text">Solo letras, números, puntos, guiones y guiones bajos. Entre 6 y 20 caracteres.</div>
               <div class="invalid-feedback">El nickname debe tener entre 6 y 20 caracteres válidos.</div>
@@ -44,10 +43,10 @@
 
             <div class="col-md-6">
               <label for="email" class="form-label">Correo electrónico <sup>*</sup></label>
-              <input type="email" class="form-control" id="email" name="email"
-                [(ngModel)]="email" required autocomplete="email"
+              <input type="email" class="form-control" id="email"
+                formControlName="email" autocomplete="email"
                 placeholder="Ej: maria@correo.com"
-                [class.is-invalid]="emailInvalid"
+                [class.is-invalid]="isInvalid('email')"
                 (input)="clearAlerts()">
               <div class="invalid-feedback">Ingresa un correo electrónico válido.</div>
             </div>
@@ -56,21 +55,21 @@
               <div class="row">
                 <div class="col-md-6">
                   <label for="password" class="form-label">Contraseña <sup>*</sup></label>
-                  <input type="password" class="form-control" id="password" name="password"
-                    [(ngModel)]="password" required autocomplete="new-password" minlength="6"
+                  <input type="password" class="form-control" id="password"
+                    formControlName="password" autocomplete="new-password"
                     placeholder="Mínimo 6 caracteres"
-                    [class.is-invalid]="passwordInvalid"
+                    [class.is-invalid]="isInvalid('password')"
                     (input)="clearAlerts()">
-                  <div class="invalid-feedback">{{ passwordError || 'La contraseña no cumple los requisitos.' }}</div>
+                  <div class="invalid-feedback">{{ getPasswordFeedback() }}</div>
                 </div>
                 <div class="col-md-6">
                   <label for="passwordConfirm" class="form-label">Confirmar contraseña <sup>*</sup></label>
-                  <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm"
-                    [(ngModel)]="passwordConfirm" required autocomplete="new-password" minlength="6"
+                  <input type="password" class="form-control" id="passwordConfirm"
+                    formControlName="passwordConfirm" autocomplete="new-password"
                     placeholder="Confirma tu contraseña"
-                    [class.is-invalid]="passwordConfirmInvalid"
+                    [class.is-invalid]="isPasswordConfirmInvalid()"
                     (input)="clearAlerts()">
-                  <div class="invalid-feedback">{{ passwordConfirmError || 'Las contraseñas deben coincidir.' }}</div>
+                  <div class="invalid-feedback">Las contraseñas deben coincidir.</div>
                 </div>
               </div>
               <div class="form-text">La contraseña debe tener entre 6 y 18 caracteres, incluir un número, una letra mayúscula y una letra minúscula.</div>
@@ -78,9 +77,9 @@
 
             <div class="col-md-6">
               <label for="birthdate" class="form-label">Fecha de nacimiento <sup>*</sup></label>
-              <input type="date" class="form-control" id="birthdate" name="birthdate"
-                [(ngModel)]="birthdate" required
-                [class.is-invalid]="birthdateInvalid"
+              <input type="date" class="form-control" id="birthdate"
+                formControlName="birthdate"
+                [class.is-invalid]="isInvalid('birthdate')"
                 (input)="clearAlerts()">
               <div class="form-text">Debes tener al menos 13 años.</div>
               <div class="invalid-feedback">Debes tener al menos 13 años.</div>
@@ -88,8 +87,8 @@
 
             <div class="col-12">
               <label for="address" class="form-label">Dirección de despacho</label>
-              <textarea class="form-control" id="address" name="address" rows="3"
-                [(ngModel)]="address"
+              <textarea class="form-control" id="address" rows="3"
+                formControlName="address"
                 placeholder="Calle, número, comuna, región"></textarea>
             </div>
           </div>

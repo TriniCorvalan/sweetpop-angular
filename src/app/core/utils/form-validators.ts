@@ -1,13 +1,47 @@
-export function isValidEmail(value: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+
+export function usernameValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const trimmed = control.value?.trim() ?? '';
+    if (trimmed.length < 6 || trimmed.length > 20) {
+      return { invalidUsername: true };
+    }
+    return /^[a-zA-Z0-9._-]+$/.test(trimmed) ? null : { invalidUsername: true };
+  };
 }
 
-export function isValidUsername(value: string): boolean {
-  const trimmed = value.trim();
-  if (trimmed.length < 6 || trimmed.length > 20) {
-    return false;
-  }
-  return /^[a-zA-Z0-9._-]+$/.test(trimmed);
+export function emailValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(control.value?.trim() ?? '') ? null : { invalidEmail: true };
+}
+
+export function birthdateValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const birthdate = new Date(control.value ?? '');
+    if (Number.isNaN(birthdate.getTime())) {
+      return { invalidBirthdate: true };
+    }
+    return calculateAge(birthdate) >= 13 ? null : { invalidBirthdate: true };
+  };
+}
+
+export function passwordStrengthValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const errors = getPasswordErrors(control.value ?? '');
+    return errors.length > 0 ? { passwordStrength: errors } : null;
+  };
+}
+
+export function passwordMatchValidator(): ValidatorFn {
+  return (group: AbstractControl): ValidationErrors | null => {
+    const password = group.get('password')?.value ?? '';
+    const confirm = group.get('passwordConfirm')?.value ?? '';
+    return password === confirm ? null : { passwordMismatch: true };
+  };
+}
+
+export function isValidEmail(value: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 }
 
 export function getPasswordErrors(password: string, confirm?: string): string[] {
@@ -35,7 +69,7 @@ export function getPasswordErrors(password: string, confirm?: string): string[] 
   return errors;
 }
 
-export function calculateAge(birthdate: Date): number {
+function calculateAge(birthdate: Date): number {
   const today = new Date();
   let age = today.getFullYear() - birthdate.getFullYear();
   const monthDifference = today.getMonth() - birthdate.getMonth();
@@ -45,12 +79,4 @@ export function calculateAge(birthdate: Date): number {
   }
 
   return age;
-}
-
-export function isValidBirthdate(value: string): boolean {
-  const birthdate = new Date(value);
-  if (Number.isNaN(birthdate.getTime())) {
-    return false;
-  }
-  return calculateAge(birthdate) >= 13;
 }
