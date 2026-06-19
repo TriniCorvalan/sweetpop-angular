@@ -1,38 +1,43 @@
 import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './login.html',
 })
 export class Login {
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly fb = inject(FormBuilder);
 
-  credential = '';
-  password = '';
   alertType: 'success' | 'danger' | null = null;
   alertMessage = '';
-  credentialInvalid = false;
-  passwordInvalid = false;
+
+  loginForm = this.fb.nonNullable.group({
+    credential: ['', Validators.required],
+    password: ['', Validators.required],
+  });
 
   onSubmit(): void {
-    this.alertType = null;
-    this.alertMessage = '';
-    this.credentialInvalid = this.credential.trim() === '';
-    this.passwordInvalid = this.password === '';
+    this.clearValidation();
 
-    if (this.credentialInvalid || this.passwordInvalid) {
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
       this.alertType = 'danger';
       this.alertMessage = 'Completa todos los campos requeridos.';
       return;
     }
 
-    const result = this.auth.login(this.credential, this.password);
+    const { credential, password } = this.loginForm.getRawValue();
+    const result = this.auth.login(credential.trim(), password);
 
     if (!result.success) {
       this.alertType = 'danger';
@@ -55,7 +60,10 @@ export class Login {
   clearValidation(): void {
     this.alertType = null;
     this.alertMessage = '';
-    this.credentialInvalid = false;
-    this.passwordInvalid = false;
+  }
+
+  isInvalid(controlName: 'credential' | 'password'): boolean {
+    const control = this.loginForm.get(controlName);
+    return !!(control && control.invalid && control.touched);
   }
 }
