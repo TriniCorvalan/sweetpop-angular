@@ -40,11 +40,7 @@ export function passwordMatchValidator(): ValidatorFn {
   };
 }
 
-export function isValidEmail(value: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
-}
-
-export function getPasswordErrors(password: string, confirm?: string): string[] {
+function getPasswordErrors(password: string): string[] {
   const errors: string[] = [];
 
   if (password.length < 6) {
@@ -61,9 +57,6 @@ export function getPasswordErrors(password: string, confirm?: string): string[] 
   }
   if (!/[a-z]/.test(password)) {
     errors.push('La contraseña debe incluir una letra minúscula.');
-  }
-  if (confirm !== undefined && confirm !== password) {
-    errors.push('Las contraseñas no coinciden.');
   }
 
   return errors;

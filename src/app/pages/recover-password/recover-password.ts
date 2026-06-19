@@ -1,22 +1,28 @@
 import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
-import { getPasswordErrors, isValidEmail } from '../../core/utils/form-validators';
+import {
+  emailValidator,
+  passwordMatchValidator,
+  passwordStrengthValidator,
+} from '../../core/utils/form-validators';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-recover-password',
-  imports: [FormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './recover-password.html',
 })
 export class RecoverPassword {
   private readonly auth = inject(AuthService);
+  private readonly fb = inject(FormBuilder);
 
   intro = 'Ingresa el correo de tu cuenta de cliente para restablecer tu contraseña.';
-  email = '';
-  password = '';
-  passwordConfirm = '';
   recoveryEmail = '';
 
   showEmailForm = true;
@@ -24,21 +30,31 @@ export class RecoverPassword {
 
   alertType: 'success' | 'danger' | 'info' | null = null;
   alertMessage = '';
-  emailInvalid = false;
-  passwordInvalid = false;
-  passwordConfirmInvalid = false;
+
+  emailForm = this.fb.nonNullable.group({
+    email: ['', [Validators.required, emailValidator()]],
+  });
+
+  passwordForm = this.fb.nonNullable.group(
+    {
+      password: ['', [Validators.required, passwordStrengthValidator()]],
+      passwordConfirm: ['', Validators.required],
+    },
+    { validators: passwordMatchValidator() },
+  );
 
   onVerifyEmail(): void {
     this.clearAlerts();
-    this.emailInvalid = !isValidEmail(this.email);
 
-    if (this.emailInvalid) {
+    if (this.emailForm.invalid) {
+      this.emailForm.markAllAsTouched();
       this.alertType = 'danger';
       this.alertMessage = 'Ingresa un correo electrónico válido.';
       return;
     }
 
-    const user = this.auth.findUserByEmail(this.email);
+    const email = this.emailForm.getRawValue().email.trim();
+    const user = this.auth.findUserByEmail(email);
 
     if (!user) {
       this.alertType = 'danger';
@@ -56,6 +72,7 @@ export class RecoverPassword {
     this.recoveryEmail = user.email;
     this.showEmailForm = false;
     this.showPasswordForm = true;
+    this.passwordForm.reset();
     this.intro = `Crea una nueva contraseña para ${user.email}.`;
     this.alertType = 'info';
     this.alertMessage = 'Correo verificado. Ahora define tu nueva contraseña.';
@@ -63,16 +80,15 @@ export class RecoverPassword {
 
   onSavePassword(): void {
     this.clearAlerts();
-    const errors = getPasswordErrors(this.password, this.passwordConfirm);
 
-    if (errors.length > 0) {
-      this.passwordInvalid = errors.some((error) => !error.includes('coinciden'));
-      this.passwordConfirmInvalid = errors.some((error) => error.includes('coinciden'));
+    if (this.passwordForm.invalid) {
+      this.passwordForm.markAllAsTouched();
       this.alertType = 'danger';
       this.alertMessage = 'Revisa los requisitos de la nueva contraseña.';
       return;
     }
 
+    const { password } = this.passwordForm.getRawValue();
     const users = this.auth.getUsers();
     const userIndex = users.findIndex(
       (user) => user.email.toLowerCase() === this.recoveryEmail.toLowerCase(),
@@ -84,7 +100,7 @@ export class RecoverPassword {
       return;
     }
 
-    users[userIndex].password = this.password;
+    users[userIndex].password = password;
     this.auth.saveUsers(users);
 
     this.showPasswordForm = false;
@@ -96,8 +112,35 @@ export class RecoverPassword {
   clearAlerts(): void {
     this.alertType = null;
     this.alertMessage = '';
-    this.emailInvalid = false;
-    this.passwordInvalid = false;
-    this.passwordConfirmInvalid = false;
+  }
+
+  isEmailInvalid(): boolean {
+    const control = this.emailForm.get('email');
+    return !!(control && control.invalid && control.touched);
+  }
+
+  isPasswordInvalid(): boolean {
+    const control = this.passwordForm.get('password');
+    return !!(control && control.invalid && control.touched);
+  }
+
+  isPasswordConfirmInvalid(): boolean {
+    const confirm = this.passwordForm.get('passwordConfirm');
+    if (confirm?.invalid && confirm.touched) {
+      return true;
+    }
+    return !!(this.passwordForm.hasError('passwordMismatch') && confirm?.touched);
+  }
+
+  getPasswordFeedback(): string {
+    const control = this.passwordForm.get('password');
+    if (!control?.invalid || !control.touched) {
+      return 'La contraseña no cumple los requisitos.';
+    }
+    if (control.hasError('required')) {
+      return 'La contraseña es obligatoria.';
+    }
+    const strength = control.getError('passwordStrength') as string[] | undefined;
+    return strength?.join('\n') ?? 'La contraseña no cumple los requisitos.';
   }
 }
