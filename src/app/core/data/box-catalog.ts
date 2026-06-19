@@ -8,6 +8,7 @@ export const BOX_CATALOG: Box[] = [
     boxPrice: 4990,
     discount: 0.1,
     image: 'assets/img/boxes/level-1.jpg',
+    description: '1 nivel, 4 paredes personalizables.',
   },
   {
     id: 'box-double',
@@ -16,6 +17,7 @@ export const BOX_CATALOG: Box[] = [
     boxPrice: 9990,
     discount: 0.15,
     image: 'assets/img/boxes/level-2.jpg',
+    description: '2 niveles anidados, 8 paredes en total.',
   },
   {
     id: 'box-triple',
@@ -24,5 +26,6 @@ export const BOX_CATALOG: Box[] = [
     boxPrice: 11990,
     discount: 0.2,
     image: 'assets/img/boxes/level-3.jpg',
+    description: '3 niveles anidados, experiencia completa de 12 paredes.',
   },
 ];

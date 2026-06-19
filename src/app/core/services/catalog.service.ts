@@ -7,6 +7,7 @@ import {
 } from '../constants/storage-keys';
 import { BOX_CATALOG } from '../data/box-catalog';
 import { CANDY_CATALOG } from '../data/candy-catalog';
+import { CATEGORY_CATALOG } from '../data/category-catalog';
 import { Box, BoxId } from '../models/box.model';
 import { Candy, CandyCategory, CandySize } from '../models/candy.model';
 
@@ -16,6 +17,7 @@ import { Candy, CandyCategory, CandySize } from '../models/candy.model';
 export class CatalogService {
   readonly boxes = BOX_CATALOG;
   readonly candies = CANDY_CATALOG;
+  readonly categories = CATEGORY_CATALOG;
 
   getBoxById(boxId: string): Box | null {
     return this.boxes.find((box) => box.id === boxId) ?? null;

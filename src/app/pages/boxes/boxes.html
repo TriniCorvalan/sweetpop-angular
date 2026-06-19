@@ -19,22 +19,4 @@
     </ul>
   </div>
 
-  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
-    @for (box of boxes; track box.id) {
-      <div class="col">
-        <article class="card h-100 sweetpop-card">
-          <img [src]="box.image" class="card-img-top" [alt]="box.name">
-          <div class="card-body">
-            <h3 class="card-title h5">{{ box.name }}</h3>
-            <p class="card-text">{{ box.wallsCount / 4 }} nivel(es) de anidación. {{ box.wallsCount }} paredes.</p>
-            <p class="card-text">Precio base: {{ formatPrice(box.boxPrice) }}</p>
-            <p class="card-text">Descuento: {{ formatDiscount(box.discount) }}</p>
-            <button type="button" class="btn btn-sweetpop btn-sm mt-2"
-              (click)="customizeBox(box.id)">
-              Personalizar esta caja
-            </button>
-          </div>
-        </article>
-      </div>
-    }
-  </div>
+  <app-box-catalog-cards view="catalog" />

@@ -7,4 +7,5 @@ export interface Box {
   boxPrice: number;
   discount: number;
   image: string;
+  description: string;
 }
