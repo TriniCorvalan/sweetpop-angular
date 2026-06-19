@@ -1,28 +1,31 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-profile',
-  imports: [FormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './profile.html',
 })
 export class Profile implements OnInit {
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
-
-  fullName = '';
-  username = '';
-  email = '';
-  birthdate = '';
-  signupDate = '';
-  address = '';
+  private readonly fb = inject(FormBuilder);
 
   alertType: 'success' | 'danger' | null = null;
   alertMessage = '';
   private userId = '';
+
+  profileForm = this.fb.nonNullable.group({
+    fullName: [''],
+    username: [''],
+    email: [''],
+    birthdate: [''],
+    signupDate: [''],
+    address: [''],
+  });
 
   ngOnInit(): void {
     const currentUser = this.auth.getCurrentUser();
@@ -45,7 +48,8 @@ export class Profile implements OnInit {
       return;
     }
 
-    const updated = this.auth.updateUser(this.userId, { address: this.address.trim() });
+    const address = this.profileForm.controls.address.value.trim();
+    const updated = this.auth.updateUser(this.userId, { address });
 
     if (!updated) {
       this.alertType = 'danger';
@@ -72,11 +76,13 @@ export class Profile implements OnInit {
     signupDate: string;
   }): void {
     this.userId = user.id;
-    this.fullName = user.fullName || '';
-    this.username = user.username || '';
-    this.email = user.email || '';
-    this.birthdate = user.birthdate || '';
-    this.address = user.address || '';
-    this.signupDate = user.signupDate || '';
+    this.profileForm.patchValue({
+      fullName: user.fullName || '',
+      username: user.username || '',
+      email: user.email || '',
+      birthdate: user.birthdate || '',
+      signupDate: user.signupDate || '',
+      address: user.address || '',
+    });
   }
 }
