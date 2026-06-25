@@ -50,4 +50,82 @@ describe('Register', () => {
     expect(auth.findUserByUsername('cliente2')).toBeTruthy();
     expect(auth.findUserByEmail('cliente2@test.cl')).toBeTruthy();
   });
+
+  it('rechaza un correo con formato invalido', () => {
+    component.registerForm.setValue({
+      ...VALID_REGISTER_FORM,
+      email: 'correo-invalido',
+    });
+
+    component.onSubmit();
+
+    expect(component.alertType).toBe('danger');
+    expect(component.alertMessage).toContain('campos requeridos correctamente');
+    expect(component.registerForm.controls.email.hasError('invalidEmail')).toBe(true);
+  });
+
+  it('rechaza una contrasena que no cumple la complejidad', () => {
+    component.registerForm.setValue({
+      ...VALID_REGISTER_FORM,
+      password: 'corta',
+      passwordConfirm: 'corta',
+    });
+
+    component.onSubmit();
+
+    expect(component.alertType).toBe('danger');
+    expect(component.registerForm.controls.password.hasError('passwordStrength')).toBe(true);
+  });
+
+  it('rechaza un registro de menor de 13 anos', () => {
+    const birthdate = new Date();
+    birthdate.setFullYear(birthdate.getFullYear() - 12);
+
+    component.registerForm.setValue({
+      ...VALID_REGISTER_FORM,
+      birthdate: birthdate.toISOString().slice(0, 10),
+    });
+
+    component.onSubmit();
+
+    expect(component.alertType).toBe('danger');
+    expect(component.registerForm.controls.birthdate.hasError('invalidBirthdate')).toBe(true);
+  });
+
+  it('limpia el formulario y las alertas con onReset', () => {
+    component.registerForm.setValue(VALID_REGISTER_FORM);
+    component.alertType = 'danger';
+    component.alertMessage = 'Error de prueba';
+
+    component.onReset();
+
+    expect(component.registerForm.value).toEqual({
+      fullName: '',
+      username: '',
+      email: '',
+      password: '',
+      passwordConfirm: '',
+      birthdate: '',
+      address: '',
+    });
+    expect(component.alertType).toBeNull();
+    expect(component.alertMessage).toBe('');
+  });
+
+  it('limpia el formulario despues de un registro exitoso', () => {
+    component.registerForm.setValue(VALID_REGISTER_FORM);
+
+    component.onSubmit();
+
+    expect(component.alertType).toBe('success');
+    expect(component.registerForm.value).toEqual({
+      fullName: '',
+      username: '',
+      email: '',
+      password: '',
+      passwordConfirm: '',
+      birthdate: '',
+      address: '',
+    });
+  });
 });

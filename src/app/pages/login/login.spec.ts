@@ -53,4 +53,14 @@ describe('Login', () => {
     expect(component.alertMessage).toContain('Inicio de sesión exitoso');
     expect(TestBed.inject(AuthService).isLoggedIn()).toBe(true);
   });
+
+  it('limpia las alertas con clearValidation', () => {
+    component.alertType = 'danger';
+    component.alertMessage = 'Error de prueba';
+
+    component.clearValidation();
+
+    expect(component.alertType).toBeNull();
+    expect(component.alertMessage).toBe('');
+  });
 });

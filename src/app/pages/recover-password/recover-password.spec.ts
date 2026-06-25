@@ -66,6 +66,49 @@ describe('RecoverPassword', () => {
     expect(auth.findUserByEmail('cliente1@test.cl')?.password).toBe(newPassword);
   });
 
+  it('rechaza un correo con formato invalido', () => {
+    component.emailForm.setValue({ email: 'correo-sin-formato' });
+
+    component.onVerifyEmail();
+
+    expect(component.alertType).toBe('danger');
+    expect(component.alertMessage).toBe('Ingresa un correo electrónico válido.');
+    expect(component.emailForm.controls.email.hasError('invalidEmail')).toBe(true);
+  });
+
+  it('rechaza una nueva contrasena que no cumple la complejidad', () => {
+    seedUser({ email: 'cliente1@test.cl', role: 'user' });
+    component.emailForm.setValue({ email: 'cliente1@test.cl' });
+    component.onVerifyEmail();
+
+    component.passwordForm.setValue({
+      password: 'debil',
+      passwordConfirm: 'debil',
+    });
+
+    component.onSavePassword();
+
+    expect(component.alertType).toBe('danger');
+    expect(component.alertMessage).toBe('Revisa los requisitos de la nueva contraseña.');
+    expect(component.passwordForm.controls.password.hasError('passwordStrength')).toBe(true);
+  });
+
+  it('limpia el formulario de contrasena al verificar el correo', () => {
+    seedUser({ email: 'cliente1@test.cl', role: 'user' });
+    component.passwordForm.setValue({
+      password: 'Basura1!',
+      passwordConfirm: 'Basura1!',
+    });
+
+    component.emailForm.setValue({ email: 'cliente1@test.cl' });
+    component.onVerifyEmail();
+
+    expect(component.passwordForm.value).toEqual({
+      password: '',
+      passwordConfirm: '',
+    });
+  });
+
   it('rechaza la recuperacion para cuentas de administrador', () => {
     seedUser({
       email: 'admin@test.cl',
