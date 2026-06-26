@@ -6,6 +6,14 @@ import { AuthService } from './core/services/auth.service';
 import { CartService } from './core/services/cart.service';
 import { InventoryService } from './core/services/inventory.service';
 
+/**
+ * Factory de inicialización ejecutada al arrancar la aplicación.
+ * @param auth Servicio de autenticación.
+ * @param inventory Servicio de inventario.
+ * @param cart Servicio de carrito.
+ * @returns Función que precarga admin, inventario y carrito.
+ * @usageNotes Registrada como `APP_INITIALIZER` en `appConfig`.
+ */
 function initializeApp(
   auth: AuthService,
   inventory: InventoryService,
@@ -19,6 +27,10 @@ function initializeApp(
   };
 }
 
+/**
+ * Configuración de providers globales: router, errores e inicialización de datos.
+ * @usageNotes Pasada a `bootstrapApplication` en `main.ts`.
+ */
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),

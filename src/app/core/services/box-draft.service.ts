@@ -9,6 +9,10 @@ import { CatalogService } from './catalog.service';
 import { InventoryService } from './inventory.service';
 import { StorageService } from './storage.service';
 
+/**
+ * Servicio de personalización de cajas mediante borrador por paredes.
+ * @usageNotes Persiste el borrador en `sessionStorage` (`STORAGE_KEYS.boxDraft`).
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -21,18 +25,40 @@ export class BoxDraftService {
     private readonly cart: CartService,
   ) {}
 
+  /**
+   * Obtiene el borrador activo desde sessionStorage.
+   * @returns Borrador actual o `null` si no hay personalización en curso.
+   * @usageNotes Consumido por Header y páginas de categoría/cajas.
+   */
   getBoxDraft(): BoxDraft | null {
     return this.storage.readJson(sessionStorage, STORAGE_KEYS.boxDraft, null);
   }
 
+  /**
+   * Persiste el borrador en sessionStorage.
+   * @param draft Borrador completo a guardar.
+   * @returns void
+   * @usageNotes Sobrescribe el borrador anterior.
+   */
   saveBoxDraft(draft: BoxDraft): void {
     this.storage.writeJson(sessionStorage, STORAGE_KEYS.boxDraft, draft);
   }
 
+  /**
+   * Elimina el borrador de sessionStorage.
+   * @returns void
+   * @usageNotes Tras agregar la caja al carrito o cancelar personalización.
+   */
   clearBoxDraft(): void {
     this.storage.removeItem(sessionStorage, STORAGE_KEYS.boxDraft);
   }
 
+  /**
+   * Cuenta paredes con dulce asignado.
+   * @param draft Borrador a evaluar; usa el activo si se omite.
+   * @returns Cantidad de paredes completadas.
+   * @usageNotes Mostrado en el indicador de progreso del Header.
+   */
   getFilledWallsCount(draft: BoxDraft | null = this.getBoxDraft()): number {
     if (!draft) {
       return 0;
@@ -40,6 +66,12 @@ export class BoxDraftService {
     return draft.walls.filter((wall) => wall.productId).length;
   }
 
+  /**
+   * Indica si todas las paredes del borrador están completas.
+   * @param draft Borrador a evaluar; usa el activo si se omite.
+   * @returns `true` si todas las paredes tienen dulce.
+   * @usageNotes Habilita el botón agregar al carrito.
+   */
   isBoxDraftComplete(draft: BoxDraft | null = this.getBoxDraft()): boolean {
     if (!draft) {
       return false;
@@ -47,6 +79,12 @@ export class BoxDraftService {
     return this.getFilledWallsCount(draft) === draft.wallsCount;
   }
 
+  /**
+   * Retorna la primera pared sin dulce asignado.
+   * @param draft Borrador a evaluar; usa el activo si se omite.
+   * @returns Pared vacía o `null` si no hay borrador o está completo.
+   * @usageNotes Usado por `assignCandyToWall`.
+   */
   getNextEmptyWall(draft: BoxDraft | null = this.getBoxDraft()): BoxWallAssignment | null {
     if (!draft) {
       return null;
@@ -54,6 +92,13 @@ export class BoxDraftService {
     return draft.walls.find((wall) => !wall.productId) ?? null;
   }
 
+  /**
+   * Suma unidades de un dulce ya reservadas en el borrador.
+   * @param productId Id del dulce.
+   * @param draft Borrador a evaluar; usa el activo si se omite.
+   * @returns Unidades reservadas en paredes del borrador.
+   * @usageNotes Resta del stock visible al asignar más unidades del mismo dulce.
+   */
   getQuantityUsedInDraft(productId: string, draft: BoxDraft | null = this.getBoxDraft()): number {
     if (!draft) {
       return 0;
@@ -67,10 +112,23 @@ export class BoxDraftService {
       }, 0);
   }
 
+  /**
+   * Stock disponible para asignar considerando reservas del borrador.
+   * @param productId Id del dulce.
+   * @returns Unidades disponibles para la siguiente pared.
+   * @usageNotes Mostrado en tarjetas de producto durante personalización.
+   */
   getAvailableStockForDraft(productId: string): number {
     return this.inventory.getStock(productId) - this.getQuantityUsedInDraft(productId);
   }
 
+  /**
+   * Inicia o reinicia el borrador con la caja seleccionada.
+   * @param boxId Id de la caja del catálogo.
+   * @param forceReplace Si `true`, reemplaza un borrador incompleto de otra caja.
+   * @returns Resultado con mensaje, redirección o confirmación según el caso.
+   * @usageNotes Invocado desde la página Boxes al elegir una caja.
+   */
   startBoxDraft(boxId: string, forceReplace = false): ServiceResult {
     if (!this.auth.hasRole('user')) {
       return {
@@ -127,6 +185,12 @@ export class BoxDraftService {
     };
   }
 
+  /**
+   * Asigna un dulce a la siguiente pared libre del borrador.
+   * @param productId Id del dulce a asignar.
+   * @returns Resultado con progreso (`filled`, `complete`) o mensaje de error.
+   * @usageNotes Invocado desde CategoryProducts al hacer clic en un dulce.
+   */
   assignCandyToWall(productId: string): ServiceResult {
     if (!this.auth.hasRole('user')) {
       return {
@@ -196,6 +260,11 @@ export class BoxDraftService {
     };
   }
 
+  /**
+   * Valida el borrador completo, calcula totales y agrega la caja al carrito.
+   * @returns Resultado con redirección a `/carrito` si tiene éxito.
+   * @usageNotes Invocado desde Header o CategoryProducts al confirmar la caja.
+   */
   addCompletedBoxToCart(): ServiceResult {
     if (!this.auth.hasRole('user')) {
       return {

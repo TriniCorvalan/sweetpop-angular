@@ -5,6 +5,7 @@ import { filter } from 'rxjs';
 import { AuthService } from '../../core/services/auth.service';
 import { CartService } from '../../core/services/cart.service';
 
+/** @ignore */
 interface NavItem {
   label: string;
   route?: string;
@@ -12,6 +13,10 @@ interface NavItem {
   dulcesGroup?: boolean;
 }
 
+/**
+ * Cabecera con navegación dinámica según sesión, rol y cantidad en carrito.
+ * @usageNotes Renderizada en el layout raíz (`App`); se actualiza en cada `NavigationEnd`.
+ */
 @Component({
   selector: 'app-header',
   imports: [RouterLink, RouterLinkActive],
@@ -32,6 +37,11 @@ export class Header {
       .subscribe(() => this.refreshNav());
   }
 
+  /**
+   * Recalcula los enlaces de navegación según sesión y rol.
+   * @returns void
+   * @usageNotes Invocado al iniciar y tras cada cambio de ruta.
+   */
   refreshNav(): void {
     const session = this.auth.getSession();
     const commonLinks: NavItem[] = [
@@ -70,6 +80,11 @@ export class Header {
     ];
   }
 
+  /**
+   * Indica si alguna ruta de dulces está activa.
+   * @returns `true` si la URL pertenece al grupo de categorías de dulces.
+   * @usageNotes Resalta el enlace "Dulces" en la barra de navegación.
+   */
   isDulcesActive(): boolean {
     const url = this.router.url;
     return (

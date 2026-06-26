@@ -1,5 +1,6 @@
 import { Box } from '../models/box.model';
 
+/** Catálogo estático de las tres cajas personalizables del sitio. @usageNotes Fuente de verdad para `CatalogService.boxes`. */
 export const BOX_CATALOG: Box[] = [
   {
     id: 'box-simple',

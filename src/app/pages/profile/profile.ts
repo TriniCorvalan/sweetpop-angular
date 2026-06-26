@@ -4,6 +4,10 @@ import { Router, RouterLink } from '@angular/router';
 
 import { AuthService } from '../../core/services/auth.service';
 
+/**
+ * Página de perfil: visualiza datos de cuenta y actualiza dirección de despacho.
+ * @usageNotes Ruta `/perfil`; requiere rol `user` vía `authGuard`.
+ */
 @Component({
   selector: 'app-profile',
   imports: [ReactiveFormsModule, RouterLink],
@@ -27,6 +31,11 @@ export class Profile implements OnInit {
     address: [''],
   });
 
+  /**
+   * Carga los datos del usuario autenticado en el formulario.
+   * @returns void
+   * @usageNotes Redirige a login si no hay sesión activa.
+   */
   ngOnInit(): void {
     const currentUser = this.auth.getCurrentUser();
 
@@ -38,6 +47,11 @@ export class Profile implements OnInit {
     this.loadProfile(currentUser);
   }
 
+  /**
+   * Persiste la dirección de despacho editada.
+   * @returns void
+   * @usageNotes Solo el campo `address` es editable; el resto es solo lectura.
+   */
   onSubmit(): void {
     this.alertType = null;
     this.alertMessage = '';

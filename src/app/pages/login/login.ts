@@ -8,6 +8,10 @@ import { Router, RouterLink } from '@angular/router';
 
 import { AuthService } from '../../core/services/auth.service';
 
+/**
+ * Página de inicio de sesión con redirección según rol.
+ * @usageNotes Ruta `/inicio-sesion`; protegida por `guestGuard`.
+ */
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule, RouterLink],
@@ -26,6 +30,11 @@ export class Login {
     password: ['', Validators.required],
   });
 
+  /**
+   * Valida el formulario e intenta iniciar sesión.
+   * @returns void
+   * @usageNotes Redirige a inventario (admin) o inicio (cliente) tras éxito.
+   */
   onSubmit(): void {
     this.clearValidation();
 
@@ -57,11 +66,22 @@ export class Login {
     }, 800);
   }
 
+  /**
+   * Limpia alertas de validación del formulario.
+   * @returns void
+   * @usageNotes Invocado antes de revalidar en `onSubmit`.
+   */
   clearValidation(): void {
     this.alertType = null;
     this.alertMessage = '';
   }
 
+  /**
+   * Indica si un control debe mostrarse como inválido.
+   * @param controlName Nombre del control (`credential` o `password`).
+   * @returns `true` si el control está inválido y fue tocado.
+   * @usageNotes Usado en la plantilla para clases CSS de error.
+   */
   isInvalid(controlName: 'credential' | 'password'): boolean {
     const control = this.loginForm.get(controlName);
     return !!(control && control.invalid && control.touched);

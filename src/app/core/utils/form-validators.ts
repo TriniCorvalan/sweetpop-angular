@@ -1,5 +1,10 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
+/**
+ * Valida nickname (6–20 caracteres, alfanumérico con `.`, `_`, `-`).
+ * @returns Función validadora para `FormControl`.
+ * @usageNotes Usado en el formulario de registro (`username`).
+ */
 export function usernameValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const trimmed = control.value?.trim() ?? '';
@@ -10,11 +15,21 @@ export function usernameValidator(): ValidatorFn {
   };
 }
 
+/**
+ * Valida formato de correo electrónico.
+ * @returns Función validadora para `FormControl`.
+ * @usageNotes Usado en registro y recuperación de contraseña.
+ */
 export function emailValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(control.value?.trim() ?? '') ? null : { invalidEmail: true };
 }
 
+/**
+ * Valida edad mínima de 13 años según fecha de nacimiento.
+ * @returns Función validadora para `FormControl`.
+ * @usageNotes Usado en el formulario de registro (`birthdate`).
+ */
 export function birthdateValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const birthdate = new Date(control.value ?? '');
@@ -25,6 +40,11 @@ export function birthdateValidator(): ValidatorFn {
   };
 }
 
+/**
+ * Valida fortaleza de contraseña según reglas del sitio.
+ * @returns Función validadora con error `passwordStrength` (lista de mensajes).
+ * @usageNotes Usado en registro y recuperación de contraseña.
+ */
 export function passwordStrengthValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const errors = getPasswordErrors(control.value ?? '');
@@ -32,6 +52,11 @@ export function passwordStrengthValidator(): ValidatorFn {
   };
 }
 
+/**
+ * Valida que `password` y `passwordConfirm` coincidan en un `FormGroup`.
+ * @returns Función validadora a nivel de grupo.
+ * @usageNotes Usado en registro y recuperación de contraseña.
+ */
 export function passwordMatchValidator(): ValidatorFn {
   return (group: AbstractControl): ValidationErrors | null => {
     const password = group.get('password')?.value ?? '';

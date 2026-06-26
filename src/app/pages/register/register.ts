@@ -17,6 +17,10 @@ import {
 import { AuthService } from '../../core/services/auth.service';
 import { StorageService } from '../../core/services/storage.service';
 
+/**
+ * Página de registro de clientes con validación reactiva y persistencia en localStorage.
+ * @usageNotes Ruta `/registro`; protegida por `guestGuard`.
+ */
 @Component({
   selector: 'app-register',
   imports: [ReactiveFormsModule, RouterLink],
@@ -43,6 +47,11 @@ export class Register {
     { validators: passwordMatchValidator() },
   );
 
+  /**
+   * Valida el formulario y persiste el nuevo usuario cliente.
+   * @returns void
+   * @usageNotes Rechaza nicknames reservados y duplicados.
+   */
   onSubmit(): void {
     this.clearAlerts();
 
@@ -97,21 +106,42 @@ export class Register {
     this.alertMessage = 'Registro exitoso. Inicia sesión para continuar.';
   }
 
+  /**
+   * Reinicia el formulario y limpia alertas.
+   * @returns void
+   * @usageNotes Invocado desde el botón limpiar del formulario.
+   */
   onReset(): void {
     this.registerForm.reset();
     this.clearAlerts();
   }
 
+  /**
+   * Limpia mensajes de alerta del formulario.
+   * @returns void
+   * @usageNotes Invocado antes de revalidar en `onSubmit`.
+   */
   clearAlerts(): void {
     this.alertType = null;
     this.alertMessage = '';
   }
 
+  /**
+   * Indica si un control del formulario debe mostrarse como inválido.
+   * @param controlName Nombre del `FormControl`.
+   * @returns `true` si el control está inválido y fue tocado.
+   * @usageNotes Usado en la plantilla para clases CSS de error.
+   */
   isInvalid(controlName: string): boolean {
     const control = this.registerForm.get(controlName);
     return !!(control && control.invalid && control.touched);
   }
 
+  /**
+   * Indica si la confirmación de contraseña es inválida o no coincide.
+   * @returns `true` si hay error de confirmación visible.
+   * @usageNotes Considera error de grupo `passwordMismatch`.
+   */
   isPasswordConfirmInvalid(): boolean {
     const confirm = this.registerForm.get('passwordConfirm');
     if (confirm?.invalid && confirm.touched) {
@@ -120,6 +150,11 @@ export class Register {
     return !!(this.registerForm.hasError('passwordMismatch') && confirm?.touched);
   }
 
+  /**
+   * Retorna mensajes de feedback de fortaleza de contraseña.
+   * @returns Texto con requisitos no cumplidos o mensaje genérico.
+   * @usageNotes Mostrado bajo el campo contraseña en la plantilla.
+   */
   getPasswordFeedback(): string {
     const control = this.registerForm.get('password');
     if (!control?.invalid || !control.touched) {

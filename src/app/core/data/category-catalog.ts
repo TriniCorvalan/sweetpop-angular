@@ -1,5 +1,6 @@
 import { Category } from '../models/category.model';
 
+/** Catálogo estático de categorías con rutas e imágenes para la UI. @usageNotes Fuente de verdad para `CatalogService.categories`. */
 export const CATEGORY_CATALOG: Category[] = [
   {
     category: 'gomitas',

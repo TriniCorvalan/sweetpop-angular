@@ -6,12 +6,18 @@ import { AuthService } from '../../core/services/auth.service';
 import { BoxDraftService } from '../../core/services/box-draft.service';
 import { CatalogService } from '../../core/services/catalog.service';
 
+/**
+ * Tarjetas del catálogo de cajas con acción de personalización.
+ * @usageNotes Reutilizado en Home (`view="home"`) y Boxes (`view="catalog"`).
+ */
 @Component({
   selector: 'app-box-catalog-cards',
   templateUrl: './box-catalog-cards.html',
 })
 export class BoxCatalogCards {
+  /** Modo de visualización: home o página de catálogo. @usageNotes Ajusta layout y textos de la plantilla. */
   @Input({ required: true }) view!: 'home' | 'catalog';
+  /** Clase CSS opcional de la fila contenedora. @usageNotes Por defecto `mb-4`. */
   @Input() rowClass = 'mb-4';
 
   private readonly catalog = inject(CatalogService);
@@ -21,14 +27,32 @@ export class BoxCatalogCards {
 
   readonly boxes: Box[] = this.catalog.boxes;
 
+  /**
+   * Formatea precio usando CatalogService.
+   * @param amount Monto numérico.
+   * @returns Precio formateado en pesos chilenos.
+   * @usageNotes Delegado a `CatalogService.formatPrice`.
+   */
   formatPrice(amount: number): string {
     return this.catalog.formatPrice(amount);
   }
 
+  /**
+   * Formatea descuento como porcentaje visible.
+   * @param discount Descuento decimal (ej. `0.15`).
+   * @returns Porcentaje redondeado (ej. `15%`).
+   * @usageNotes Delegado a `CatalogService.formatDiscountPercent`.
+   */
   formatDiscount(discount: number): string {
     return this.catalog.formatDiscountPercent(discount);
   }
 
+  /**
+   * Inicia personalización de la caja seleccionada.
+   * @param boxId Id de la caja del catálogo.
+   * @returns void
+   * @usageNotes Redirige a `/dulces` tras crear el borrador; pide confirmación si hay borrador previo.
+   */
   customizeBox(boxId: BoxId): void {
     if (!this.auth.isLoggedIn()) {
       this.router.navigate(['/inicio-sesion']);

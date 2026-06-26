@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "compodoc": "compodoc -p tsconfig.doc.json -d documentation --disablePrivate --hideGenerator",
+    "compodoc:serve": "compodoc -p tsconfig.doc.json -d documentation -s -o --disablePrivate --hideGenerator"
   },
   "private": true,
   "packageManager": "npm@11.9.0",
@@ -25,6 +27,7 @@
     "@angular/build": "^21.2.1",
     "@angular/cli": "^21.2.1",
     "@angular/compiler-cli": "^21.2.0",
+    "@compodoc/compodoc": "^1.2.1",
     "jsdom": "^28.0.0",
     "prettier": "^3.8.1",
     "typescript": "~5.9.2",

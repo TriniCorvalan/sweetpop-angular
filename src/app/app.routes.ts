@@ -18,6 +18,7 @@ import { Profile } from './pages/profile/profile';
 import { RecoverPassword } from './pages/recover-password/recover-password';
 import { Register } from './pages/register/register';
 
+/** Tabla de rutas de la aplicación con guards por rol. @usageNotes Consumida por `provideRouter` en `app.config`. */
 export const routes: Routes = [
   { path: '', component: Home },
   {

@@ -1,5 +1,6 @@
 import { Candy } from '../models/candy.model';
 
+/** Catálogo estático de los 12 dulces disponibles en SweetPop. @usageNotes Fuente de verdad para `CatalogService.candies`. */
 export const CANDY_CATALOG: Candy[] = [
   {
     id: 'gom-gummy-bears',

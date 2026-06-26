@@ -1,6 +1,10 @@
 import { BoxId } from './box.model';
 import { CandySize } from './candy.model';
 
+/**
+ * Asignación de un dulce a una pared del borrador.
+ * @usageNotes Campos nulos indican pared sin dulce asignado aún.
+ */
 export interface BoxWallAssignment {
   wallIndex: number;
   productId: string | null;
@@ -10,6 +14,10 @@ export interface BoxWallAssignment {
   quantity: number | null;
 }
 
+/**
+ * Borrador de caja en personalización, persistido en sessionStorage.
+ * @usageNotes Gestionado por {@link BoxDraftService}; clave `STORAGE_KEYS.boxDraft`.
+ */
 export interface BoxDraft {
   boxId: BoxId;
   boxName: string;

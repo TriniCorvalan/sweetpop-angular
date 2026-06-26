@@ -13,6 +13,10 @@ import {
 } from '../../core/utils/form-validators';
 import { AuthService } from '../../core/services/auth.service';
 
+/**
+ * Página de recuperación de contraseña en dos pasos (solo clientes).
+ * @usageNotes Ruta `/recuperar-contrasena`; protegida por `guestGuard`.
+ */
 @Component({
   selector: 'app-recover-password',
   imports: [ReactiveFormsModule, RouterLink],
@@ -43,6 +47,11 @@ export class RecoverPassword {
     { validators: passwordMatchValidator() },
   );
 
+  /**
+   * Verifica que el correo pertenezca a un cliente registrado.
+   * @returns void
+   * @usageNotes Paso 1: muestra formulario de nueva contraseña si el correo es válido.
+   */
   onVerifyEmail(): void {
     this.clearAlerts();
 
@@ -78,6 +87,11 @@ export class RecoverPassword {
     this.alertMessage = 'Correo verificado. Ahora define tu nueva contraseña.';
   }
 
+  /**
+   * Persiste la nueva contraseña del cliente verificado.
+   * @returns void
+   * @usageNotes Paso 2: actualiza `localStorage` y muestra mensaje de éxito.
+   */
   onSavePassword(): void {
     this.clearAlerts();
 
@@ -109,21 +123,41 @@ export class RecoverPassword {
     this.alertMessage = 'Contraseña actualizada. Inicia sesión para continuar.';
   }
 
+  /**
+   * Limpia mensajes de alerta.
+   * @returns void
+   * @usageNotes Invocado antes de revalidar en cada paso.
+   */
   clearAlerts(): void {
     this.alertType = null;
     this.alertMessage = '';
   }
 
+  /**
+   * Indica si el campo correo es inválido y fue tocado.
+   * @returns `true` si hay error visible en el paso 1.
+   * @usageNotes Usado en la plantilla para clases CSS de error.
+   */
   isEmailInvalid(): boolean {
     const control = this.emailForm.get('email');
     return !!(control && control.invalid && control.touched);
   }
 
+  /**
+   * Indica si el campo contraseña es inválido y fue tocado.
+   * @returns `true` si hay error visible en el paso 2.
+   * @usageNotes Usado en la plantilla para clases CSS de error.
+   */
   isPasswordInvalid(): boolean {
     const control = this.passwordForm.get('password');
     return !!(control && control.invalid && control.touched);
   }
 
+  /**
+   * Indica si la confirmación de contraseña es inválida o no coincide.
+   * @returns `true` si hay error de confirmación visible.
+   * @usageNotes Considera error de grupo `passwordMismatch`.
+   */
   isPasswordConfirmInvalid(): boolean {
     const confirm = this.passwordForm.get('passwordConfirm');
     if (confirm?.invalid && confirm.touched) {
@@ -132,6 +166,11 @@ export class RecoverPassword {
     return !!(this.passwordForm.hasError('passwordMismatch') && confirm?.touched);
   }
 
+  /**
+   * Retorna mensajes de feedback de fortaleza de contraseña.
+   * @returns Texto con requisitos no cumplidos o mensaje genérico.
+   * @usageNotes Mostrado bajo el campo contraseña en el paso 2.
+   */
   getPasswordFeedback(): string {
     const control = this.passwordForm.get('password');
     if (!control?.invalid || !control.touched) {

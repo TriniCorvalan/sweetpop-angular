@@ -1,3 +1,5 @@
+/** @ignore */
+
 import { TestBed, TestModuleMetadata } from '@angular/core/testing';
 
 import { STORAGE_KEYS } from '../core/constants/storage-keys';

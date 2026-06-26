@@ -6,6 +6,7 @@ import { BoxDraftService } from '../../core/services/box-draft.service';
 import { CatalogService } from '../../core/services/catalog.service';
 import { BoxDraftBar } from '../box-draft-bar/box-draft-bar';
 
+/** @ignore */
 interface ProductView {
   candy: Candy;
   statusClass: string;
@@ -15,15 +16,23 @@ interface ProductView {
   blocked: boolean;
 }
 
+/**
+ * Componente reutilizable de productos por categoría con asignación al borrador.
+ * @usageNotes Usado por páginas gomitas, chocolates, caramelos y barritas.
+ */
 @Component({
   selector: 'app-category-products',
   imports: [RouterLink, BoxDraftBar],
   templateUrl: './category-products.html',
 })
 export class CategoryProducts implements OnInit {
+  /** Categoría de dulces a renderizar. @usageNotes Input requerido desde la página contenedora. */
   @Input({ required: true }) category!: CandyCategory;
+  /** Título visible de la página de categoría. @usageNotes Mostrado como encabezado principal. */
   @Input({ required: true }) title!: string;
+  /** Ruta opcional del enlace de navegación siguiente. @usageNotes Enlace al final de la lista. */
   @Input() nextRoute?: string;
+  /** Etiqueta del enlace de navegación siguiente. @usageNotes Texto visible del enlace `nextRoute`. */
   @Input() nextLabel?: string;
 
   protected readonly catalog = inject(CatalogService);
@@ -33,6 +42,11 @@ export class CategoryProducts implements OnInit {
   alertType: 'info' | 'success' | 'danger' | 'warning' | null = null;
   alertMessage = '';
 
+  /**
+   * Carga dulces de la categoría y muestra aviso si no hay borrador activo.
+   * @returns void
+   * @usageNotes Ejecutado al inicializar el componente.
+   */
   ngOnInit(): void {
     this.candies = this.catalog.getCandiesByCategory(this.category);
 
@@ -44,10 +58,17 @@ export class CategoryProducts implements OnInit {
     }
   }
 
+  /** Vista enriquecida de productos con estado de asignación. @usageNotes Getter consumido por la plantilla. */
   get products(): ProductView[] {
     return this.candies.map((candy) => this.buildProductView(candy));
   }
 
+  /**
+   * Asigna un dulce a la pared activa del borrador.
+   * @param productId Id del dulce en el catálogo.
+   * @returns void
+   * @usageNotes Invocado al hacer clic en el botón de asignar de cada tarjeta.
+   */
   assignProduct(productId: string): void {
     const result = this.boxDraftService.assignCandyToWall(productId);
 
@@ -66,6 +87,12 @@ export class CategoryProducts implements OnInit {
     }
   }
 
+  /**
+   * Texto de descuento visible en la tarjeta del producto.
+   * @param candy Dulce del catálogo.
+   * @returns Etiqueta de descuento formateada.
+   * @usageNotes Muestra "no disponible" si el dulce no tiene descuento activo.
+   */
   getDiscountText(candy: Candy): string {
     return candy.discountLabel === 'no disponible'
       ? 'Descuento: no disponible'

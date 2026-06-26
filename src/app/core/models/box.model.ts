@@ -1,5 +1,10 @@
+/** Identificador de los tipos de caja del catálogo. @usageNotes Valores: box-simple, box-double, box-triple. */
 export type BoxId = 'box-simple' | 'box-double' | 'box-triple';
 
+/**
+ * Caja del catálogo que el cliente puede personalizar.
+ * @usageNotes Definida en `BOX_CATALOG`; el descuento aplica al total de la caja completa.
+ */
 export interface Box {
   id: BoxId;
   name: string;
