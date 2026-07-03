@@ -1,7 +1,8 @@
 import { Component, Input, inject } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
 import { Router } from '@angular/router';
 
-import { Box, BoxId } from '../../core/models/box.model';
+import { BoxId } from '../../core/models/box.model';
 import { AuthService } from '../../core/services/auth.service';
 import { BoxDraftService } from '../../core/services/box-draft.service';
 import { CatalogService } from '../../core/services/catalog.service';
@@ -12,6 +13,7 @@ import { CatalogService } from '../../core/services/catalog.service';
  */
 @Component({
   selector: 'app-box-catalog-cards',
+  imports: [AsyncPipe],
   templateUrl: './box-catalog-cards.html',
 })
 export class BoxCatalogCards {
@@ -25,7 +27,7 @@ export class BoxCatalogCards {
   private readonly boxDraftService = inject(BoxDraftService);
   private readonly router = inject(Router);
 
-  readonly boxes: Box[] = this.catalog.boxes;
+  readonly boxes$ = this.catalog.getBoxes();
 
   /**
    * Formatea precio usando CatalogService.
@@ -81,11 +83,13 @@ export class BoxCatalogCards {
     }
 
     const result = this.boxDraftService.startBoxDraft(boxId, forceReplace);
-    if (!result.success) {
-      window.alert(result.message);
-      return;
-    }
+    result.subscribe((draftResult) => {
+      if (!draftResult.success) {
+        window.alert(draftResult.message);
+        return;
+      }
 
-    this.router.navigate(['/dulces']);
+      this.router.navigate(['/dulces']);
+    });
   }
 }

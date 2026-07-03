@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { map, Observable, of } from 'rxjs';
 
 import { STORAGE_KEYS } from '../constants/storage-keys';
 import { BoxDraft, BoxWallAssignment } from '../models/box-draft.model';
@@ -129,60 +130,63 @@ export class BoxDraftService {
    * @returns Resultado con mensaje, redirección o confirmación según el caso.
    * @usageNotes Invocado desde la página Boxes al elegir una caja.
    */
-  startBoxDraft(boxId: string, forceReplace = false): ServiceResult {
+  startBoxDraft(boxId: string, forceReplace = false): Observable<ServiceResult> {
     if (!this.auth.hasRole('user')) {
-      return {
+      return of({
         success: false,
         message: 'Debes iniciar sesión como cliente para personalizar una caja.',
         redirect: '/inicio-sesion',
-      };
-    }
-
-    const box = this.catalog.getBoxById(boxId);
-    if (!box) {
-      return { success: false, message: 'La caja seleccionada no existe.' };
-    }
-
-    const existing = this.getBoxDraft();
-    if (
-      existing &&
-      !this.isBoxDraftComplete(existing) &&
-      existing.boxId !== box.id &&
-      !forceReplace
-    ) {
-      return {
-        success: false,
-        needsConfirm: true,
-        message: `Ya estás personalizando una ${existing.boxName}. ¿Deseas reemplazarla por ${box.name}?`,
-        boxId: box.id,
-      };
-    }
-
-    const walls: BoxWallAssignment[] = [];
-    for (let index = 1; index <= box.wallsCount; index += 1) {
-      walls.push({
-        wallIndex: index,
-        productId: null,
-        productName: null,
-        price: null,
-        size: null,
-        quantity: null,
       });
     }
 
-    this.saveBoxDraft({
-      boxId: box.id,
-      boxName: box.name,
-      wallsCount: box.wallsCount,
-      boxPrice: box.boxPrice,
-      discount: box.discount,
-      walls,
-    });
+    return this.catalog.getBoxById(boxId).pipe(
+      map((box) => {
+        if (!box) {
+          return { success: false, message: 'La caja seleccionada no existe.' };
+        }
 
-    return {
-      success: true,
-      message: `${box.name} seleccionada. Asigna un dulce por pared.`,
-    };
+        const existing = this.getBoxDraft();
+        if (
+          existing &&
+          !this.isBoxDraftComplete(existing) &&
+          existing.boxId !== box.id &&
+          !forceReplace
+        ) {
+          return {
+            success: false,
+            needsConfirm: true,
+            message: `Ya estás personalizando una ${existing.boxName}. ¿Deseas reemplazarla por ${box.name}?`,
+            boxId: box.id,
+          };
+        }
+
+        const walls: BoxWallAssignment[] = [];
+        for (let index = 1; index <= box.wallsCount; index += 1) {
+          walls.push({
+            wallIndex: index,
+            productId: null,
+            productName: null,
+            price: null,
+            size: null,
+            quantity: null,
+          });
+        }
+
+        this.saveBoxDraft({
+          boxId: box.id,
+          boxName: box.name,
+          wallsCount: box.wallsCount,
+          boxPrice: box.boxPrice,
+          discount: box.discount,
+          walls,
+        });
+
+        return {
+          success: true,
+          message: `${box.name} seleccionada. Asigna un dulce por pared.`,
+        };
+      }),
+    );
   }
 
   /**

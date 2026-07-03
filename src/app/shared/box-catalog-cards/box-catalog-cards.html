@@ -1,5 +1,5 @@
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" [class]="rowClass">
-  @for (box of boxes; track box.id) {
+  @for (box of boxes$ | async; track box.id) {
     <div class="col">
       <article class="card h-100 sweetpop-card d-flex flex-column">
         <img [src]="box.image" class="card-img-top" [alt]="box.name">
