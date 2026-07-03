@@ -3,7 +3,7 @@ export type BoxId = 'box-simple' | 'box-double' | 'box-triple';
 
 /**
  * Caja del catálogo que el cliente puede personalizar.
- * @usageNotes Definida en `BOX_CATALOG`; el descuento aplica al total de la caja completa.
+ * @usageNotes Cargada desde la API DummyJSON; el descuento aplica al total de la caja completa.
  */
 export interface Box {
   id: BoxId;

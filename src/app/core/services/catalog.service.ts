@@ -1,39 +1,52 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
 
 import {
   CATEGORY_LABELS,
   SIZE_COMPATIBILITY,
   WALL_QUANTITY_BY_SIZE,
 } from '../constants/storage-keys';
-import { BOX_CATALOG } from '../data/box-catalog';
 import { CANDY_CATALOG } from '../data/candy-catalog';
 import { CATEGORY_CATALOG } from '../data/category-catalog';
 import { Box, BoxId } from '../models/box.model';
 import { Candy, CandyCategory, CandySize } from '../models/candy.model';
 
 /**
- * Servicio de consulta al catálogo estático y reglas de negocio.
- * @usageNotes Solo lectura; no persiste datos. Fuente de verdad para cajas, dulces y categorías.
+ * Servicio de consulta al catálogo y reglas de negocio.
+ * @usageNotes Cajas desde API DummyJSON; dulces y categorías estáticos. Solo lectura.
  */
 @Injectable({
   providedIn: 'root',
 })
 export class CatalogService {
-  /** Catálogo de cajas disponibles. @usageNotes Ver `BOX_CATALOG`. */
-  readonly boxes = BOX_CATALOG;
+  readonly boxesUrl = 'https://dummyjson.com/c/a111-5f2a-4629-ae59';
+
   /** Catálogo de dulces disponibles. @usageNotes Ver `CANDY_CATALOG`. */
   readonly candies = CANDY_CATALOG;
   /** Catálogo de categorías para navegación. @usageNotes Ver `CATEGORY_CATALOG`. */
   readonly categories = CATEGORY_CATALOG;
 
+  constructor(private readonly httpClient: HttpClient) {}
+
   /**
-   * Busca una caja por id.
+   * Obtiene las cajas desde DummyJSON.
+   * @returns Observable con el catálogo de cajas.
+   */
+  getBoxes(): Observable<Box[]> {
+    return this.httpClient.get<Box[]>(this.boxesUrl);
+  }
+
+  /**
+   * Busca una caja por id consultando la API.
    * @param boxId Id de la caja.
    * @returns Caja encontrada o `null`.
    * @usageNotes Usado al iniciar personalización (`BoxDraftService.startBoxDraft`).
    */
-  getBoxById(boxId: string): Box | null {
-    return this.boxes.find((box) => box.id === boxId) ?? null;
+  getBoxById(boxId: string): Observable<Box | null> {
+    return this.getBoxes().pipe(
+      map((boxes) => boxes.find((box) => box.id === boxId) ?? null),
+    );
   }
 
   /**
