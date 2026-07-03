@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { firstValueFrom } from 'rxjs';
 
 import { BoxDraftService } from './box-draft.service';
 import { CartService } from './cart.service';
@@ -6,6 +7,7 @@ import { InventoryService } from './inventory.service';
 import {
   clearStorages,
   createSampleCompleteBoxDraft,
+  flushBoxesRequest,
   SAMPLE_BOX_CALCULATION,
   seedSession,
 } from '../../testing/test-helpers';
@@ -25,18 +27,20 @@ describe('BoxDraftService', () => {
   });
 
   describe('flujo de personalizacion', () => {
-    it('rechaza startBoxDraft si no hay sesion de cliente', () => {
-      const result = service.startBoxDraft('box-simple');
+    it('rechaza startBoxDraft si no hay sesion de cliente', async () => {
+      const result = await firstValueFrom(service.startBoxDraft('box-simple'));
 
       expect(result.success).toBe(false);
       expect(result.message).toContain('Debes iniciar sesión como cliente');
       expect(result.redirect).toBe('/inicio-sesion');
     });
 
-    it('crea un borrador con una pared por nivel de la caja simple', () => {
+    it('crea un borrador con una pared por nivel de la caja simple', async () => {
       seedSession('user');
 
-      const result = service.startBoxDraft('box-simple');
+      const resultPromise = firstValueFrom(service.startBoxDraft('box-simple'));
+      flushBoxesRequest();
+      const result = await resultPromise;
 
       expect(result.success).toBe(true);
       const draft = service.getBoxDraft();
@@ -45,9 +49,11 @@ describe('BoxDraftService', () => {
       expect(draft?.walls.every((wall) => wall.productId === null)).toBe(true);
     });
 
-    it('asigna dulces compatibles hasta completar el borrador', () => {
+    it('asigna dulces compatibles hasta completar el borrador', async () => {
       seedSession('user');
-      service.startBoxDraft('box-simple');
+      const startPromise = firstValueFrom(service.startBoxDraft('box-simple'));
+      flushBoxesRequest();
+      await startPromise;
 
       const candyIds = ['gom-gummy-bears', 'gom-jelly-beans', 'gom-worms', 'cho-kisses'];
 
@@ -59,9 +65,11 @@ describe('BoxDraftService', () => {
       expect(service.isBoxDraftComplete()).toBe(true);
     });
 
-    it('addCompletedBoxToCart agrega la caja al carrito y limpia el borrador', () => {
+    it('addCompletedBoxToCart agrega la caja al carrito y limpia el borrador', async () => {
       seedSession('user');
-      service.startBoxDraft('box-simple');
+      const startPromise = firstValueFrom(service.startBoxDraft('box-simple'));
+      flushBoxesRequest();
+      await startPromise;
 
       ['gom-gummy-bears', 'gom-jelly-beans', 'gom-worms', 'cho-kisses'].forEach((productId) => {
         service.assignCandyToWall(productId);

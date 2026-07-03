@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { of } from 'rxjs';
 
 import { BoxDraftService } from '../../core/services/box-draft.service';
 import { InventoryService } from '../../core/services/inventory.service';
@@ -41,7 +42,9 @@ describe('BoxCatalogCards', () => {
   it('inicia el borrador y navega a dulces cuando hay sesion de cliente', () => {
     seedSession('user');
     const navigateSpy = vi.spyOn(router, 'navigate');
-    const startSpy = vi.spyOn(boxDraftService, 'startBoxDraft');
+    const startSpy = vi
+      .spyOn(boxDraftService, 'startBoxDraft')
+      .mockReturnValue(of({ success: true, message: 'Caja simple seleccionada.' }));
 
     component.customizeBox('box-simple');
 

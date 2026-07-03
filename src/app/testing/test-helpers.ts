@@ -1,13 +1,16 @@
 /** @ignore */
 
 import { TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { HttpTestingController } from '@angular/common/http/testing';
 
 import { STORAGE_KEYS } from '../core/constants/storage-keys';
+import { BOX_CATALOG } from '../core/data/box-catalog';
 import { BoxDraft } from '../core/models/box-draft.model';
 import { CartItem } from '../core/models/cart-item.model';
 import { Session } from '../core/models/session.model';
 import { User, UserRole } from '../core/models/user.model';
 import { AuthService } from '../core/services/auth.service';
+import { CatalogService } from '../core/services/catalog.service';
 import { StorageService } from '../core/services/storage.service';
 
 export const VALID_PASSWORD = 'Cliente1!';
@@ -147,6 +150,14 @@ export function seedAdminUser(): User {
   const auth = TestBed.inject(AuthService);
   auth.ensureAdminUser();
   return auth.getUsers().find((user) => user.role === 'admin')!;
+}
+
+/** Simula la respuesta de la API de cajas en pruebas unitarias. */
+export function flushBoxesRequest(): void {
+  const catalog = TestBed.inject(CatalogService);
+  const httpMock = TestBed.inject(HttpTestingController);
+  const request = httpMock.expectOne(catalog.boxesUrl);
+  request.flush(BOX_CATALOG);
 }
 
 export async function configureComponentTestingModule(

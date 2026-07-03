@@ -1,8 +1,9 @@
 import { TestBed } from '@angular/core/testing';
+import { firstValueFrom } from 'rxjs';
 
 import { BoxDraftService } from '../../core/services/box-draft.service';
 import { InventoryService } from '../../core/services/inventory.service';
-import { clearStorages, seedSession } from '../../testing/test-helpers';
+import { clearStorages, flushBoxesRequest, seedSession } from '../../testing/test-helpers';
 import { CategoryProducts } from './category-products';
 
 describe('CategoryProducts', () => {
@@ -36,9 +37,11 @@ describe('CategoryProducts', () => {
     expect(component.products.every((product) => product.disabled)).toBe(true);
   });
 
-  it('muestra exito al asignar un dulce con borrador activo', () => {
+  it('muestra exito al asignar un dulce con borrador activo', async () => {
     seedSession('user');
-    boxDraftService.startBoxDraft('box-simple');
+    const startPromise = firstValueFrom(boxDraftService.startBoxDraft('box-simple'));
+    flushBoxesRequest();
+    await startPromise;
 
     component.ngOnInit();
     component.assignProduct('gom-gummy-bears');
