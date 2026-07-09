@@ -83,6 +83,9 @@ function getPasswordErrors(password: string): string[] {
   if (!/[a-z]/.test(password)) {
     errors.push('La contraseña debe incluir una letra minúscula.');
   }
+  if (!/[^A-Za-z0-9]/.test(password)) {
+    errors.push('La contraseña debe incluir un carácter especial.');
+  }
 
   return errors;
 }

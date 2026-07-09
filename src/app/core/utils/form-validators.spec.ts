@@ -55,6 +55,12 @@ describe('form-validators', () => {
       );
     });
 
+    it('rechaza contrasenas sin caracter especial', () => {
+      expect(validate(new FormControl('Cliente1'))?.['passwordStrength']).toContain(
+        'La contraseña debe incluir un carácter especial.',
+      );
+    });
+
     it('rechaza contrasenas demasiado largas', () => {
       const result = validate(new FormControl('Cliente12345678901!'));
 
