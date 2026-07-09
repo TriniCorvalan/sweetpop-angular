@@ -1,18 +1,52 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
+import { User } from '../models/user.model';
+
+/**
+ * Indica si un nickname cumple largo y formato mínimos.
+ * @param value Valor a evaluar.
+ * @returns `true` si tiene entre 6 y 20 caracteres válidos.
+ * @usageNotes Usado para decidir cuándo verificar disponibilidad al escribir.
+ */
+export function hasValidUsernameFormat(value: string): boolean {
+  const trimmed = value?.trim() ?? '';
+  if (trimmed.length < 6 || trimmed.length > 20) {
+    return false;
+  }
+  return /^[a-zA-Z0-9._-]+$/.test(trimmed);
+}
+
 /**
  * Valida nickname (6–20 caracteres, alfanumérico con `.`, `_`, `-`).
  * @returns Función validadora para `FormControl`.
  * @usageNotes Usado en el formulario de registro (`username`).
  */
 export function usernameValidator(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    const trimmed = control.value?.trim() ?? '';
-    if (trimmed.length < 6 || trimmed.length > 20) {
-      return { invalidUsername: true };
-    }
-    return /^[a-zA-Z0-9._-]+$/.test(trimmed) ? null : { invalidUsername: true };
-  };
+  return (control: AbstractControl): ValidationErrors | null =>
+    hasValidUsernameFormat(control.value ?? '') ? null : { invalidUsername: true };
+}
+
+/**
+ * Comprueba si un nickname puede usarse entre los usuarios registrados.
+ * @param username Nickname a evaluar.
+ * @param users Lista de usuarios existentes.
+ * @param excludeUserId Id de usuario a excluir (p. ej. el perfil en edición).
+ * @returns `true` si el nickname está libre o pertenece al usuario excluido.
+ * @usageNotes Usado en perfil y registro para validar disponibilidad.
+ */
+export function isUsernameAvailable(
+  username: string,
+  users: readonly User[],
+  excludeUserId?: string,
+): boolean {
+  const normalized = username.trim();
+  if (normalized.toLowerCase() === 'admin') {
+    return false;
+  }
+
+  const normalizedLower = normalized.toLowerCase();
+  const existing = users.find((user) => user.username.toLowerCase() === normalizedLower);
+  return !existing || existing.id === excludeUserId;
 }
 
 /**

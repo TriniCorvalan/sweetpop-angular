@@ -3,9 +3,12 @@ import { FormControl, FormGroup } from '@angular/forms';
 import {
   birthdateValidator,
   emailValidator,
+  hasValidUsernameFormat,
+  isUsernameAvailable,
   passwordMatchValidator,
   passwordStrengthValidator,
 } from './form-validators';
+import { User } from '../models/user.model';
 
 function birthdateYearsAgo(years: number): string {
   const date = new Date();
@@ -14,6 +17,45 @@ function birthdateYearsAgo(years: number): string {
 }
 
 describe('form-validators', () => {
+  describe('hasValidUsernameFormat', () => {
+    it('acepta nicknames con largo y formato validos', () => {
+      expect(hasValidUsernameFormat('cliente1')).toBe(true);
+      expect(hasValidUsernameFormat('  maria_gp  ')).toBe(true);
+    });
+
+    it('rechaza nicknames cortos o con caracteres invalidos', () => {
+      expect(hasValidUsernameFormat('abc')).toBe(false);
+      expect(hasValidUsernameFormat('cliente invalido')).toBe(false);
+      expect(hasValidUsernameFormat('nickname-muy-largo-para-el-sitio')).toBe(false);
+    });
+  });
+
+  describe('isUsernameAvailable', () => {
+    const users: User[] = [
+      {
+        id: 'user-1',
+        username: 'cliente1',
+        email: 'cliente1@test.cl',
+        password: 'Cliente1!',
+        role: 'user',
+        fullName: 'Cliente Uno',
+        birthdate: '2000-01-01',
+        address: '',
+        signupDate: '2026-01-01',
+      },
+    ];
+
+    it('rechaza nicknames reservados o ya registrados', () => {
+      expect(isUsernameAvailable('admin', users)).toBe(false);
+      expect(isUsernameAvailable('cliente1', users)).toBe(false);
+    });
+
+    it('acepta nicknames libres o del mismo usuario en edicion', () => {
+      expect(isUsernameAvailable('clientenuevo', users)).toBe(true);
+      expect(isUsernameAvailable('cliente1', users, 'user-1')).toBe(true);
+    });
+  });
+
   describe('emailValidator', () => {
     const validate = emailValidator();
 
