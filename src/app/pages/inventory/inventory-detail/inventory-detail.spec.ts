@@ -106,4 +106,23 @@ describe('InventoryDetail', () => {
 
     expect(navigateSpy).toHaveBeenCalledWith(['/inventario']);
   });
+
+  it('elimina el producto y vuelve al listado', () => {
+    const router = TestBed.inject(Router);
+    const navigateSpy = vi.spyOn(router, 'navigate');
+    vi.spyOn(window, 'confirm').mockReturnValue(true);
+
+    component.onDelete();
+
+    expect(inventoryService.getInventoryItem(productId)).toBeUndefined();
+    expect(navigateSpy).toHaveBeenCalledWith(['/inventario']);
+  });
+
+  it('no elimina si se cancela la confirmacion', () => {
+    vi.spyOn(window, 'confirm').mockReturnValue(false);
+
+    component.onDelete();
+
+    expect(inventoryService.getInventoryItem(productId)).toBeTruthy();
+  });
 });

@@ -152,6 +152,34 @@ export class InventoryDetail implements OnInit {
   }
 
   /**
+   * Elimina el producto del inventario tras confirmación.
+   * @returns void
+   * @usageNotes Invocado desde el botón eliminar del detalle.
+   */
+  onDelete(): void {
+    if (!this.item) {
+      this.showAlert('danger', 'No se encontró el producto en inventario.');
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `¿Eliminar "${this.item.name}" del inventario? Esta acción no se puede deshacer.`,
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    const deleted = this.inventoryService.deleteItem(this.item.productId);
+    if (!deleted) {
+      this.showAlert('danger', 'No fue posible eliminar el producto.');
+      return;
+    }
+
+    void this.router.navigate(['/inventario']);
+  }
+
+  /**
    * Limpia alertas al editar campos.
    * @returns void
    */

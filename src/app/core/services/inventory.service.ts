@@ -185,6 +185,24 @@ export class InventoryService {
     return item;
   }
 
+  /**
+   * Elimina un producto del inventario.
+   * @param productId Id del producto a eliminar.
+   * @returns `false` si el producto no existe.
+   * @usageNotes Usado en detalle/listado de inventario. Con json-server será un DELETE.
+   */
+  deleteItem(productId: string): boolean {
+    const inventory = this.getInventory();
+    const next = inventory.filter((item) => item.productId !== productId);
+
+    if (next.length === inventory.length) {
+      return false;
+    }
+
+    this.saveInventory(next);
+    return true;
+  }
+
   private buildItem(productId: string, data: InventoryItemUpdate): InventoryItem {
     return {
       productId,

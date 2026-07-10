@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { vi } from 'vitest';
 
 import { InventoryService } from '../../core/services/inventory.service';
 import { clearStorages } from '../../testing/test-helpers';
@@ -36,5 +37,15 @@ describe('Inventory', () => {
       label: 'Agotado',
       badgeClass: 'badge-stock-empty',
     });
+  });
+
+  it('elimina un producto tras confirmar', () => {
+    const inventoryService = TestBed.inject(InventoryService);
+    const product = component.inventory[0];
+    vi.spyOn(window, 'confirm').mockReturnValue(true);
+
+    component.deleteProduct(product);
+
+    expect(inventoryService.getInventoryItem(product.productId)).toBeUndefined();
   });
 });

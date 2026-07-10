@@ -35,4 +35,22 @@ export class Inventory {
     }
     return { label: 'Agotado', badgeClass: 'badge-stock-empty' };
   }
+
+  /**
+   * Elimina un producto del inventario tras confirmación.
+   * @param item Producto a eliminar.
+   * @returns void
+   * @usageNotes Invocado desde el botón eliminar de cada fila.
+   */
+  deleteProduct(item: InventoryItem): void {
+    const confirmed = window.confirm(
+      `¿Eliminar "${item.name}" del inventario? Esta acción no se puede deshacer.`,
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    this.inventoryService.deleteItem(item.productId);
+  }
 }
