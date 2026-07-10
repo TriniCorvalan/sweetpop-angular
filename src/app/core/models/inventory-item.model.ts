@@ -1,8 +1,8 @@
 import { CandyCategory, CandySize } from './candy.model';
 
 /**
- * Producto del inventario con stock persistido en localStorage.
- * @usageNotes Derivado del catálogo de dulces con campo `stock` editable por admin.
+ * Producto del inventario con stock y datos editables por admin.
+ * @usageNotes Hoy se persiste en localStorage; la misma forma servirá con json-server.
  */
 export interface InventoryItem {
   productId: string;
@@ -13,3 +13,6 @@ export interface InventoryItem {
   image: string;
   stock: number;
 }
+
+/** Campos editables de un ítem (sin `productId`, que actúa como id estable). */
+export type InventoryItemUpdate = Omit<InventoryItem, 'productId'>;

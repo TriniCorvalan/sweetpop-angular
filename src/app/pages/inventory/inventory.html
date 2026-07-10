@@ -5,18 +5,14 @@
   </ol>
 </nav>
 
-<section class="sweetpop-admin-card p-4 p-md-5" [formGroup]="inventoryForm">
+<section class="sweetpop-admin-card p-4 p-md-5">
   <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
     <div>
       <h1 class="h2 mb-2">Inventario de dulces</h1>
-      <p class="mb-0">Stock disponible para personalización de cajas. Se actualiza al confirmar compras.</p>
+      <p class="mb-0">Consulta el stock y abre el detalle de cada producto para editarlo.</p>
     </div>
     <a routerLink="/clientes" class="btn btn-outline-light btn-sm">Ver clientes</a>
   </div>
-
-  @if (alertMessage && alertType) {
-    <div class="alert alert-{{ alertType }} mb-4" role="alert">{{ alertMessage }}</div>
-  }
 
   <div class="table-responsive">
     <table class="table sweetpop-table align-middle mb-0">
@@ -28,36 +24,34 @@
           <th scope="col">Precio</th>
           <th scope="col">Stock</th>
           <th scope="col">Estado</th>
-          <th scope="col">Actualizar</th>
+          <th scope="col">Acciones</th>
         </tr>
       </thead>
-      <tbody formArrayName="items">
+      <tbody>
         @if (inventory.length === 0) {
           <tr>
             <td colspan="7" class="text-center py-4">No hay productos en inventario.</td>
           </tr>
         } @else {
-          @for (item of inventory; track item.productId; let i = $index) {
-            <tr [formGroupName]="i" [class.table-row-out-of-stock]="item.stock === 0">
+          @for (item of inventory; track item.productId) {
+            <tr [class.table-row-out-of-stock]="item.stock === 0">
               <td>{{ item.name }}</td>
               <td>{{ catalog.getCategoryLabel(item.category) }}</td>
               <td>{{ catalog.getSizeLabel(item.size) }}</td>
               <td>{{ catalog.formatPrice(item.price) }}</td>
-              <td>
-                <input type="number" class="form-control form-control-sm inventory-stock-input"
-                  formControlName="stock" min="0"
-                  [class.is-invalid]="isStockInvalid(i)">
-              </td>
+              <td>{{ item.stock }}</td>
               <td>
                 <span class="badge" [class]="getStockStatus(item.stock).badgeClass">
                   {{ getStockStatus(item.stock).label }}
                 </span>
               </td>
               <td>
-                <button type="button" class="btn btn-outline-light btn-sm"
-                  (click)="updateStock(i)">
-                  Guardar
-                </button>
+                <a
+                  class="btn btn-outline-light btn-sm"
+                  [routerLink]="['/inventario', item.productId]"
+                >
+                  Ver detalle
+                </a>
               </td>
             </tr>
           }

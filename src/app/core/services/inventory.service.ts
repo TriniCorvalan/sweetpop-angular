@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 
 import { INITIAL_STOCK, STORAGE_KEYS } from '../constants/storage-keys';
 import { CANDY_CATALOG } from '../data/candy-catalog';
-import { InventoryItem } from '../models/inventory-item.model';
+import { InventoryItem, InventoryItemUpdate } from '../models/inventory-item.model';
 import { CatalogService } from './catalog.service';
 import { StorageService } from './storage.service';
 
 /**
  * Servicio de persistencia y consulta del inventario de dulces.
- * @usageNotes Gestiona stock en `localStorage` (`STORAGE_KEYS.inventory`).
+ * @usageNotes Hoy usa `localStorage`; la API CRUD facilita migrar a json-server.
  */
 @Injectable({
   providedIn: 'root',
@@ -74,9 +74,9 @@ export class InventoryService {
   }
 
   /**
-   * Obtiene el inventario completo desde localStorage.
+   * Obtiene el inventario completo.
    * @returns Lista de ítems de inventario.
-   * @usageNotes Consumido por la página Inventory (admin).
+   * @usageNotes Consumido por la página Inventory (admin). Con json-server será un GET.
    */
   getInventory(): InventoryItem[] {
     return this.storage.readJson(localStorage, STORAGE_KEYS.inventory, []);
@@ -96,7 +96,7 @@ export class InventoryService {
    * Busca un ítem de inventario por productId.
    * @param productId Id del dulce en el catálogo.
    * @returns Ítem encontrado o `undefined`.
-   * @usageNotes Usado internamente por `getStock` y `updateStock`.
+   * @usageNotes Usado por detalle de inventario, `getStock` y actualizaciones.
    */
   getInventoryItem(productId: string): InventoryItem | undefined {
     return this.getInventory().find((item) => item.productId === productId);
@@ -118,9 +118,32 @@ export class InventoryService {
    * @param productId Id del dulce en el catálogo.
    * @param newStock Nuevo stock a persistir.
    * @returns `false` si el producto no existe en inventario.
-   * @usageNotes Usado en Inventory (admin) y al procesar pago del carrito.
+   * @usageNotes Usado al procesar pago del carrito.
    */
   updateStock(productId: string, newStock: number): boolean {
+    const item = this.getInventoryItem(productId);
+    if (!item) {
+      return false;
+    }
+
+    return this.updateItem(productId, {
+      name: item.name,
+      category: item.category,
+      size: item.size,
+      price: item.price,
+      image: item.image,
+      stock: Math.max(0, newStock),
+    });
+  }
+
+  /**
+   * Actualiza los datos editables de un producto del inventario.
+   * @param productId Id estable del producto.
+   * @param updates Campos a persistir (nombre, categoría, tamaño, precio, imagen, stock).
+   * @returns `false` si el producto no existe.
+   * @usageNotes Usado en el detalle de inventario. Con json-server será un PUT/PATCH.
+   */
+  updateItem(productId: string, updates: InventoryItemUpdate): boolean {
     const inventory = this.getInventory();
     const index = inventory.findIndex((item) => item.productId === productId);
 
@@ -128,7 +151,15 @@ export class InventoryService {
       return false;
     }
 
-    inventory[index].stock = Math.max(0, newStock);
+    inventory[index] = {
+      productId,
+      name: updates.name.trim(),
+      category: updates.category,
+      size: updates.size,
+      price: Math.max(0, updates.price),
+      image: updates.image.trim(),
+      stock: Math.max(0, updates.stock),
+    };
     this.saveInventory(inventory);
     return true;
   }
