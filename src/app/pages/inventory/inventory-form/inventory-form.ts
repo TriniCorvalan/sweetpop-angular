@@ -2,31 +2,33 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
-import { CATEGORY_LABELS } from '../../../core/constants/storage-keys';
+import { CATEGORY_LABELS, INITIAL_STOCK } from '../../../core/constants/storage-keys';
 import { CandyCategory, CandySize } from '../../../core/models/candy.model';
-import { InventoryItem } from '../../../core/models/inventory-item.model';
+import { InventoryItem, InventoryItemUpdate } from '../../../core/models/inventory-item.model';
 import { CatalogService } from '../../../core/services/catalog.service';
 import { InventoryService } from '../../../core/services/inventory.service';
 
 /**
- * Detalle de un producto del inventario: consulta y edita stock y datos.
- * @usageNotes Ruta `/inventario/:id`; requiere rol `admin` vía `authGuard`.
+ * Formulario compartido de inventario: alta (`/inventario/nuevo`) o edición (`/inventario/:id`).
+ * @usageNotes Requiere rol `admin` vía `authGuard`. Título y botones cambian según el modo.
  */
 @Component({
-  selector: 'app-inventory-detail',
+  selector: 'app-inventory-form',
   imports: [ReactiveFormsModule, RouterLink],
-  templateUrl: './inventory-detail.html',
+  templateUrl: './inventory-form.html',
 })
-export class InventoryDetail implements OnInit {
+export class InventoryForm implements OnInit {
   private readonly inventoryService = inject(InventoryService);
   private readonly catalog = inject(CatalogService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
 
+  isEditMode = false;
   item: InventoryItem | null = null;
   alertType: 'success' | 'danger' | null = null;
   alertMessage = '';
+  ready = false;
 
   readonly categories = Object.entries(CATEGORY_LABELS).map(([value, label]) => ({
     value: value as CandyCategory,
@@ -47,28 +49,60 @@ export class InventoryDetail implements OnInit {
     image: ['', Validators.required],
     description: ['', [Validators.required, Validators.minLength(5)]],
     discount: [0, [Validators.required, Validators.min(0)]],
-    stock: [0, [Validators.required, Validators.min(0)]],
+    stock: [INITIAL_STOCK, [Validators.required, Validators.min(0)]],
   });
 
+  /** Título principal según modo. */
+  get pageTitle(): string {
+    if (this.isEditMode) {
+      return this.item?.name ?? 'Editar producto';
+    }
+    return 'Nuevo producto';
+  }
+
+  /** Texto del breadcrumb activo. */
+  get breadcrumbLabel(): string {
+    return this.isEditMode ? (this.item?.name ?? 'Detalle') : 'Nuevo producto';
+  }
+
+  /** Descripción bajo el título. */
+  get pageDescription(): string {
+    return this.isEditMode
+      ? 'Edita la cantidad en stock y los datos del producto.'
+      : 'Completa los datos para agregarlo al inventario. El ID numérico lo asigna el servidor.';
+  }
+
+  /** Etiqueta del botón principal de envío. */
+  get submitLabel(): string {
+    return this.isEditMode ? 'Guardar cambios' : 'Crear producto';
+  }
+
   /**
-   * Carga el producto según el `id` de la ruta.
+   * Detecta modo create/edit y carga el ítem si corresponde.
    * @returns void
-   * @usageNotes Redirige al listado si el id no existe en inventario.
    */
   ngOnInit(): void {
     const rawId = this.route.snapshot.paramMap.get('id');
-    const id = rawId ? Number(rawId) : NaN;
-    if (!rawId || Number.isNaN(id)) {
-      this.router.navigate(['/inventario']);
+
+    if (!rawId) {
+      this.isEditMode = false;
+      this.ready = true;
+      return;
+    }
+
+    const id = Number(rawId);
+    if (Number.isNaN(id)) {
+      void this.router.navigate(['/inventario']);
       return;
     }
 
     const item = this.inventoryService.getInventoryItem(id);
     if (!item) {
-      this.router.navigate(['/inventario']);
+      void this.router.navigate(['/inventario']);
       return;
     }
 
+    this.isEditMode = true;
     this.item = item;
     this.itemForm.patchValue({
       name: item.name,
@@ -80,6 +114,7 @@ export class InventoryDetail implements OnInit {
       discount: item.discount,
       stock: item.stock,
     });
+    this.ready = true;
   }
 
   /**
@@ -105,7 +140,7 @@ export class InventoryDetail implements OnInit {
   }
 
   /**
-   * Precio formateado del ítem cargado.
+   * Precio formateado del ítem en edición.
    * @returns Precio en pesos chilenos o cadena vacía.
    */
   formatItemPrice(): string {
@@ -113,17 +148,11 @@ export class InventoryDetail implements OnInit {
   }
 
   /**
-   * Persiste los cambios del producto en inventario.
+   * Crea o actualiza el producto según el modo.
    * @returns void
-   * @usageNotes Invocado al enviar el formulario de detalle.
    */
   onSubmit(): void {
     this.clearAlerts();
-
-    if (!this.item) {
-      this.showAlert('danger', 'No se encontró el producto en inventario.');
-      return;
-    }
 
     if (this.itemForm.invalid) {
       this.itemForm.markAllAsTouched();
@@ -131,42 +160,32 @@ export class InventoryDetail implements OnInit {
       return;
     }
 
-    const id = this.item.id;
     const values = this.itemForm.getRawValue();
-    this.inventoryService
-      .updateItem(id, {
-        name: values.name,
-        category: values.category,
-        size: values.size,
-        price: Number(values.price),
-        image: values.image,
-        description: values.description,
-        discount: Number(values.discount),
-        stock: Number(values.stock),
-      })
-      .subscribe({
-        next: (updated) => {
-          if (!updated) {
-            this.showAlert('danger', 'No fue posible guardar los cambios.');
-            return;
-          }
-          this.item = this.inventoryService.getInventoryItem(id) ?? this.item;
-          this.showAlert('success', 'Producto actualizado correctamente.');
-        },
-        error: () => {
-          this.showAlert('danger', 'No fue posible guardar los cambios.');
-        },
-      });
+    const payload: InventoryItemUpdate = {
+      name: values.name,
+      category: values.category,
+      size: values.size,
+      price: Number(values.price),
+      image: values.image,
+      description: values.description,
+      discount: Number(values.discount),
+      stock: Number(values.stock),
+    };
+
+    if (this.isEditMode) {
+      this.saveEdit(payload);
+      return;
+    }
+
+    this.saveCreate(payload);
   }
 
   /**
-   * Elimina el producto del inventario tras confirmación.
+   * Elimina el producto en modo edición tras confirmación.
    * @returns void
-   * @usageNotes Invocado desde el botón eliminar del detalle.
    */
   onDelete(): void {
-    if (!this.item) {
-      this.showAlert('danger', 'No se encontró el producto en inventario.');
+    if (!this.isEditMode || !this.item) {
       return;
     }
 
@@ -199,6 +218,43 @@ export class InventoryDetail implements OnInit {
   clearAlerts(): void {
     this.alertType = null;
     this.alertMessage = '';
+  }
+
+  private saveCreate(payload: InventoryItemUpdate): void {
+    this.inventoryService.createItem(payload).subscribe({
+      next: (created) => {
+        if (!created) {
+          this.showAlert('danger', 'No fue posible crear el producto.');
+          return;
+        }
+        void this.router.navigate(['/inventario', created.id]);
+      },
+      error: () => {
+        this.showAlert('danger', 'No fue posible crear el producto.');
+      },
+    });
+  }
+
+  private saveEdit(payload: InventoryItemUpdate): void {
+    if (!this.item) {
+      this.showAlert('danger', 'No se encontró el producto en inventario.');
+      return;
+    }
+
+    const id = this.item.id;
+    this.inventoryService.updateItem(id, payload).subscribe({
+      next: (updated) => {
+        if (!updated) {
+          this.showAlert('danger', 'No fue posible guardar los cambios.');
+          return;
+        }
+        this.item = this.inventoryService.getInventoryItem(id) ?? this.item;
+        this.showAlert('success', 'Producto actualizado correctamente.');
+      },
+      error: () => {
+        this.showAlert('danger', 'No fue posible guardar los cambios.');
+      },
+    });
   }
 
   private showAlert(type: 'success' | 'danger', message: string): void {

@@ -2,24 +2,24 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a routerLink="/">Inicio</a></li>
     <li class="breadcrumb-item"><a routerLink="/inventario">Inventario</a></li>
-    <li class="breadcrumb-item active" aria-current="page">
-      {{ item?.name || 'Detalle' }}
-    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ breadcrumbLabel }}</li>
   </ol>
 </nav>
 
-@if (item) {
+@if (ready) {
   <div class="row justify-content-center">
     <div class="col-lg-8">
       <section class="sweetpop-form-card p-4 p-md-5">
         <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
           <div>
-            <h1 class="h2 mb-2">{{ item.name }}</h1>
+            <h1 class="h2 mb-2">{{ pageTitle }}</h1>
             <p class="mb-0">
-              Edita la cantidad en stock y los datos del producto.
-              <span class="badge ms-2" [class]="getStockStatus(item.stock).badgeClass">
-                {{ getStockStatus(item.stock).label }}
-              </span>
+              {{ pageDescription }}
+              @if (isEditMode && item) {
+                <span class="badge ms-2" [class]="getStockStatus(item.stock).badgeClass">
+                  {{ getStockStatus(item.stock).label }}
+                </span>
+              }
             </p>
           </div>
           <a routerLink="/inventario" class="btn btn-outline-light btn-sm">Volver al listado</a>
@@ -31,17 +31,19 @@
 
         <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" novalidate>
           <div class="row g-3">
-            <div class="col-12">
-              <label for="itemId" class="form-label">ID del producto</label>
-              <input
-                type="text"
-                class="form-control sweetpop-field-readonly"
-                id="itemId"
-                [value]="item.id"
-                readonly
-                tabindex="-1"
-              >
-            </div>
+            @if (isEditMode && item) {
+              <div class="col-12">
+                <label for="itemId" class="form-label">ID del producto</label>
+                <input
+                  type="text"
+                  class="form-control sweetpop-field-readonly"
+                  id="itemId"
+                  [value]="item.id"
+                  readonly
+                  tabindex="-1"
+                >
+              </div>
+            }
 
             <div class="col-md-8">
               <label for="name" class="form-label">Nombre <sup>*</sup></label>
@@ -116,7 +118,9 @@
                 [class.is-invalid]="isInvalid('price')"
                 (input)="clearAlerts()"
               >
-              <div class="form-text">Precio actual: {{ formatItemPrice() }}</div>
+              @if (isEditMode) {
+                <div class="form-text">Precio actual: {{ formatItemPrice() }}</div>
+              }
               <div class="invalid-feedback">El precio debe ser un número mayor o igual a 0.</div>
             </div>
 
@@ -165,11 +169,13 @@
           </div>
 
           <div class="d-flex flex-wrap justify-content-between gap-2 mt-4">
-            <button type="submit" class="btn btn-sweetpop">Actualizar</button>
+            <button type="submit" class="btn btn-sweetpop">{{ submitLabel }}</button>
+            @if (isEditMode) {
+              <button type="button" class="btn btn-danger" (click)="onDelete()">
+                Eliminar producto
+              </button>
+            }
             <a routerLink="/inventario" class="btn btn-outline-light">Cancelar</a>
-            <button type="button" class="btn btn-outline-danger" (click)="onDelete()">
-              Eliminar
-            </button>
           </div>
         </form>
       </section>

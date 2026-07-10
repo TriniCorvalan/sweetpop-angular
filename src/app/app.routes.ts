@@ -12,8 +12,7 @@ import { Gummies } from './pages/gummies/gummies';
 import { HardCandies } from './pages/hard-candies/hard-candies';
 import { Home } from './pages/home/home';
 import { Inventory } from './pages/inventory/inventory';
-import { InventoryCreate } from './pages/inventory/inventory-create/inventory-create';
-import { InventoryDetail } from './pages/inventory/inventory-detail/inventory-detail';
+import { InventoryForm } from './pages/inventory/inventory-form/inventory-form';
 import { Login } from './pages/login/login';
 import { Logout } from './pages/logout/logout';
 import { Profile } from './pages/profile/profile';
@@ -71,13 +70,13 @@ export const routes: Routes = [
   },
   {
     path: 'inventario/nuevo',
-    component: InventoryCreate,
+    component: InventoryForm,
     canActivate: [authGuard],
     data: { roles: ['admin'] },
   },
   {
     path: 'inventario/:id',
-    component: InventoryDetail,
+    component: InventoryForm,
     canActivate: [authGuard],
     data: { roles: ['admin'] },
   },
