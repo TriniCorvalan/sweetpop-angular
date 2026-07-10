@@ -1,0 +1,26 @@
+# Dependencias locales de Node.js.
+# No se copian porque Docker instalará las dependencias dentro de la imagen.
+node_modules
+
+# Carpeta generada por Angular al compilar.
+# No se copia porque Docker generará una nueva compilación.
+dist
+
+# Caché interna de Angular.
+.angular
+
+# Archivos de control de versiones.
+.git
+.gitignore
+
+# Archivos de configuración local del editor.
+.vscode
+.idea
+
+# Archivos temporales del sistema operativo.
+.DS_Store
+Thumbs.db
+
+# Logs de npm o del sistema.
+npm-debug.log
+yarn-error.log

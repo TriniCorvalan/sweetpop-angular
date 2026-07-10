@@ -1,59 +1,89 @@
-# SweetpopAngular
+# SweetPop Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.1.
+Tienda de dulces en Angular 21. Incluye catálogo por categorías, armado de cajas, carrito, autenticación por roles y CRUD de inventario contra **json-server**.
 
-## Development server
+## Requisitos
 
-To start a local development server, run:
+- Node.js 20+
+- npm 11+
+- Docker y Docker Compose (opcional, para despliegue local en contenedores)
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Instalación
 
 ```bash
-ng generate component component-name
+npm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Desarrollo local
+
+La app y la API de inventario son procesos separados. Para usar el inventario hace falta tener **ambos** en ejecución.
+
+### 1. API (json-server)
+
+Sirve el recurso `inventory` desde `db.json` en el puerto **3000**:
 
 ```bash
-ng generate --help
+npm run api
 ```
 
-## Building
+Endpoint: `http://localhost:3000/inventory`
 
-To build the project run:
+### 2. Frontend (Angular)
 
 ```bash
-ng build
+npm start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Abrir [http://localhost:4200/](http://localhost:4200/). La app se recarga al cambiar el código fuente.
 
-## Running unit tests
+> Sin `npm run api`, el catálogo y el resto de la UI funcionan; el módulo de inventario mostrará error de conexión.
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Scripts útiles
+
+| Comando | Descripción |
+| --- | --- |
+| `npm start` | Servidor de desarrollo (`ng serve`) |
+| `npm run api` | API REST local con json-server |
+| `npm run build` | Build de producción en `dist/` |
+| `npm test` | Tests unitarios con Vitest |
+| `npm run compodoc` | Genera documentación en `documentation/` |
+| `npm run compodoc:serve` | Genera y sirve Compodoc en el navegador |
+
+## Docker
+
+Levanta la app compilada (NGINX en el puerto **8080**) y json-server (puerto **3000**):
 
 ```bash
-ng test
+docker compose up --build
 ```
 
-## Running end-to-end tests
+| Servicio | URL |
+| --- | --- |
+| Angular (NGINX) | [http://localhost:8080/](http://localhost:8080/) |
+| API inventario | [http://localhost:3000/inventory](http://localhost:3000/inventory) |
 
-For end-to-end (e2e) testing, run:
+`db.json` se monta como volumen, así que los cambios de inventario persisten en el host.
+
+Para detener:
 
 ```bash
-ng e2e
+docker compose down
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Roles y rutas principales
 
-## Additional Resources
+| Ruta | Acceso |
+| --- | --- |
+| `/`, catálogo (`/dulces`, `/gomitas`, `/chocolates`, …), `/cajas` | Público |
+| `/inicio-sesion`, `/registro`, `/recuperar-contrasena` | Solo invitados |
+| `/carrito`, `/perfil` | Usuario autenticado (`user`) |
+| `/inventario`, `/inventario/nuevo`, `/inventario/:id` | Admin |
+| `/clientes` | Admin |
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Stack
+
+- Angular 21 + Bootstrap 5
+- json-server (API de inventario)
+- Vitest (tests)
+- Compodoc (documentación)
+- Docker multi-stage + NGINX (producción local)
