@@ -182,7 +182,12 @@ export function createSeedInventoryItems(): InventoryItem[] {
 
 /** Precarga el inventario en localStorage sin llamar a la API. */
 export function seedInventoryCache(items = createSeedInventoryItems()): void {
-  TestBed.inject(InventoryService).setLocalInventory(items);
+  const storage = new StorageService();
+  storage.writeJson(
+    localStorage,
+    STORAGE_KEYS.inventory,
+    items.map((item) => ({ ...item })),
+  );
 }
 
 /** Responde un GET a `/inventory` con el inventario local actual. */

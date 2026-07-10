@@ -217,7 +217,7 @@ export class InventoryForm implements OnInit {
       if (!connectionFailed) {
         this.applyFlashAlert();
       }
-      this.ready = true;
+      this.markReady();
       return;
     }
 
@@ -248,7 +248,13 @@ export class InventoryForm implements OnInit {
     if (!connectionFailed) {
       this.applyFlashAlert();
     }
+    this.markReady();
+  }
+
+  /** Marca el formulario como listo y refresca la vista (app sin Zone.js). */
+  private markReady(): void {
     this.ready = true;
+    this.cdr.detectChanges();
   }
 
   private saveCreate(payload: InventoryItemUpdate): void {

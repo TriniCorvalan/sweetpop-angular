@@ -57,15 +57,6 @@ export class InventoryService {
   }
 
   /**
-   * Reemplaza el inventario local (útil en pruebas unitarias).
-   * @param items Ítems a persistir en localStorage.
-   * @returns void
-   */
-  setLocalInventory(items: InventoryItem[]): void {
-    this.saveLocal(items.map((item) => ({ ...item })));
-  }
-
-  /**
    * Obtiene el inventario desde localStorage.
    * @returns Lista de ítems.
    */
