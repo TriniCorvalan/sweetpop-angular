@@ -8,6 +8,11 @@ import { InventoryItem, InventoryItemUpdate } from '../../../core/models/invento
 import { CatalogService } from '../../../core/services/catalog.service';
 import { InventoryService } from '../../../core/services/inventory.service';
 import {
+  INVENTORY_CONNECTION_ERROR_MESSAGE,
+  inventoryHttpErrorMessage,
+  isApiConnectionError,
+} from '../../../core/utils/api-connection';
+import {
   consumeInventoryFlash,
   setInventoryFlash,
 } from '../../../core/utils/inventory-flash';
@@ -83,45 +88,17 @@ export class InventoryForm implements OnInit {
   }
 
   /**
-   * Detecta modo create/edit y carga el ítem si corresponde.
+   * Detecta modo create/edit, verifica conexión y carga el ítem si corresponde.
    * @returns void
    */
   ngOnInit(): void {
-    const rawId = this.route.snapshot.paramMap.get('id');
+    this.inventoryService.loadInventory().subscribe((loaded) => {
+      if (!loaded) {
+        this.showAlert('danger', INVENTORY_CONNECTION_ERROR_MESSAGE);
+      }
 
-    if (!rawId) {
-      this.isEditMode = false;
-      this.applyFlashAlert();
-      this.ready = true;
-      return;
-    }
-
-    const id = Number(rawId);
-    if (Number.isNaN(id)) {
-      void this.router.navigate(['/inventario']);
-      return;
-    }
-
-    const item = this.inventoryService.getInventoryItem(id);
-    if (!item) {
-      void this.router.navigate(['/inventario']);
-      return;
-    }
-
-    this.isEditMode = true;
-    this.item = item;
-    this.itemForm.patchValue({
-      name: item.name,
-      category: item.category,
-      size: item.size,
-      price: item.price,
-      image: item.image,
-      description: item.description,
-      discount: item.discount,
-      stock: item.stock,
+      this.initializeForm(!loaded);
     });
-    this.applyFlashAlert();
-    this.ready = true;
   }
 
   /**
@@ -217,8 +194,8 @@ export class InventoryForm implements OnInit {
         });
         void this.router.navigate(['/inventario']);
       },
-      error: () => {
-        this.showAlert('danger', 'No fue posible eliminar el producto.');
+      error: (error: unknown) => {
+        this.handleHttpError(error, 'No fue posible eliminar el producto.');
       },
     });
   }
@@ -230,6 +207,48 @@ export class InventoryForm implements OnInit {
   clearAlerts(): void {
     this.alertType = null;
     this.alertMessage = '';
+  }
+
+  private initializeForm(connectionFailed: boolean): void {
+    const rawId = this.route.snapshot.paramMap.get('id');
+
+    if (!rawId) {
+      this.isEditMode = false;
+      if (!connectionFailed) {
+        this.applyFlashAlert();
+      }
+      this.ready = true;
+      return;
+    }
+
+    const id = Number(rawId);
+    if (Number.isNaN(id)) {
+      void this.router.navigate(['/inventario']);
+      return;
+    }
+
+    const item = this.inventoryService.getInventoryItem(id);
+    if (!item) {
+      void this.router.navigate(['/inventario']);
+      return;
+    }
+
+    this.isEditMode = true;
+    this.item = item;
+    this.itemForm.patchValue({
+      name: item.name,
+      category: item.category,
+      size: item.size,
+      price: item.price,
+      image: item.image,
+      description: item.description,
+      discount: item.discount,
+      stock: item.stock,
+    });
+    if (!connectionFailed) {
+      this.applyFlashAlert();
+    }
+    this.ready = true;
   }
 
   private saveCreate(payload: InventoryItemUpdate): void {
@@ -247,8 +266,8 @@ export class InventoryForm implements OnInit {
         });
         void this.router.navigate(['/inventario', created.id], { replaceUrl: true });
       },
-      error: () => {
-        this.showAlert('danger', 'No fue posible crear el producto.');
+      error: (error: unknown) => {
+        this.handleHttpError(error, 'No fue posible crear el producto.');
       },
     });
   }
@@ -269,10 +288,15 @@ export class InventoryForm implements OnInit {
         this.item = this.inventoryService.getInventoryItem(id) ?? this.item;
         this.showAlert('success', 'Producto actualizado correctamente.');
       },
-      error: () => {
-        this.showAlert('danger', 'No fue posible guardar los cambios.');
+      error: (error: unknown) => {
+        this.handleHttpError(error, 'No fue posible guardar los cambios.');
       },
     });
+  }
+
+  private handleHttpError(error: unknown, fallback: string): void {
+    this.inventoryService.setConnectionAvailable(!isApiConnectionError(error));
+    this.showAlert('danger', inventoryHttpErrorMessage(error, fallback));
   }
 
   private showAlert(type: 'success' | 'danger', message: string): void {

@@ -14,7 +14,8 @@ import { InventoryService } from './core/services/inventory.service';
  * @param inventory Servicio de inventario.
  * @param cart Servicio de carrito.
  * @returns Función async que precarga admin, inventario (API) y carrito.
- * @usageNotes Requiere json-server (`npm run api`) para cargar el inventario.
+ * @usageNotes Si json-server no está disponible, la app arranca igual y el inventario
+ *   marca el error de conexión para mostrarlo en la UI.
  */
 function initializeApp(
   auth: AuthService,

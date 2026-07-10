@@ -4,6 +4,11 @@ import { RouterLink } from '@angular/router';
 import { InventoryItem } from '../../core/models/inventory-item.model';
 import { CatalogService } from '../../core/services/catalog.service';
 import { InventoryService } from '../../core/services/inventory.service';
+import {
+  INVENTORY_CONNECTION_ERROR_MESSAGE,
+  inventoryHttpErrorMessage,
+  isApiConnectionError,
+} from '../../core/utils/api-connection';
 import { consumeInventoryFlash } from '../../core/utils/inventory-flash';
 
 /**
@@ -29,14 +34,21 @@ export class Inventory implements OnInit {
   }
 
   /**
-   * Muestra alertas flash pendientes (p. ej. tras eliminar desde el detalle).
+   * Recarga el inventario desde la API y muestra flash o error de conexión.
    * @returns void
    */
   ngOnInit(): void {
-    const flash = consumeInventoryFlash();
-    if (flash) {
-      this.showAlert(flash.type, flash.message);
-    }
+    this.inventoryService.loadInventory().subscribe((loaded) => {
+      if (!loaded) {
+        this.showAlert('danger', INVENTORY_CONNECTION_ERROR_MESSAGE);
+        return;
+      }
+
+      const flash = consumeInventoryFlash();
+      if (flash) {
+        this.showAlert(flash.type, flash.message);
+      }
+    });
   }
 
   /**
@@ -78,8 +90,12 @@ export class Inventory implements OnInit {
         }
         this.showAlert('success', `Producto "${productName}" eliminado correctamente.`);
       },
-      error: () => {
-        this.showAlert('danger', 'No fue posible eliminar el producto.');
+      error: (error: unknown) => {
+        this.inventoryService.setConnectionAvailable(!isApiConnectionError(error));
+        this.showAlert(
+          'danger',
+          inventoryHttpErrorMessage(error, 'No fue posible eliminar el producto.'),
+        );
       },
     });
   }

@@ -185,6 +185,23 @@ export function seedInventoryCache(items = createSeedInventoryItems()): void {
   TestBed.inject(InventoryService).setLocalInventory(items);
 }
 
+/** Responde un GET a `/inventory` con el inventario local actual. */
+export function flushInventoryLoadRequest(items?: InventoryItem[]): void {
+  const httpMock = TestBed.inject(HttpTestingController);
+  const inventory = items ?? TestBed.inject(InventoryService).getInventory();
+  const request = httpMock.expectOne(INVENTORY_API_URL);
+  expect(request.request.method).toBe('GET');
+  request.flush(inventory);
+}
+
+/** Simula un fallo de conexión (API caída) en el GET de inventario. */
+export function failInventoryLoadRequest(): void {
+  const httpMock = TestBed.inject(HttpTestingController);
+  const request = httpMock.expectOne(INVENTORY_API_URL);
+  expect(request.request.method).toBe('GET');
+  request.error(new ProgressEvent('error'));
+}
+
 /** Responde un POST a `/inventory` con el body enviado más un id generado. */
 export function flushInventoryCreateRequest(id = 100): void {
   const httpMock = TestBed.inject(HttpTestingController);

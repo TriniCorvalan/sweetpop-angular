@@ -3,7 +3,14 @@ import { provideRouter } from '@angular/router';
 import { vi } from 'vitest';
 
 import { InventoryService } from '../../core/services/inventory.service';
-import { clearStorages, flushInventoryDeleteRequest, seedInventoryCache } from '../../testing/test-helpers';
+import { INVENTORY_CONNECTION_ERROR_MESSAGE } from '../../core/utils/api-connection';
+import {
+  clearStorages,
+  failInventoryLoadRequest,
+  flushInventoryDeleteRequest,
+  flushInventoryLoadRequest,
+  seedInventoryCache,
+} from '../../testing/test-helpers';
 import { Inventory } from './inventory';
 
 describe('Inventory', () => {
@@ -17,7 +24,10 @@ describe('Inventory', () => {
     }).compileComponents();
 
     seedInventoryCache();
-    component = TestBed.createComponent(Inventory).componentInstance;
+    const fixture = TestBed.createComponent(Inventory);
+    component = fixture.componentInstance;
+    component.ngOnInit();
+    flushInventoryLoadRequest();
   });
 
   it('should create', () => {
@@ -53,6 +63,7 @@ describe('Inventory', () => {
   });
 
   it('muestra mensaje flash al llegar tras eliminar desde el detalle', () => {
+    clearStorages();
     sessionStorage.setItem(
       'sweetpop.inventory.flash',
       JSON.stringify({
@@ -60,11 +71,25 @@ describe('Inventory', () => {
         message: 'Producto "Dulce" eliminado correctamente.',
       }),
     );
+    seedInventoryCache();
 
     const fixture = TestBed.createComponent(Inventory);
     fixture.componentInstance.ngOnInit();
+    flushInventoryLoadRequest();
 
     expect(fixture.componentInstance.alertType).toBe('success');
     expect(fixture.componentInstance.alertMessage).toContain('eliminado correctamente');
+  });
+
+  it('muestra error de conexion si json-server no responde', () => {
+    clearStorages();
+    seedInventoryCache();
+
+    const fixture = TestBed.createComponent(Inventory);
+    fixture.componentInstance.ngOnInit();
+    failInventoryLoadRequest();
+
+    expect(fixture.componentInstance.alertType).toBe('danger');
+    expect(fixture.componentInstance.alertMessage).toBe(INVENTORY_CONNECTION_ERROR_MESSAGE);
   });
 });

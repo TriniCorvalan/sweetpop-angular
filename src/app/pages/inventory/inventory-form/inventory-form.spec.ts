@@ -3,10 +3,13 @@ import { ActivatedRoute, convertToParamMap, provideRouter, Router } from '@angul
 import { vi } from 'vitest';
 
 import { InventoryService } from '../../../core/services/inventory.service';
+import { INVENTORY_CONNECTION_ERROR_MESSAGE } from '../../../core/utils/api-connection';
 import {
   clearStorages,
+  failInventoryLoadRequest,
   flushInventoryCreateRequest,
   flushInventoryDeleteRequest,
+  flushInventoryLoadRequest,
   flushInventoryUpdateRequest,
   seedInventoryCache,
 } from '../../../testing/test-helpers';
@@ -41,6 +44,7 @@ describe('InventoryForm', () => {
       router = TestBed.inject(Router);
       component = TestBed.createComponent(InventoryForm).componentInstance;
       component.ngOnInit();
+      flushInventoryLoadRequest();
     });
 
     it('should create en modo alta', () => {
@@ -82,6 +86,19 @@ describe('InventoryForm', () => {
       expect(navigateSpy).toHaveBeenCalledWith(['/inventario', 100], { replaceUrl: true });
       expect(sessionStorage.getItem('sweetpop.inventory.flash')).toContain('Producto creado correctamente');
     });
+
+    it('muestra error de conexion si json-server no responde al cargar', () => {
+      clearStorages();
+      seedInventoryCache();
+
+      const fixture = TestBed.createComponent(InventoryForm);
+      fixture.componentInstance.ngOnInit();
+      failInventoryLoadRequest();
+
+      expect(fixture.componentInstance.alertType).toBe('danger');
+      expect(fixture.componentInstance.alertMessage).toBe(INVENTORY_CONNECTION_ERROR_MESSAGE);
+      expect(fixture.componentInstance.ready).toBe(true);
+    });
   });
 
   describe('modo edit', () => {
@@ -111,6 +128,7 @@ describe('InventoryForm', () => {
       seedInventoryCache();
       component = TestBed.createComponent(InventoryForm).componentInstance;
       component.ngOnInit();
+      flushInventoryLoadRequest();
     });
 
     it('should create en modo edicion', () => {
@@ -164,6 +182,7 @@ describe('InventoryForm', () => {
       seedInventoryCache();
       const fixture = TestBed.createComponent(InventoryForm);
       fixture.componentInstance.ngOnInit();
+      flushInventoryLoadRequest();
 
       expect(fixture.componentInstance.alertType).toBe('success');
       expect(fixture.componentInstance.alertMessage).toBe('Producto creado correctamente.');
@@ -216,6 +235,7 @@ describe('InventoryForm', () => {
       const navigateSpy = vi.spyOn(router, 'navigate');
       const fixture = TestBed.createComponent(InventoryForm);
       fixture.componentInstance.ngOnInit();
+      flushInventoryLoadRequest();
 
       expect(navigateSpy).toHaveBeenCalledWith(['/inventario']);
     });
