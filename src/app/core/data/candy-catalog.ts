@@ -1,6 +1,6 @@
 import { Candy } from '../models/candy.model';
 
-/** Catálogo estático de los 12 dulces disponibles en SweetPop. @usageNotes Fuente de verdad para `CatalogService.candies`. */
+/** Catálogo estático de los 12 dulces disponibles en SweetPop. @usageNotes Seed inicial del inventario. */
 export const CANDY_CATALOG: Candy[] = [
   {
     id: 'gom-gummy-bears',
@@ -10,7 +10,7 @@ export const CANDY_CATALOG: Candy[] = [
     price: 990,
     image: 'assets/img/categories/gummies/candy-gummy-bears.jpg',
     description: 'Tiernos ositos de gomita de colores.',
-    discountLabel: '10%',
+    discount: 10,
   },
   {
     id: 'gom-jelly-beans',
@@ -20,7 +20,7 @@ export const CANDY_CATALOG: Candy[] = [
     price: 790,
     image: 'assets/img/categories/gummies/candy-jelly-beans.jpg',
     description: 'Deliciosas gomitas en forma de semillas.',
-    discountLabel: 'no disponible',
+    discount: 0,
   },
   {
     id: 'gom-worms',
@@ -30,7 +30,7 @@ export const CANDY_CATALOG: Candy[] = [
     price: 590,
     image: 'assets/img/categories/gummies/candy-worms.jpg',
     description: 'Entretenidas gomitas en forma de serpientes.',
-    discountLabel: '15%',
+    discount: 15,
   },
   {
     id: 'cho-kisses',
@@ -40,7 +40,7 @@ export const CANDY_CATALOG: Candy[] = [
     price: 490,
     image: 'assets/img/categories/chocolate/candy-choco-kisses.jpg',
     description: 'Románticos besitos de chocolate.',
-    discountLabel: 'no disponible',
+    discount: 0,
   },
   {
     id: 'cho-pb-cup',
@@ -50,7 +50,7 @@ export const CANDY_CATALOG: Candy[] = [
     price: 290,
     image: 'assets/img/categories/chocolate/candy-peanut-cup.jpg',
     description: 'Delicioso chocolate con mantequilla de maní.',
-    discountLabel: '10%',
+    discount: 10,
   },
   {
     id: 'cho-trufa',
@@ -60,7 +60,7 @@ export const CANDY_CATALOG: Candy[] = [
     price: 990,
     image: 'assets/img/categories/chocolate/candy-truffle.jpg',
     description: 'Tradicionales trufas de chocolate.',
-    discountLabel: '20%',
+    discount: 20,
   },
   {
     id: 'car-lollipop',
@@ -70,7 +70,7 @@ export const CANDY_CATALOG: Candy[] = [
     price: 990,
     image: 'assets/img/categories/hard-candies/candy-lollipop.jpg',
     description: 'Clásicos caramelos en forma de paleta.',
-    discountLabel: '5%',
+    discount: 5,
   },
   {
     id: 'car-chew',
@@ -80,7 +80,7 @@ export const CANDY_CATALOG: Candy[] = [
     price: 490,
     image: 'assets/img/categories/hard-candies/candy-caramel.jpg',
     description: 'Deliciosos caramelos masticables.',
-    discountLabel: 'no disponible',
+    discount: 0,
   },
   {
     id: 'car-fruit-drop',
@@ -90,7 +90,7 @@ export const CANDY_CATALOG: Candy[] = [
     price: 490,
     image: 'assets/img/categories/hard-candies/candy-fruit-drop.jpg',
     description: 'Caramelos de fruta.',
-    discountLabel: '10%',
+    discount: 10,
   },
   {
     id: 'bar-candy',
@@ -100,7 +100,7 @@ export const CANDY_CATALOG: Candy[] = [
     price: 1990,
     image: 'assets/img/categories/bars/candy-candy-bar.jpg',
     description: 'Barrita de chocolate con chispas de chocolate.',
-    discountLabel: '15%',
+    discount: 15,
   },
   {
     id: 'bar-nougat',
@@ -110,7 +110,7 @@ export const CANDY_CATALOG: Candy[] = [
     price: 1290,
     image: 'assets/img/categories/bars/candy-nougat.jpg',
     description: 'Barrita de chocolate con nuez.',
-    discountLabel: '10%',
+    discount: 10,
   },
   {
     id: 'bar-crispy',
@@ -120,6 +120,6 @@ export const CANDY_CATALOG: Candy[] = [
     price: 1890,
     image: 'assets/img/categories/bars/candy-crispy.jpg',
     description: 'Barrita de chocolate con chispas de chocolate.',
-    discountLabel: 'no disponible',
+    discount: 0,
   },
 ];

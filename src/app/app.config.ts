@@ -23,7 +23,7 @@ function initializeApp(
   return () => {
     auth.ensureAdminUser();
     inventory.ensureInventory();
-    inventory.syncInventorySizesFromCatalog();
+    inventory.syncInventoryFromCatalog();
     cart.ensureCart();
   };
 }

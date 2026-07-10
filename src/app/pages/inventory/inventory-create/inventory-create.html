@@ -1,0 +1,155 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/">Inicio</a></li>
+    <li class="breadcrumb-item"><a routerLink="/inventario">Inventario</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Nuevo producto</li>
+  </ol>
+</nav>
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <section class="sweetpop-form-card p-4 p-md-5">
+      <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+        <div>
+          <h1 class="h2 mb-2">Nuevo producto</h1>
+          <p class="mb-0">
+            Completa los datos para agregarlo al inventario. El ID se genera automáticamente.
+          </p>
+        </div>
+        <a routerLink="/inventario" class="btn btn-outline-light btn-sm">Volver al listado</a>
+      </div>
+
+      @if (alertMessage && alertType) {
+        <div class="alert alert-{{ alertType }} mb-4" role="alert">{{ alertMessage }}</div>
+      }
+
+      <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="row g-3">
+          <div class="col-md-8">
+            <label for="name" class="form-label">Nombre <sup>*</sup></label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              formControlName="name"
+              placeholder="Nombre del dulce"
+              [class.is-invalid]="isInvalid('name')"
+              (input)="clearAlerts()"
+            >
+            <div class="invalid-feedback">Ingresa un nombre válido (mínimo 2 caracteres).</div>
+          </div>
+
+          <div class="col-md-4">
+            <label for="stock" class="form-label">Stock <sup>*</sup></label>
+            <input
+              type="number"
+              class="form-control"
+              id="stock"
+              formControlName="stock"
+              min="0"
+              step="1"
+              [class.is-invalid]="isInvalid('stock')"
+              (input)="clearAlerts()"
+            >
+            <div class="invalid-feedback">El stock debe ser un número mayor o igual a 0.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="category" class="form-label">Categoría <sup>*</sup></label>
+            <select
+              class="form-select"
+              id="category"
+              formControlName="category"
+              [class.is-invalid]="isInvalid('category')"
+              (change)="clearAlerts()"
+            >
+              @for (category of categories; track category.value) {
+                <option [value]="category.value">{{ category.label }}</option>
+              }
+            </select>
+            <div class="invalid-feedback">Selecciona una categoría.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="size" class="form-label">Tamaño <sup>*</sup></label>
+            <select
+              class="form-select"
+              id="size"
+              formControlName="size"
+              [class.is-invalid]="isInvalid('size')"
+              (change)="clearAlerts()"
+            >
+              @for (size of sizes; track size.value) {
+                <option [value]="size.value">{{ size.label }}</option>
+              }
+            </select>
+            <div class="invalid-feedback">Selecciona un tamaño.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="price" class="form-label">Precio <sup>*</sup></label>
+            <input
+              type="number"
+              class="form-control"
+              id="price"
+              formControlName="price"
+              min="0"
+              step="1"
+              [class.is-invalid]="isInvalid('price')"
+              (input)="clearAlerts()"
+            >
+            <div class="invalid-feedback">El precio debe ser un número mayor o igual a 0.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="image" class="form-label">Ruta de imagen <sup>*</sup></label>
+            <input
+              type="text"
+              class="form-control"
+              id="image"
+              formControlName="image"
+              placeholder="assets/img/..."
+              [class.is-invalid]="isInvalid('image')"
+              (input)="clearAlerts()"
+            >
+            <div class="invalid-feedback">La ruta de imagen es obligatoria.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="discount" class="form-label">Descuento (%) <sup>*</sup></label>
+            <input
+              type="number"
+              class="form-control"
+              id="discount"
+              formControlName="discount"
+              min="0"
+              step="1"
+              [class.is-invalid]="isInvalid('discount')"
+              (input)="clearAlerts()"
+            >
+            <div class="invalid-feedback">El descuento debe ser un número mayor o igual a 0.</div>
+          </div>
+
+          <div class="col-12">
+            <label for="description" class="form-label">Descripción <sup>*</sup></label>
+            <textarea
+              class="form-control"
+              id="description"
+              formControlName="description"
+              rows="3"
+              placeholder="Descripción del dulce"
+              [class.is-invalid]="isInvalid('description')"
+              (input)="clearAlerts()"
+            ></textarea>
+            <div class="invalid-feedback">Ingresa una descripción (mínimo 5 caracteres).</div>
+          </div>
+        </div>
+
+        <div class="d-flex flex-wrap gap-2 mt-4">
+          <button type="submit" class="btn btn-sweetpop">Crear producto</button>
+          <a routerLink="/inventario" class="btn btn-outline-light">Cancelar</a>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>

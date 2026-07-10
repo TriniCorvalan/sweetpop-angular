@@ -8,8 +8,8 @@ export type CandyCategory = 'gomitas' | 'chocolate' | 'caramelos' | 'barritas';
 export type CandySize = 'small' | 'medium' | 'large';
 
 /**
- * Dulce disponible en el catálogo estático.
- * @usageNotes Definido en `CANDY_CATALOG`; no incluye stock (ver `InventoryItem`).
+ * Dulce disponible para personalización de cajas.
+ * @usageNotes Proviene del inventario (seed inicial en `CANDY_CATALOG`).
  */
 export interface Candy {
   id: string;
@@ -19,5 +19,6 @@ export interface Candy {
   price: number;
   image: string;
   description: string;
-  discountLabel: string;
+  /** Descuento en porcentaje (0 = sin descuento). */
+  discount: number;
 }

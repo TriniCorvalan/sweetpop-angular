@@ -1,8 +1,8 @@
 import { CandyCategory, CandySize } from './candy.model';
 
 /**
- * Producto del inventario con stock y datos editables por admin.
- * @usageNotes Hoy se persiste en localStorage; la misma forma servirá con json-server.
+ * Producto del inventario: mismos datos de catálogo más stock editable.
+ * @usageNotes Fuente de verdad de dulces (seed en `CANDY_CATALOG`); listo para json-server.
  */
 export interface InventoryItem {
   productId: string;
@@ -11,6 +11,9 @@ export interface InventoryItem {
   size: CandySize;
   price: number;
   image: string;
+  description: string;
+  /** Descuento en porcentaje (0 = sin descuento). */
+  discount: number;
   stock: number;
 }
 

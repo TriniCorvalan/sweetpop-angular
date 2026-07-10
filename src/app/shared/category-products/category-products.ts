@@ -91,12 +91,12 @@ export class CategoryProducts implements OnInit {
    * Texto de descuento visible en la tarjeta del producto.
    * @param candy Dulce del catálogo.
    * @returns Etiqueta de descuento formateada.
-   * @usageNotes Muestra "no disponible" si el dulce no tiene descuento activo.
+   * @usageNotes Muestra "no disponible" si el descuento es 0.
    */
   getDiscountText(candy: Candy): string {
-    return candy.discountLabel === 'no disponible'
-      ? 'Descuento: no disponible'
-      : `Descuento: ${candy.discountLabel}`;
+    return candy.discount > 0
+      ? `Descuento: ${candy.discount}%`
+      : 'Descuento: no disponible';
   }
 
   private buildProductView(candy: Candy): ProductView {

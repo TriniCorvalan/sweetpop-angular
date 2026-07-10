@@ -49,4 +49,27 @@ describe('CategoryProducts', () => {
     expect(component.alertType).toBe('success');
     expect(component.alertMessage).toContain('Ositos de gomita');
   });
+
+  it('incluye productos creados en inventario dentro de la categoria', () => {
+    const inventoryService = TestBed.inject(InventoryService);
+    inventoryService.createItem({
+      name: 'Caramelo nuevo',
+      category: 'caramelos',
+      size: 'small',
+      price: 990,
+      image: 'assets/img/categories/hard-candies/candy-lollipop.jpg',
+      description: 'Caramelo creado desde inventario para la categoría.',
+      discount: 5,
+      stock: 12,
+    });
+
+    component.category = 'caramelos';
+    component.title = 'Caramelos';
+    component.ngOnInit();
+
+    const created = component.candies.find((candy) => candy.name === 'Caramelo nuevo');
+    expect(created).toBeTruthy();
+    expect(created?.description).toBe('Caramelo creado desde inventario para la categoría.');
+    expect(created?.discount).toBe(5);
+  });
 });

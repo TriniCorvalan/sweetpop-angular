@@ -45,6 +45,8 @@ export class InventoryDetail implements OnInit {
     size: this.fb.nonNullable.control<CandySize>('small', Validators.required),
     price: [0, [Validators.required, Validators.min(0)]],
     image: ['', Validators.required],
+    description: ['', [Validators.required, Validators.minLength(5)]],
+    discount: [0, [Validators.required, Validators.min(0)]],
     stock: [0, [Validators.required, Validators.min(0)]],
   });
 
@@ -73,6 +75,8 @@ export class InventoryDetail implements OnInit {
       size: item.size,
       price: item.price,
       image: item.image,
+      description: item.description,
+      discount: item.discount,
       stock: item.stock,
     });
   }
@@ -133,6 +137,8 @@ export class InventoryDetail implements OnInit {
       size: values.size,
       price: Number(values.price),
       image: values.image,
+      description: values.description,
+      discount: Number(values.discount),
       stock: Number(values.stock),
     });
 

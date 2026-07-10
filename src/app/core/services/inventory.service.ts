@@ -2,22 +2,29 @@ import { Injectable } from '@angular/core';
 
 import { INITIAL_STOCK, STORAGE_KEYS } from '../constants/storage-keys';
 import { CANDY_CATALOG } from '../data/candy-catalog';
+import { CandyCategory } from '../models/candy.model';
 import { InventoryItem, InventoryItemUpdate } from '../models/inventory-item.model';
-import { CatalogService } from './catalog.service';
 import { StorageService } from './storage.service';
+
+const CATEGORY_ID_PREFIX: Record<CandyCategory, string> = {
+  gomitas: 'gom',
+  chocolate: 'cho',
+  caramelos: 'car',
+  barritas: 'bar',
+};
+
+const DEFAULT_DISCOUNT = 0;
 
 /**
  * Servicio de persistencia y consulta del inventario de dulces.
  * @usageNotes Hoy usa `localStorage`; la API CRUD facilita migrar a json-server.
+ * Es la fuente de productos visibles en categorías y stock.
  */
 @Injectable({
   providedIn: 'root',
 })
 export class InventoryService {
-  constructor(
-    private readonly storage: StorageService,
-    private readonly catalog: CatalogService,
-  ) {}
+  constructor(private readonly storage: StorageService) {}
 
   /**
    * Crea el inventario inicial desde el catálogo si no hay datos guardados.
@@ -42,6 +49,8 @@ export class InventoryService {
       size: candy.size,
       price: candy.price,
       image: candy.image,
+      description: candy.description,
+      discount: candy.discount,
       stock: INITIAL_STOCK,
     }));
 
@@ -49,21 +58,24 @@ export class InventoryService {
   }
 
   /**
-   * Sincroniza tamaños del inventario si cambió el catálogo base.
+   * Completa o sincroniza campos de catálogo en ítems ya persistidos.
    * @returns void
    * @usageNotes Ejecutado en el `APP_INITIALIZER` tras `ensureInventory`.
+   * Rellena `description`/`discount` faltantes y alinea tamaño con el seed.
    */
-  syncInventorySizesFromCatalog(): void {
+  syncInventoryFromCatalog(): void {
     const inventory = this.getInventory();
     if (inventory.length === 0) {
       return;
     }
 
     let changed = false;
-    inventory.forEach((item) => {
-      const candy = this.catalog.getCandyById(item.productId);
-      if (candy && item.size !== candy.size) {
-        item.size = candy.size;
+    inventory.forEach((item, index) => {
+      const seed = CANDY_CATALOG.find((entry) => entry.id === item.productId);
+      const normalized = this.normalizeItem(item, seed);
+
+      if (!this.areItemsEqual(item, normalized)) {
+        inventory[index] = normalized;
         changed = true;
       }
     });
@@ -127,11 +139,7 @@ export class InventoryService {
     }
 
     return this.updateItem(productId, {
-      name: item.name,
-      category: item.category,
-      size: item.size,
-      price: item.price,
-      image: item.image,
+      ...this.toUpdatePayload(item),
       stock: Math.max(0, newStock),
     });
   }
@@ -139,7 +147,7 @@ export class InventoryService {
   /**
    * Actualiza los datos editables de un producto del inventario.
    * @param productId Id estable del producto.
-   * @param updates Campos a persistir (nombre, categoría, tamaño, precio, imagen, stock).
+   * @param updates Campos a persistir (incluye descripción y descuento).
    * @returns `false` si el producto no existe.
    * @usageNotes Usado en el detalle de inventario. Con json-server será un PUT/PATCH.
    */
@@ -151,16 +159,131 @@ export class InventoryService {
       return false;
     }
 
-    inventory[index] = {
-      productId,
-      name: updates.name.trim(),
-      category: updates.category,
-      size: updates.size,
-      price: Math.max(0, updates.price),
-      image: updates.image.trim(),
-      stock: Math.max(0, updates.stock),
-    };
+    inventory[index] = this.buildItem(productId, updates);
     this.saveInventory(inventory);
     return true;
+  }
+
+  /**
+   * Agrega un producto nuevo al inventario.
+   * @param data Datos del producto (sin `productId`; se genera automáticamente).
+   * @returns Ítem creado o `null` si el nombre queda vacío.
+   * @usageNotes Usado en el formulario de alta. Con json-server será un POST.
+   */
+  createItem(data: InventoryItemUpdate): InventoryItem | null {
+    const name = data.name.trim();
+    if (!name) {
+      return null;
+    }
+
+    const inventory = this.getInventory();
+    const productId = this.buildUniqueProductId(name, data.category, inventory);
+    const item = this.buildItem(productId, { ...data, name });
+
+    inventory.push(item);
+    this.saveInventory(inventory);
+    return item;
+  }
+
+  private buildItem(productId: string, data: InventoryItemUpdate): InventoryItem {
+    return {
+      productId,
+      name: data.name.trim(),
+      category: data.category,
+      size: data.size,
+      price: Math.max(0, data.price),
+      image: data.image.trim(),
+      description: data.description.trim(),
+      discount: Math.max(0, Number(data.discount) || 0),
+      stock: Math.max(0, data.stock),
+    };
+  }
+
+  private toUpdatePayload(item: InventoryItem): InventoryItemUpdate {
+    const { productId: _productId, ...rest } = item;
+    return rest;
+  }
+
+  private normalizeItem(
+    item: InventoryItem,
+    seed?: (typeof CANDY_CATALOG)[number],
+  ): InventoryItem {
+    return {
+      productId: item.productId,
+      name: item.name,
+      category: item.category,
+      size: seed && item.size !== seed.size ? seed.size : item.size,
+      price: item.price,
+      image: item.image,
+      description: item.description?.trim()
+        ? item.description
+        : (seed?.description ?? `Dulce de la categoría ${item.category}.`),
+      discount: this.resolveDiscount(item, seed),
+      stock: item.stock,
+    };
+  }
+
+  private resolveDiscount(
+    item: InventoryItem,
+    seed?: (typeof CANDY_CATALOG)[number],
+  ): number {
+    const legacy = item as InventoryItem & { discountLabel?: string };
+
+    if (typeof legacy.discount === 'number' && !Number.isNaN(legacy.discount)) {
+      return Math.max(0, legacy.discount);
+    }
+
+    if (typeof legacy.discountLabel === 'string') {
+      return this.parseLegacyDiscountLabel(legacy.discountLabel);
+    }
+
+    return seed?.discount ?? DEFAULT_DISCOUNT;
+  }
+
+  private parseLegacyDiscountLabel(label: string): number {
+    const trimmed = label.trim().toLowerCase();
+    if (!trimmed || trimmed === 'no disponible') {
+      return DEFAULT_DISCOUNT;
+    }
+
+    const match = trimmed.match(/(\d+(?:\.\d+)?)/);
+    return match ? Math.max(0, Number(match[1])) : DEFAULT_DISCOUNT;
+  }
+
+  private areItemsEqual(a: InventoryItem, b: InventoryItem): boolean {
+    return (
+      a.productId === b.productId &&
+      a.name === b.name &&
+      a.category === b.category &&
+      a.size === b.size &&
+      a.price === b.price &&
+      a.image === b.image &&
+      a.description === b.description &&
+      a.discount === b.discount &&
+      a.stock === b.stock
+    );
+  }
+
+  private buildUniqueProductId(
+    name: string,
+    category: CandyCategory,
+    inventory: InventoryItem[],
+  ): string {
+    const slug = name
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+    const base = `${CATEGORY_ID_PREFIX[category]}-${slug || 'producto'}`;
+    let candidate = base;
+    let suffix = 2;
+
+    while (inventory.some((item) => item.productId === candidate)) {
+      candidate = `${base}-${suffix}`;
+      suffix += 1;
+    }
+
+    return candidate;
   }
 }

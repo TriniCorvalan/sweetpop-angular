@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 
@@ -7,14 +7,15 @@ import {
   SIZE_COMPATIBILITY,
   WALL_QUANTITY_BY_SIZE,
 } from '../constants/storage-keys';
-import { CANDY_CATALOG } from '../data/candy-catalog';
 import { CATEGORY_CATALOG } from '../data/category-catalog';
 import { Box, BoxId } from '../models/box.model';
 import { Candy, CandyCategory, CandySize } from '../models/candy.model';
+import { InventoryItem } from '../models/inventory-item.model';
+import { InventoryService } from './inventory.service';
 
 /**
  * Servicio de consulta al catálogo y reglas de negocio.
- * @usageNotes Cajas desde API DummyJSON; dulces y categorías estáticos. Solo lectura.
+ * @usageNotes Cajas desde DummyJSON; dulces desde inventario (mismos campos que el catálogo + stock).
  */
 @Injectable({
   providedIn: 'root',
@@ -22,12 +23,16 @@ import { Candy, CandyCategory, CandySize } from '../models/candy.model';
 export class CatalogService {
   readonly boxesUrl = 'https://dummyjson.com/c/a111-5f2a-4629-ae59';
 
-  /** Catálogo de dulces disponibles. @usageNotes Ver `CANDY_CATALOG`. */
-  readonly candies = CANDY_CATALOG;
   /** Catálogo de categorías para navegación. @usageNotes Ver `CATEGORY_CATALOG`. */
   readonly categories = CATEGORY_CATALOG;
 
-  constructor(private readonly httpClient: HttpClient) {}
+  private readonly httpClient = inject(HttpClient);
+  private readonly inventory = inject(InventoryService);
+
+  /** Dulces disponibles según inventario actual. @usageNotes Incluye productos creados por admin. */
+  get candies(): Candy[] {
+    return this.inventory.getInventory().map((item) => this.mapInventoryItemToCandy(item));
+  }
 
   /**
    * Obtiene las cajas desde DummyJSON.
@@ -50,23 +55,27 @@ export class CatalogService {
   }
 
   /**
-   * Busca un dulce por id.
+   * Busca un dulce por id en el inventario.
    * @param productId Id del producto.
    * @returns Dulce encontrado o `null`.
    * @usageNotes Usado al asignar dulces a paredes del borrador.
    */
   getCandyById(productId: string): Candy | null {
-    return this.candies.find((candy) => candy.id === productId) ?? null;
+    const item = this.inventory.getInventoryItem(productId);
+    return item ? this.mapInventoryItemToCandy(item) : null;
   }
 
   /**
-   * Filtra dulces por categoría.
+   * Filtra dulces del inventario por categoría.
    * @param category Id de categoría (`gomitas`, `chocolate`, etc.).
    * @returns Dulces de la categoría indicada.
    * @usageNotes Consumido por `CategoryProducts` en páginas de categoría.
    */
   getCandiesByCategory(category: CandyCategory): Candy[] {
-    return this.candies.filter((candy) => candy.category === category);
+    return this.inventory
+      .getInventory()
+      .filter((item) => item.category === category)
+      .map((item) => this.mapInventoryItemToCandy(item));
   }
 
   /**
@@ -134,5 +143,18 @@ export class CatalogService {
    */
   formatDiscountPercent(discount: number): string {
     return `${Math.round(discount * 100)}%`;
+  }
+
+  private mapInventoryItemToCandy(item: InventoryItem): Candy {
+    return {
+      id: item.productId,
+      name: item.name,
+      category: item.category,
+      size: item.size,
+      price: item.price,
+      image: item.image,
+      description: item.description,
+      discount: item.discount,
+    };
   }
 }

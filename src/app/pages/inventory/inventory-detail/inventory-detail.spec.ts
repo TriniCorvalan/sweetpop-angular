@@ -66,6 +66,8 @@ describe('InventoryDetail', () => {
       name: 'Dulce editado',
       stock: 42,
       price: 1990,
+      description: 'Descripción actualizada del dulce.',
+      discount: 15,
     });
 
     component.onSubmit();
@@ -75,6 +77,8 @@ describe('InventoryDetail', () => {
     expect(updated?.name).toBe('Dulce editado');
     expect(updated?.stock).toBe(42);
     expect(updated?.price).toBe(1990);
+    expect(updated?.description).toBe('Descripción actualizada del dulce.');
+    expect(updated?.discount).toBe(15);
   });
 
   it('redirige al listado si el producto no existe', async () => {
