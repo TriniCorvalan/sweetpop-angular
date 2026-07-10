@@ -1,6 +1,7 @@
 import { provideHttpClient } from '@angular/common/http';
 import { APP_INITIALIZER, ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 
 import { routes } from './app.routes';
 import { AuthService } from './core/services/auth.service';
@@ -12,18 +13,17 @@ import { InventoryService } from './core/services/inventory.service';
  * @param auth Servicio de autenticación.
  * @param inventory Servicio de inventario.
  * @param cart Servicio de carrito.
- * @returns Función que precarga admin, inventario y carrito.
- * @usageNotes Registrada como `APP_INITIALIZER` en `appConfig`.
+ * @returns Función async que precarga admin, inventario (API) y carrito.
+ * @usageNotes Requiere json-server (`npm run api`) para cargar el inventario.
  */
 function initializeApp(
   auth: AuthService,
   inventory: InventoryService,
   cart: CartService,
-): () => void {
-  return () => {
+): () => Promise<void> {
+  return async () => {
     auth.ensureAdminUser();
-    inventory.ensureInventory();
-    inventory.syncInventoryFromCatalog();
+    await firstValueFrom(inventory.loadInventory());
     cart.ensureCart();
   };
 }

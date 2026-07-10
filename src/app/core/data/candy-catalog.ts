@@ -1,9 +1,9 @@
 import { Candy } from '../models/candy.model';
 
-/** Catálogo estático de los 12 dulces disponibles en SweetPop. @usageNotes Seed inicial del inventario. */
+/** Catálogo estático de referencia de los 12 dulces SweetPop. @usageNotes Semilla histórica alineada con `db.json` (ids 1–12). */
 export const CANDY_CATALOG: Candy[] = [
   {
-    id: 'gom-gummy-bears',
+    id: 1,
     name: 'Ositos de gomita',
     category: 'gomitas',
     size: 'small',
@@ -13,7 +13,7 @@ export const CANDY_CATALOG: Candy[] = [
     discount: 10,
   },
   {
-    id: 'gom-jelly-beans',
+    id: 2,
     name: 'Gomitas en forma de semillas',
     category: 'gomitas',
     size: 'small',
@@ -23,7 +23,7 @@ export const CANDY_CATALOG: Candy[] = [
     discount: 0,
   },
   {
-    id: 'gom-worms',
+    id: 3,
     name: 'Gomitas en forma de serpientes',
     category: 'gomitas',
     size: 'small',
@@ -33,7 +33,7 @@ export const CANDY_CATALOG: Candy[] = [
     discount: 15,
   },
   {
-    id: 'cho-kisses',
+    id: 4,
     name: 'Besitos de chocolate',
     category: 'chocolate',
     size: 'small',
@@ -43,7 +43,7 @@ export const CANDY_CATALOG: Candy[] = [
     discount: 0,
   },
   {
-    id: 'cho-pb-cup',
+    id: 5,
     name: 'Chocolate con mantequilla de maní',
     category: 'chocolate',
     size: 'medium',
@@ -53,7 +53,7 @@ export const CANDY_CATALOG: Candy[] = [
     discount: 10,
   },
   {
-    id: 'cho-trufa',
+    id: 6,
     name: 'Trufas gourmet',
     category: 'chocolate',
     size: 'large',
@@ -63,7 +63,7 @@ export const CANDY_CATALOG: Candy[] = [
     discount: 20,
   },
   {
-    id: 'car-lollipop',
+    id: 7,
     name: 'Paletas',
     category: 'caramelos',
     size: 'medium',
@@ -73,7 +73,7 @@ export const CANDY_CATALOG: Candy[] = [
     discount: 5,
   },
   {
-    id: 'car-chew',
+    id: 8,
     name: 'Caramelos masticables',
     category: 'caramelos',
     size: 'medium',
@@ -83,7 +83,7 @@ export const CANDY_CATALOG: Candy[] = [
     discount: 0,
   },
   {
-    id: 'car-fruit-drop',
+    id: 9,
     name: 'Caramelos de fruta',
     category: 'caramelos',
     size: 'large',
@@ -93,7 +93,7 @@ export const CANDY_CATALOG: Candy[] = [
     discount: 10,
   },
   {
-    id: 'bar-candy',
+    id: 10,
     name: 'Barritas de chocolate',
     category: 'barritas',
     size: 'large',
@@ -103,7 +103,7 @@ export const CANDY_CATALOG: Candy[] = [
     discount: 15,
   },
   {
-    id: 'bar-nougat',
+    id: 11,
     name: 'Barritas de nuez',
     category: 'barritas',
     size: 'large',
@@ -113,7 +113,7 @@ export const CANDY_CATALOG: Candy[] = [
     discount: 10,
   },
   {
-    id: 'bar-crispy',
+    id: 12,
     name: 'Barritas crujientes',
     category: 'barritas',
     size: 'large',

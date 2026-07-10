@@ -1,7 +1,7 @@
 import { BoxId } from '../models/box.model';
 import { CandySize } from '../models/candy.model';
 
-/** Claves usadas para persistir datos en localStorage y sessionStorage. @usageNotes Referenciadas por servicios de auth, carrito, inventario y borrador. */
+/** Claves usadas para persistir datos en localStorage y sessionStorage. @usageNotes Referenciadas por servicios de auth, carrito, inventario local y borrador. */
 export const STORAGE_KEYS = {
   users: 'sweetpop_users',
   session: 'sweetpop_session',
@@ -10,7 +10,7 @@ export const STORAGE_KEYS = {
   boxDraft: 'sweetpop_box_draft',
 } as const;
 
-/** Stock inicial asignado a cada dulce al crear el inventario. @usageNotes Usado por `InventoryService.ensureInventory`. */
+/** Stock inicial de referencia al sembrar `db.json`. @usageNotes El inventario remoto vive en json-server; localStorage es espejo de lectura. */
 export const INITIAL_STOCK = 20;
 
 /** Mapa de cajas compatibles según el tamaño del dulce. @usageNotes Consultado por `CatalogService.isCandyCompatibleWithBox`. */

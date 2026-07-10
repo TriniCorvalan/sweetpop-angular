@@ -1,0 +1,136 @@
+{
+  "inventory": [
+    {
+      "id": 1,
+      "name": "Ositos de gomita",
+      "category": "gomitas",
+      "size": "small",
+      "price": 990,
+      "image": "assets/img/categories/gummies/candy-gummy-bears.jpg",
+      "description": "Tiernos ositos de gomita de colores.",
+      "discount": 10,
+      "stock": 20
+    },
+    {
+      "id": 2,
+      "name": "Gomitas en forma de semillas",
+      "category": "gomitas",
+      "size": "small",
+      "price": 790,
+      "image": "assets/img/categories/gummies/candy-jelly-beans.jpg",
+      "description": "Deliciosas gomitas en forma de semillas.",
+      "discount": 0,
+      "stock": 20
+    },
+    {
+      "id": 3,
+      "name": "Gomitas en forma de serpientes",
+      "category": "gomitas",
+      "size": "small",
+      "price": 590,
+      "image": "assets/img/categories/gummies/candy-worms.jpg",
+      "description": "Entretenidas gomitas en forma de serpientes.",
+      "discount": 15,
+      "stock": 20
+    },
+    {
+      "id": 4,
+      "name": "Besitos de chocolate",
+      "category": "chocolate",
+      "size": "small",
+      "price": 490,
+      "image": "assets/img/categories/chocolate/candy-choco-kisses.jpg",
+      "description": "Románticos besitos de chocolate.",
+      "discount": 0,
+      "stock": 20
+    },
+    {
+      "id": 5,
+      "name": "Chocolate con mantequilla de maní",
+      "category": "chocolate",
+      "size": "medium",
+      "price": 290,
+      "image": "assets/img/categories/chocolate/candy-peanut-cup.jpg",
+      "description": "Delicioso chocolate con mantequilla de maní.",
+      "discount": 10,
+      "stock": 20
+    },
+    {
+      "id": 6,
+      "name": "Trufas gourmet",
+      "category": "chocolate",
+      "size": "large",
+      "price": 990,
+      "image": "assets/img/categories/chocolate/candy-truffle.jpg",
+      "description": "Tradicionales trufas de chocolate.",
+      "discount": 20,
+      "stock": 20
+    },
+    {
+      "id": 7,
+      "name": "Paletas",
+      "category": "caramelos",
+      "size": "medium",
+      "price": 990,
+      "image": "assets/img/categories/hard-candies/candy-lollipop.jpg",
+      "description": "Clásicos caramelos en forma de paleta.",
+      "discount": 5,
+      "stock": 20
+    },
+    {
+      "id": 8,
+      "name": "Caramelos masticables",
+      "category": "caramelos",
+      "size": "medium",
+      "price": 490,
+      "image": "assets/img/categories/hard-candies/candy-caramel.jpg",
+      "description": "Deliciosos caramelos masticables.",
+      "discount": 0,
+      "stock": 20
+    },
+    {
+      "id": 9,
+      "name": "Caramelos de fruta",
+      "category": "caramelos",
+      "size": "large",
+      "price": 490,
+      "image": "assets/img/categories/hard-candies/candy-fruit-drop.jpg",
+      "description": "Caramelos de fruta.",
+      "discount": 10,
+      "stock": 20
+    },
+    {
+      "id": 10,
+      "name": "Barritas de chocolate",
+      "category": "barritas",
+      "size": "large",
+      "price": 1990,
+      "image": "assets/img/categories/bars/candy-candy-bar.jpg",
+      "description": "Barrita de chocolate con chispas de chocolate.",
+      "discount": 15,
+      "stock": 20
+    },
+    {
+      "id": 11,
+      "name": "Barritas de nuez",
+      "category": "barritas",
+      "size": "large",
+      "price": 1290,
+      "image": "assets/img/categories/bars/candy-nougat.jpg",
+      "description": "Barrita de chocolate con nuez.",
+      "discount": 10,
+      "stock": 20
+    },
+    {
+      "id": 12,
+      "name": "Barritas crujientes",
+      "category": "barritas",
+      "size": "large",
+      "price": 1890,
+      "image": "assets/img/categories/bars/candy-crispy.jpg",
+      "description": "Barrita de chocolate con chispas de chocolate.",
+      "discount": 0,
+      "stock": 20
+    }
+  ]
+}

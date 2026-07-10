@@ -70,23 +70,29 @@ export class InventoryCreate {
     }
 
     const values = this.itemForm.getRawValue();
-    const created = this.inventoryService.createItem({
-      name: values.name,
-      category: values.category,
-      size: values.size,
-      price: Number(values.price),
-      image: values.image,
-      description: values.description,
-      discount: Number(values.discount),
-      stock: Number(values.stock),
-    });
-
-    if (!created) {
-      this.showAlert('danger', 'No fue posible crear el producto.');
-      return;
-    }
-
-    void this.router.navigate(['/inventario', created.productId]);
+    this.inventoryService
+      .createItem({
+        name: values.name,
+        category: values.category,
+        size: values.size,
+        price: Number(values.price),
+        image: values.image,
+        description: values.description,
+        discount: Number(values.discount),
+        stock: Number(values.stock),
+      })
+      .subscribe({
+        next: (created) => {
+          if (!created) {
+            this.showAlert('danger', 'No fue posible crear el producto.');
+            return;
+          }
+          void this.router.navigate(['/inventario', created.id]);
+        },
+        error: () => {
+          this.showAlert('danger', 'No fue posible crear el producto.');
+        },
+      });
   }
 
   /**

@@ -51,6 +51,6 @@ export class Inventory {
       return;
     }
 
-    this.inventoryService.deleteItem(item.productId);
+    this.inventoryService.deleteItem(item.id).subscribe();
   }
 }

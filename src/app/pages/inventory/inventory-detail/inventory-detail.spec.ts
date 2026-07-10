@@ -2,13 +2,17 @@ import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap, provideRouter, Router } from '@angular/router';
 import { vi } from 'vitest';
 
-import { CANDY_CATALOG } from '../../../core/data/candy-catalog';
 import { InventoryService } from '../../../core/services/inventory.service';
-import { clearStorages } from '../../../testing/test-helpers';
+import {
+  clearStorages,
+  flushInventoryDeleteRequest,
+  flushInventoryUpdateRequest,
+  seedInventoryCache,
+} from '../../../testing/test-helpers';
 import { InventoryDetail } from './inventory-detail';
 
 describe('InventoryDetail', () => {
-  const productId = CANDY_CATALOG[0].id;
+  const itemId = 1;
   let component: InventoryDetail;
   let inventoryService: InventoryService;
 
@@ -23,7 +27,7 @@ describe('InventoryDetail', () => {
           provide: ActivatedRoute,
           useValue: {
             snapshot: {
-              paramMap: convertToParamMap({ productId }),
+              paramMap: convertToParamMap({ id: String(itemId) }),
             },
           },
         },
@@ -31,14 +35,14 @@ describe('InventoryDetail', () => {
     }).compileComponents();
 
     inventoryService = TestBed.inject(InventoryService);
-    inventoryService.ensureInventory();
+    seedInventoryCache();
     component = TestBed.createComponent(InventoryDetail).componentInstance;
     component.ngOnInit();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
-    expect(component.item?.productId).toBe(productId);
+    expect(component.item?.id).toBe(itemId);
   });
 
   it('indica disponibilidad segun el stock', () => {
@@ -71,8 +75,9 @@ describe('InventoryDetail', () => {
     });
 
     component.onSubmit();
+    flushInventoryUpdateRequest(itemId);
 
-    const updated = inventoryService.getInventoryItem(productId);
+    const updated = inventoryService.getInventoryItem(itemId);
     expect(component.alertType).toBe('success');
     expect(updated?.name).toBe('Dulce editado');
     expect(updated?.stock).toBe(42);
@@ -92,13 +97,14 @@ describe('InventoryDetail', () => {
           provide: ActivatedRoute,
           useValue: {
             snapshot: {
-              paramMap: convertToParamMap({ productId: 'no-existe' }),
+              paramMap: convertToParamMap({ id: '999' }),
             },
           },
         },
       ],
     }).compileComponents();
 
+    seedInventoryCache();
     const router = TestBed.inject(Router);
     const navigateSpy = vi.spyOn(router, 'navigate');
     const fixture = TestBed.createComponent(InventoryDetail);
@@ -113,8 +119,9 @@ describe('InventoryDetail', () => {
     vi.spyOn(window, 'confirm').mockReturnValue(true);
 
     component.onDelete();
+    flushInventoryDeleteRequest(itemId);
 
-    expect(inventoryService.getInventoryItem(productId)).toBeUndefined();
+    expect(inventoryService.getInventoryItem(itemId)).toBeUndefined();
     expect(navigateSpy).toHaveBeenCalledWith(['/inventario']);
   });
 
@@ -123,6 +130,6 @@ describe('InventoryDetail', () => {
 
     component.onDelete();
 
-    expect(inventoryService.getInventoryItem(productId)).toBeTruthy();
+    expect(inventoryService.getInventoryItem(itemId)).toBeTruthy();
   });
 });

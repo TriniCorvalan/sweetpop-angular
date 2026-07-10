@@ -76,7 +76,7 @@ export const routes: Routes = [
     data: { roles: ['admin'] },
   },
   {
-    path: 'inventario/:productId',
+    path: 'inventario/:id',
     component: InventoryDetail,
     canActivate: [authGuard],
     data: { roles: ['admin'] },

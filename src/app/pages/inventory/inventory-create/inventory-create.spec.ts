@@ -3,7 +3,11 @@ import { provideRouter, Router } from '@angular/router';
 import { vi } from 'vitest';
 
 import { InventoryService } from '../../../core/services/inventory.service';
-import { clearStorages } from '../../../testing/test-helpers';
+import {
+  clearStorages,
+  flushInventoryCreateRequest,
+  seedInventoryCache,
+} from '../../../testing/test-helpers';
 import { InventoryCreate } from './inventory-create';
 
 describe('InventoryCreate', () => {
@@ -20,7 +24,7 @@ describe('InventoryCreate', () => {
     }).compileComponents();
 
     inventoryService = TestBed.inject(InventoryService);
-    inventoryService.ensureInventory();
+    seedInventoryCache();
     router = TestBed.inject(Router);
     component = TestBed.createComponent(InventoryCreate).componentInstance;
   });
@@ -54,13 +58,14 @@ describe('InventoryCreate', () => {
     });
 
     component.onSubmit();
+    flushInventoryCreateRequest(100);
 
     const created = inventoryService.getInventory().find((item) => item.name === 'Gomitas nuevas');
     expect(inventoryService.getInventory().length).toBe(countBefore + 1);
-    expect(created?.productId).toBe('gom-gomitas-nuevas');
+    expect(created?.id).toBe(100);
     expect(created?.description).toBe('Nuevas gomitas de prueba para el inventario.');
     expect(created?.discount).toBe(10);
     expect(created?.stock).toBe(10);
-    expect(navigateSpy).toHaveBeenCalledWith(['/inventario', 'gom-gomitas-nuevas']);
+    expect(navigateSpy).toHaveBeenCalledWith(['/inventario', 100]);
   });
 });

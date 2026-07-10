@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 import { vi } from 'vitest';
 
 import { InventoryService } from '../../core/services/inventory.service';
-import { clearStorages } from '../../testing/test-helpers';
+import { clearStorages, flushInventoryDeleteRequest, seedInventoryCache } from '../../testing/test-helpers';
 import { Inventory } from './inventory';
 
 describe('Inventory', () => {
@@ -16,7 +16,7 @@ describe('Inventory', () => {
       providers: [provideRouter([])],
     }).compileComponents();
 
-    TestBed.inject(InventoryService).ensureInventory();
+    seedInventoryCache();
     component = TestBed.createComponent(Inventory).componentInstance;
   });
 
@@ -45,7 +45,8 @@ describe('Inventory', () => {
     vi.spyOn(window, 'confirm').mockReturnValue(true);
 
     component.deleteProduct(product);
+    flushInventoryDeleteRequest(product.id);
 
-    expect(inventoryService.getInventoryItem(product.productId)).toBeUndefined();
+    expect(inventoryService.getInventoryItem(product.id)).toBeUndefined();
   });
 });

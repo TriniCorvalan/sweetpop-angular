@@ -91,7 +91,8 @@ export class CartService {
   validateCartStock(cart: CartItem[]): ServiceResult {
     const stockNeeded = this.getStockNeededFromCart(cart);
 
-    for (const [productId, quantity] of Object.entries(stockNeeded)) {
+    for (const [productIdKey, quantity] of Object.entries(stockNeeded)) {
+      const productId = Number(productIdKey);
       if (this.inventory.getStock(productId) < quantity) {
         const candy = this.catalog.getCandyById(productId);
         return {
@@ -130,13 +131,14 @@ export class CartService {
     };
   }
 
-  private getStockNeededFromCart(cart: CartItem[]): Record<string, number> {
-    const stockNeeded: Record<string, number> = {};
+  private getStockNeededFromCart(cart: CartItem[]): Record<number, number> {
+    const stockNeeded: Record<number, number> = {};
 
     cart.forEach((item) => {
       item.walls.forEach((wall) => {
         const quantity = wall.quantity ?? this.catalog.getWallQuantityBySize(wall.size!);
-        stockNeeded[wall.productId!] = (stockNeeded[wall.productId!] ?? 0) + quantity;
+        const productId = wall.productId!;
+        stockNeeded[productId] = (stockNeeded[productId] ?? 0) + quantity;
       });
     });
 
@@ -146,9 +148,10 @@ export class CartService {
   private deductInventoryForCart(cart: CartItem[]): void {
     const stockNeeded = this.getStockNeededFromCart(cart);
 
-    Object.entries(stockNeeded).forEach(([productId, quantity]) => {
+    Object.entries(stockNeeded).forEach(([productIdKey, quantity]) => {
+      const productId = Number(productIdKey);
       const currentStock = this.inventory.getStock(productId);
-      this.inventory.updateStock(productId, currentStock - quantity);
+      this.inventory.updateStock(productId, currentStock - quantity).subscribe();
     });
   }
 }

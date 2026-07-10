@@ -2,10 +2,10 @@ import { CandyCategory, CandySize } from './candy.model';
 
 /**
  * Producto del inventario: mismos datos de catálogo más stock editable.
- * @usageNotes Fuente de verdad de dulces (seed en `CANDY_CATALOG`); listo para json-server.
+ * @usageNotes Forma alineada con json-server (`id` numérico); espejo en localStorage.
  */
 export interface InventoryItem {
-  productId: string;
+  id: number;
   name: string;
   category: CandyCategory;
   size: CandySize;
@@ -17,5 +17,5 @@ export interface InventoryItem {
   stock: number;
 }
 
-/** Campos editables de un ítem (sin `productId`, que actúa como id estable). */
-export type InventoryItemUpdate = Omit<InventoryItem, 'productId'>;
+/** Campos editables de un ítem (sin `id`, generado por json-server). */
+export type InventoryItemUpdate = Omit<InventoryItem, 'id'>;

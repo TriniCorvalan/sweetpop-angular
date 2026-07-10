@@ -7,7 +7,7 @@ import { CandySize } from './candy.model';
  */
 export interface BoxWallAssignment {
   wallIndex: number;
-  productId: string | null;
+  productId: number | null;
   productName: string | null;
   price: number | null;
   size: CandySize | null;

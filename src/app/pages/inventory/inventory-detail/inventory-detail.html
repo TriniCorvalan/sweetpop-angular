@@ -32,12 +32,12 @@
         <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" novalidate>
           <div class="row g-3">
             <div class="col-12">
-              <label for="productId" class="form-label">ID del producto</label>
+              <label for="itemId" class="form-label">ID del producto</label>
               <input
                 type="text"
                 class="form-control sweetpop-field-readonly"
-                id="productId"
-                [value]="item.productId"
+                id="itemId"
+                [value]="item.id"
                 readonly
                 tabindex="-1"
               >

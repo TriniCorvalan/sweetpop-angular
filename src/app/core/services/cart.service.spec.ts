@@ -5,7 +5,9 @@ import { InventoryService } from './inventory.service';
 import {
   clearStorages,
   createSampleCartItem,
+  flushInventoryUpdateRequest,
   SAMPLE_BOX_CALCULATION,
+  seedInventoryCache,
 } from '../../testing/test-helpers';
 
 describe('CartService', () => {
@@ -17,7 +19,7 @@ describe('CartService', () => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(CartService);
     inventoryService = TestBed.inject(InventoryService);
-    inventoryService.ensureInventory();
+    seedInventoryCache();
   });
 
   describe('calculo del carrito', () => {
@@ -49,12 +51,17 @@ describe('CartService', () => {
       const cartItem = createSampleCartItem();
       service.saveCart([cartItem]);
 
-      const stockBefore = inventoryService.getStock('gom-gummy-bears');
+      const stockBefore = inventoryService.getStock(1);
       const result = service.processCartPayment();
+
+      flushInventoryUpdateRequest(1);
+      flushInventoryUpdateRequest(2);
+      flushInventoryUpdateRequest(3);
+      flushInventoryUpdateRequest(4);
 
       expect(result.success).toBe(true);
       expect(service.getCart()).toHaveLength(0);
-      expect(inventoryService.getStock('gom-gummy-bears')).toBe(stockBefore - 4);
+      expect(inventoryService.getStock(1)).toBe(stockBefore - 4);
     });
   });
 });

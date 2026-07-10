@@ -65,11 +65,11 @@ export class CategoryProducts implements OnInit {
 
   /**
    * Asigna un dulce a la pared activa del borrador.
-   * @param productId Id del dulce en el catálogo.
+   * @param productId Id numérico del dulce en el inventario.
    * @returns void
    * @usageNotes Invocado al hacer clic en el botón de asignar de cada tarjeta.
    */
-  assignProduct(productId: string): void {
+  assignProduct(productId: number): void {
     const result = this.boxDraftService.assignCandyToWall(productId);
 
     if (!result.success) {

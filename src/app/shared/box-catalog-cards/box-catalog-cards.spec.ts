@@ -3,8 +3,7 @@ import { Router } from '@angular/router';
 import { of } from 'rxjs';
 
 import { BoxDraftService } from '../../core/services/box-draft.service';
-import { InventoryService } from '../../core/services/inventory.service';
-import { clearStorages, seedSession } from '../../testing/test-helpers';
+import { clearStorages, seedInventoryCache, seedSession } from '../../testing/test-helpers';
 import { BoxCatalogCards } from './box-catalog-cards';
 
 describe('BoxCatalogCards', () => {
@@ -18,7 +17,7 @@ describe('BoxCatalogCards', () => {
       imports: [BoxCatalogCards],
     }).compileComponents();
 
-    TestBed.inject(InventoryService).ensureInventory();
+    seedInventoryCache();
     router = TestBed.inject(Router);
     boxDraftService = TestBed.inject(BoxDraftService);
 

@@ -3,7 +3,13 @@ import { firstValueFrom } from 'rxjs';
 
 import { BoxDraftService } from '../../core/services/box-draft.service';
 import { InventoryService } from '../../core/services/inventory.service';
-import { clearStorages, flushBoxesRequest, seedSession } from '../../testing/test-helpers';
+import {
+  clearStorages,
+  flushBoxesRequest,
+  flushInventoryCreateRequest,
+  seedInventoryCache,
+  seedSession,
+} from '../../testing/test-helpers';
 import { CategoryProducts } from './category-products';
 
 describe('CategoryProducts', () => {
@@ -16,7 +22,7 @@ describe('CategoryProducts', () => {
       imports: [CategoryProducts],
     }).compileComponents();
 
-    TestBed.inject(InventoryService).ensureInventory();
+    seedInventoryCache();
     boxDraftService = TestBed.inject(BoxDraftService);
 
     const fixture = TestBed.createComponent(CategoryProducts);
@@ -44,7 +50,7 @@ describe('CategoryProducts', () => {
     await startPromise;
 
     component.ngOnInit();
-    component.assignProduct('gom-gummy-bears');
+    component.assignProduct(1);
 
     expect(component.alertType).toBe('success');
     expect(component.alertMessage).toContain('Ositos de gomita');
@@ -52,16 +58,19 @@ describe('CategoryProducts', () => {
 
   it('incluye productos creados en inventario dentro de la categoria', () => {
     const inventoryService = TestBed.inject(InventoryService);
-    inventoryService.createItem({
-      name: 'Caramelo nuevo',
-      category: 'caramelos',
-      size: 'small',
-      price: 990,
-      image: 'assets/img/categories/hard-candies/candy-lollipop.jpg',
-      description: 'Caramelo creado desde inventario para la categoría.',
-      discount: 5,
-      stock: 12,
-    });
+    inventoryService
+      .createItem({
+        name: 'Caramelo nuevo',
+        category: 'caramelos',
+        size: 'small',
+        price: 990,
+        image: 'assets/img/categories/hard-candies/candy-lollipop.jpg',
+        description: 'Caramelo creado desde inventario para la categoría.',
+        discount: 5,
+        stock: 12,
+      })
+      .subscribe();
+    flushInventoryCreateRequest(50);
 
     component.category = 'caramelos';
     component.title = 'Caramelos';

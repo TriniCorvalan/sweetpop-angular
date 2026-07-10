@@ -3,27 +3,25 @@ import { firstValueFrom } from 'rxjs';
 
 import { BoxDraftService } from './box-draft.service';
 import { CartService } from './cart.service';
-import { InventoryService } from './inventory.service';
 import {
   clearStorages,
   createSampleCompleteBoxDraft,
   flushBoxesRequest,
   SAMPLE_BOX_CALCULATION,
+  seedInventoryCache,
   seedSession,
 } from '../../testing/test-helpers';
 
 describe('BoxDraftService', () => {
   let service: BoxDraftService;
   let cartService: CartService;
-  let inventoryService: InventoryService;
 
   beforeEach(() => {
     clearStorages();
     TestBed.configureTestingModule({});
     service = TestBed.inject(BoxDraftService);
     cartService = TestBed.inject(CartService);
-    inventoryService = TestBed.inject(InventoryService);
-    inventoryService.ensureInventory();
+    seedInventoryCache();
   });
 
   describe('flujo de personalizacion', () => {
@@ -55,7 +53,7 @@ describe('BoxDraftService', () => {
       flushBoxesRequest();
       await startPromise;
 
-      const candyIds = ['gom-gummy-bears', 'gom-jelly-beans', 'gom-worms', 'cho-kisses'];
+      const candyIds = [1, 2, 3, 4];
 
       candyIds.forEach((productId) => {
         const result = service.assignCandyToWall(productId);
@@ -71,7 +69,7 @@ describe('BoxDraftService', () => {
       flushBoxesRequest();
       await startPromise;
 
-      ['gom-gummy-bears', 'gom-jelly-beans', 'gom-worms', 'cho-kisses'].forEach((productId) => {
+      [1, 2, 3, 4].forEach((productId) => {
         service.assignCandyToWall(productId);
       });
 

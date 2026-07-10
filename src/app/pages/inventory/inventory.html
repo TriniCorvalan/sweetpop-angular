@@ -36,7 +36,7 @@
             <td colspan="7" class="text-center py-4">No hay productos en inventario.</td>
           </tr>
         } @else {
-          @for (item of inventory; track item.productId) {
+          @for (item of inventory; track item.id) {
             <tr [class.table-row-out-of-stock]="item.stock === 0">
               <td>{{ item.name }}</td>
               <td>{{ catalog.getCategoryLabel(item.category) }}</td>
@@ -52,9 +52,9 @@
                 <div class="d-flex flex-wrap gap-2">
                   <a
                     class="btn btn-outline-light btn-sm"
-                    [routerLink]="['/inventario', item.productId]"
+                    [routerLink]="['/inventario', item.id]"
                   >
-                    Ver detalle
+                    Editar
                   </a>
                   <button
                     type="button"

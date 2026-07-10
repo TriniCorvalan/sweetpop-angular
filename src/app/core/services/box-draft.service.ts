@@ -95,12 +95,12 @@ export class BoxDraftService {
 
   /**
    * Suma unidades de un dulce ya reservadas en el borrador.
-   * @param productId Id del dulce.
+   * @param productId Id numérico del dulce.
    * @param draft Borrador a evaluar; usa el activo si se omite.
    * @returns Unidades reservadas en paredes del borrador.
    * @usageNotes Resta del stock visible al asignar más unidades del mismo dulce.
    */
-  getQuantityUsedInDraft(productId: string, draft: BoxDraft | null = this.getBoxDraft()): number {
+  getQuantityUsedInDraft(productId: number, draft: BoxDraft | null = this.getBoxDraft()): number {
     if (!draft) {
       return 0;
     }
@@ -115,11 +115,11 @@ export class BoxDraftService {
 
   /**
    * Stock disponible para asignar considerando reservas del borrador.
-   * @param productId Id del dulce.
+   * @param productId Id numérico del dulce.
    * @returns Unidades disponibles para la siguiente pared.
    * @usageNotes Mostrado en tarjetas de producto durante personalización.
    */
-  getAvailableStockForDraft(productId: string): number {
+  getAvailableStockForDraft(productId: number): number {
     return this.inventory.getStock(productId) - this.getQuantityUsedInDraft(productId);
   }
 
@@ -191,11 +191,11 @@ export class BoxDraftService {
 
   /**
    * Asigna un dulce a la siguiente pared libre del borrador.
-   * @param productId Id del dulce a asignar.
+   * @param productId Id numérico del dulce a asignar.
    * @returns Resultado con progreso (`filled`, `complete`) o mensaje de error.
    * @usageNotes Invocado desde CategoryProducts al hacer clic en un dulce.
    */
-  assignCandyToWall(productId: string): ServiceResult {
+  assignCandyToWall(productId: number): ServiceResult {
     if (!this.auth.hasRole('user')) {
       return {
         success: false,
@@ -294,13 +294,15 @@ export class BoxDraftService {
       };
     }
 
-    const stockNeeded: Record<string, number> = {};
+    const stockNeeded: Record<number, number> = {};
     draft.walls.forEach((wall) => {
       const quantity = wall.quantity ?? this.catalog.getWallQuantityBySize(wall.size!);
-      stockNeeded[wall.productId!] = (stockNeeded[wall.productId!] ?? 0) + quantity;
+      const productId = wall.productId!;
+      stockNeeded[productId] = (stockNeeded[productId] ?? 0) + quantity;
     });
 
-    for (const [productId, quantity] of Object.entries(stockNeeded)) {
+    for (const [productIdKey, quantity] of Object.entries(stockNeeded)) {
+      const productId = Number(productIdKey);
       if (this.inventory.getStock(productId) < quantity) {
         const candy = this.catalog.getCandyById(productId);
         return {

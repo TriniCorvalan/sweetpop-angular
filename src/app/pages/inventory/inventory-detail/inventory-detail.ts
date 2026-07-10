@@ -10,7 +10,7 @@ import { InventoryService } from '../../../core/services/inventory.service';
 
 /**
  * Detalle de un producto del inventario: consulta y edita stock y datos.
- * @usageNotes Ruta `/inventario/:productId`; requiere rol `admin` vía `authGuard`.
+ * @usageNotes Ruta `/inventario/:id`; requiere rol `admin` vía `authGuard`.
  */
 @Component({
   selector: 'app-inventory-detail',
@@ -51,18 +51,19 @@ export class InventoryDetail implements OnInit {
   });
 
   /**
-   * Carga el producto según el `productId` de la ruta.
+   * Carga el producto según el `id` de la ruta.
    * @returns void
    * @usageNotes Redirige al listado si el id no existe en inventario.
    */
   ngOnInit(): void {
-    const productId = this.route.snapshot.paramMap.get('productId');
-    if (!productId) {
+    const rawId = this.route.snapshot.paramMap.get('id');
+    const id = rawId ? Number(rawId) : NaN;
+    if (!rawId || Number.isNaN(id)) {
       this.router.navigate(['/inventario']);
       return;
     }
 
-    const item = this.inventoryService.getInventoryItem(productId);
+    const item = this.inventoryService.getInventoryItem(id);
     if (!item) {
       this.router.navigate(['/inventario']);
       return;
@@ -130,25 +131,32 @@ export class InventoryDetail implements OnInit {
       return;
     }
 
+    const id = this.item.id;
     const values = this.itemForm.getRawValue();
-    const updated = this.inventoryService.updateItem(this.item.productId, {
-      name: values.name,
-      category: values.category,
-      size: values.size,
-      price: Number(values.price),
-      image: values.image,
-      description: values.description,
-      discount: Number(values.discount),
-      stock: Number(values.stock),
-    });
-
-    if (!updated) {
-      this.showAlert('danger', 'No fue posible guardar los cambios.');
-      return;
-    }
-
-    this.item = this.inventoryService.getInventoryItem(this.item.productId) ?? this.item;
-    this.showAlert('success', 'Producto actualizado correctamente.');
+    this.inventoryService
+      .updateItem(id, {
+        name: values.name,
+        category: values.category,
+        size: values.size,
+        price: Number(values.price),
+        image: values.image,
+        description: values.description,
+        discount: Number(values.discount),
+        stock: Number(values.stock),
+      })
+      .subscribe({
+        next: (updated) => {
+          if (!updated) {
+            this.showAlert('danger', 'No fue posible guardar los cambios.');
+            return;
+          }
+          this.item = this.inventoryService.getInventoryItem(id) ?? this.item;
+          this.showAlert('success', 'Producto actualizado correctamente.');
+        },
+        error: () => {
+          this.showAlert('danger', 'No fue posible guardar los cambios.');
+        },
+      });
   }
 
   /**
@@ -170,13 +178,18 @@ export class InventoryDetail implements OnInit {
       return;
     }
 
-    const deleted = this.inventoryService.deleteItem(this.item.productId);
-    if (!deleted) {
-      this.showAlert('danger', 'No fue posible eliminar el producto.');
-      return;
-    }
-
-    void this.router.navigate(['/inventario']);
+    this.inventoryService.deleteItem(this.item.id).subscribe({
+      next: (deleted) => {
+        if (!deleted) {
+          this.showAlert('danger', 'No fue posible eliminar el producto.');
+          return;
+        }
+        void this.router.navigate(['/inventario']);
+      },
+      error: () => {
+        this.showAlert('danger', 'No fue posible eliminar el producto.');
+      },
+    });
   }
 
   /**

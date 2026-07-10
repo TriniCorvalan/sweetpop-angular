@@ -9,10 +9,10 @@ export type CandySize = 'small' | 'medium' | 'large';
 
 /**
  * Dulce disponible para personalización de cajas.
- * @usageNotes Proviene del inventario (seed inicial en `CANDY_CATALOG`).
+ * @usageNotes Proviene del inventario (id numérico de json-server).
  */
 export interface Candy {
-  id: string;
+  id: number;
   name: string;
   category: CandyCategory;
   size: CandySize;

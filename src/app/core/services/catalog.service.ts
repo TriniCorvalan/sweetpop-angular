@@ -56,12 +56,12 @@ export class CatalogService {
 
   /**
    * Busca un dulce por id en el inventario.
-   * @param productId Id del producto.
+   * @param id Id numérico del producto.
    * @returns Dulce encontrado o `null`.
    * @usageNotes Usado al asignar dulces a paredes del borrador.
    */
-  getCandyById(productId: string): Candy | null {
-    const item = this.inventory.getInventoryItem(productId);
+  getCandyById(id: number): Candy | null {
+    const item = this.inventory.getInventoryItem(id);
     return item ? this.mapInventoryItemToCandy(item) : null;
   }
 
@@ -147,7 +147,7 @@ export class CatalogService {
 
   private mapInventoryItemToCandy(item: InventoryItem): Candy {
     return {
-      id: item.productId,
+      id: item.id,
       name: item.name,
       category: item.category,
       size: item.size,

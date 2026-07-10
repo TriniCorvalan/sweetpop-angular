@@ -2,15 +2,20 @@
 
 import { TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { HttpTestingController } from '@angular/common/http/testing';
+import { expect } from 'vitest';
 
-import { STORAGE_KEYS } from '../core/constants/storage-keys';
+import { INITIAL_STOCK, STORAGE_KEYS } from '../core/constants/storage-keys';
+import { INVENTORY_API_URL } from '../core/constants/api.constants';
 import { BOX_CATALOG } from '../core/data/box-catalog';
+import { CANDY_CATALOG } from '../core/data/candy-catalog';
 import { BoxDraft } from '../core/models/box-draft.model';
 import { CartItem } from '../core/models/cart-item.model';
+import { InventoryItem } from '../core/models/inventory-item.model';
 import { Session } from '../core/models/session.model';
 import { User, UserRole } from '../core/models/user.model';
 import { AuthService } from '../core/services/auth.service';
 import { CatalogService } from '../core/services/catalog.service';
+import { InventoryService } from '../core/services/inventory.service';
 import { StorageService } from '../core/services/storage.service';
 
 export const VALID_PASSWORD = 'Cliente1!';
@@ -45,7 +50,7 @@ export function createSampleCompleteBoxDraft(): BoxDraft {
     walls: [
       {
         wallIndex: 1,
-        productId: 'gom-gummy-bears',
+        productId: 1,
         productName: 'Dulce 1',
         price: 500,
         size: 'large',
@@ -53,7 +58,7 @@ export function createSampleCompleteBoxDraft(): BoxDraft {
       },
       {
         wallIndex: 2,
-        productId: 'gom-jelly-beans',
+        productId: 2,
         productName: 'Dulce 2',
         price: 600,
         size: 'large',
@@ -61,7 +66,7 @@ export function createSampleCompleteBoxDraft(): BoxDraft {
       },
       {
         wallIndex: 3,
-        productId: 'gom-worms',
+        productId: 3,
         productName: 'Dulce 3',
         price: 700,
         size: 'large',
@@ -69,7 +74,7 @@ export function createSampleCompleteBoxDraft(): BoxDraft {
       },
       {
         wallIndex: 4,
-        productId: 'cho-kisses',
+        productId: 4,
         productName: 'Dulce 4',
         price: 800,
         size: 'large',
@@ -158,6 +163,50 @@ export function flushBoxesRequest(): void {
   const httpMock = TestBed.inject(HttpTestingController);
   const request = httpMock.expectOne(catalog.boxesUrl);
   request.flush(BOX_CATALOG);
+}
+
+/** Inventario semilla equivalente a `db.json` para pruebas. */
+export function createSeedInventoryItems(): InventoryItem[] {
+  return CANDY_CATALOG.map((candy) => ({
+    id: candy.id,
+    name: candy.name,
+    category: candy.category,
+    size: candy.size,
+    price: candy.price,
+    image: candy.image,
+    description: candy.description,
+    discount: candy.discount,
+    stock: INITIAL_STOCK,
+  }));
+}
+
+/** Precarga el inventario en localStorage sin llamar a la API. */
+export function seedInventoryCache(items = createSeedInventoryItems()): void {
+  TestBed.inject(InventoryService).setLocalInventory(items);
+}
+
+/** Responde un POST a `/inventory` con el body enviado más un id generado. */
+export function flushInventoryCreateRequest(id = 100): void {
+  const httpMock = TestBed.inject(HttpTestingController);
+  const request = httpMock.expectOne(INVENTORY_API_URL);
+  expect(request.request.method).toBe('POST');
+  request.flush({ id, ...request.request.body });
+}
+
+/** Responde un PUT a `/inventory/:id`. */
+export function flushInventoryUpdateRequest(id: number): void {
+  const httpMock = TestBed.inject(HttpTestingController);
+  const request = httpMock.expectOne(`${INVENTORY_API_URL}/${id}`);
+  expect(request.request.method).toBe('PUT');
+  request.flush(request.request.body);
+}
+
+/** Responde un DELETE a `/inventory/:id`. */
+export function flushInventoryDeleteRequest(id: number): void {
+  const httpMock = TestBed.inject(HttpTestingController);
+  const request = httpMock.expectOne(`${INVENTORY_API_URL}/${id}`);
+  expect(request.request.method).toBe('DELETE');
+  request.flush({});
 }
 
 export async function configureComponentTestingModule(
