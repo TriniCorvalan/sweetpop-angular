@@ -17,6 +17,17 @@
     </div>
   </div>
 
+  @if (alertMessage) {
+    <div
+      class="alert mb-4"
+      role="alert"
+      [class.alert-success]="alertType === 'success'"
+      [class.alert-danger]="alertType === 'danger'"
+    >
+      {{ alertMessage }}
+    </div>
+  }
+
   <div class="table-responsive">
     <table class="table sweetpop-table align-middle mb-0">
       <thead>

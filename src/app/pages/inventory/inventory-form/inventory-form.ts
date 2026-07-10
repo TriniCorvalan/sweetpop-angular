@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -7,6 +7,10 @@ import { CandyCategory, CandySize } from '../../../core/models/candy.model';
 import { InventoryItem, InventoryItemUpdate } from '../../../core/models/inventory-item.model';
 import { CatalogService } from '../../../core/services/catalog.service';
 import { InventoryService } from '../../../core/services/inventory.service';
+import {
+  consumeInventoryFlash,
+  setInventoryFlash,
+} from '../../../core/utils/inventory-flash';
 
 /**
  * Formulario compartido de inventario: alta (`/inventario/nuevo`) o edición (`/inventario/:id`).
@@ -23,6 +27,7 @@ export class InventoryForm implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   isEditMode = false;
   item: InventoryItem | null = null;
@@ -86,6 +91,7 @@ export class InventoryForm implements OnInit {
 
     if (!rawId) {
       this.isEditMode = false;
+      this.applyFlashAlert();
       this.ready = true;
       return;
     }
@@ -114,6 +120,7 @@ export class InventoryForm implements OnInit {
       discount: item.discount,
       stock: item.stock,
     });
+    this.applyFlashAlert();
     this.ready = true;
   }
 
@@ -189,8 +196,9 @@ export class InventoryForm implements OnInit {
       return;
     }
 
+    const productName = this.item.name;
     const confirmed = window.confirm(
-      `¿Eliminar "${this.item.name}" del inventario? Esta acción no se puede deshacer.`,
+      `¿Eliminar "${productName}" del inventario? Esta acción no se puede deshacer.`,
     );
 
     if (!confirmed) {
@@ -203,6 +211,10 @@ export class InventoryForm implements OnInit {
           this.showAlert('danger', 'No fue posible eliminar el producto.');
           return;
         }
+        setInventoryFlash({
+          type: 'success',
+          message: `Producto "${productName}" eliminado correctamente.`,
+        });
         void this.router.navigate(['/inventario']);
       },
       error: () => {
@@ -227,7 +239,13 @@ export class InventoryForm implements OnInit {
           this.showAlert('danger', 'No fue posible crear el producto.');
           return;
         }
-        void this.router.navigate(['/inventario', created.id]);
+
+        // La ruta create y edit son configs distintas: el componente se recrea al navegar.
+        setInventoryFlash({
+          type: 'success',
+          message: 'Producto creado correctamente.',
+        });
+        void this.router.navigate(['/inventario', created.id], { replaceUrl: true });
       },
       error: () => {
         this.showAlert('danger', 'No fue posible crear el producto.');
@@ -260,5 +278,13 @@ export class InventoryForm implements OnInit {
   private showAlert(type: 'success' | 'danger', message: string): void {
     this.alertType = type;
     this.alertMessage = message;
+    this.cdr.detectChanges();
+  }
+
+  private applyFlashAlert(): void {
+    const flash = consumeInventoryFlash();
+    if (flash) {
+      this.showAlert(flash.type, flash.message);
+    }
   }
 }

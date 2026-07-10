@@ -48,5 +48,23 @@ describe('Inventory', () => {
     flushInventoryDeleteRequest(product.id);
 
     expect(inventoryService.getInventoryItem(product.id)).toBeUndefined();
+    expect(component.alertType).toBe('success');
+    expect(component.alertMessage).toContain('eliminado correctamente');
+  });
+
+  it('muestra mensaje flash al llegar tras eliminar desde el detalle', () => {
+    sessionStorage.setItem(
+      'sweetpop.inventory.flash',
+      JSON.stringify({
+        type: 'success',
+        message: 'Producto "Dulce" eliminado correctamente.',
+      }),
+    );
+
+    const fixture = TestBed.createComponent(Inventory);
+    fixture.componentInstance.ngOnInit();
+
+    expect(fixture.componentInstance.alertType).toBe('success');
+    expect(fixture.componentInstance.alertMessage).toContain('eliminado correctamente');
   });
 });

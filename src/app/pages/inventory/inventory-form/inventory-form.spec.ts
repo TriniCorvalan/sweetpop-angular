@@ -58,7 +58,7 @@ describe('InventoryForm', () => {
       expect(component.alertMessage).toContain('campos del formulario');
     });
 
-    it('crea el producto y navega a su detalle', () => {
+    it('crea el producto y navega al detalle con mensaje flash', () => {
       const navigateSpy = vi.spyOn(router, 'navigate');
       const countBefore = inventoryService.getInventory().length;
 
@@ -79,7 +79,8 @@ describe('InventoryForm', () => {
       const created = inventoryService.getInventory().find((item) => item.name === 'Gomitas nuevas');
       expect(inventoryService.getInventory().length).toBe(countBefore + 1);
       expect(created?.id).toBe(100);
-      expect(navigateSpy).toHaveBeenCalledWith(['/inventario', 100]);
+      expect(navigateSpy).toHaveBeenCalledWith(['/inventario', 100], { replaceUrl: true });
+      expect(sessionStorage.getItem('sweetpop.inventory.flash')).toContain('Producto creado correctamente');
     });
   });
 
@@ -133,20 +134,55 @@ describe('InventoryForm', () => {
 
       const updated = inventoryService.getInventoryItem(itemId);
       expect(component.alertType).toBe('success');
+      expect(component.alertMessage).toBe('Producto actualizado correctamente.');
       expect(updated?.name).toBe('Dulce editado');
       expect(updated?.stock).toBe(42);
+    });
+
+    it('muestra el mensaje flash tras crear un producto', async () => {
+      clearStorages();
+      sessionStorage.setItem(
+        'sweetpop.inventory.flash',
+        JSON.stringify({ type: 'success', message: 'Producto creado correctamente.' }),
+      );
+      TestBed.resetTestingModule();
+      await TestBed.configureTestingModule({
+        imports: [InventoryForm],
+        providers: [
+          provideRouter([]),
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              snapshot: {
+                paramMap: convertToParamMap({ id: String(itemId) }),
+              },
+            },
+          },
+        ],
+      }).compileComponents();
+
+      seedInventoryCache();
+      const fixture = TestBed.createComponent(InventoryForm);
+      fixture.componentInstance.ngOnInit();
+
+      expect(fixture.componentInstance.alertType).toBe('success');
+      expect(fixture.componentInstance.alertMessage).toBe('Producto creado correctamente.');
+      expect(sessionStorage.getItem('sweetpop.inventory.flash')).toBeNull();
     });
 
     it('elimina el producto y vuelve al listado', () => {
       const router = TestBed.inject(Router);
       const navigateSpy = vi.spyOn(router, 'navigate');
       vi.spyOn(window, 'confirm').mockReturnValue(true);
+      const productName = component.item?.name ?? '';
 
       component.onDelete();
       flushInventoryDeleteRequest(itemId);
 
       expect(inventoryService.getInventoryItem(itemId)).toBeUndefined();
       expect(navigateSpy).toHaveBeenCalledWith(['/inventario']);
+      expect(sessionStorage.getItem('sweetpop.inventory.flash')).toContain(productName);
+      expect(sessionStorage.getItem('sweetpop.inventory.flash')).toContain('eliminado correctamente');
     });
 
     it('no elimina si se cancela la confirmacion', () => {
