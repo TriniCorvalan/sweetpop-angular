@@ -1,0 +1,642 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>sweetpop-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">sweetpop-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  LoginResult</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/core/services/auth.service.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Resultado de un intento de inicio de sesión.</p>
+
+            </p>
+
+
+        <section data-compodoc="block-index">
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                        <a href="#message" 
+>
+                                            message
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#success" 
+>
+                                            success
+                                        </a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#user" 
+>
+                                            user
+                                        </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+
+            <section data-compodoc="block-properties">
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="message"></a>
+                                        <span class="name "><b>message</b>
+                                            <a href="#message">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>message:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="success"></a>
+                                        <span class="name "><b>success</b>
+                                            <a href="#success">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>success:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="user"></a>
+                                        <span class="name "><b>user</b>
+                                            <a href="#user">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>user:         <code><a href="../interfaces/User.html" target="_self" >User</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="../interfaces/User.html" target="_self" >User</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+
+import { STORAGE_KEYS } from &#x27;../constants/storage-keys&#x27;;
+import { Session } from &#x27;../models/session.model&#x27;;
+import { User, UserRole } from &#x27;../models/user.model&#x27;;
+import { StorageService } from &#x27;./storage.service&#x27;;
+
+/**
+ * Resultado de un intento de inicio de sesión.
+ * @usageNotes Consumido por el componente Login para mostrar mensajes y redirigir.
+ */
+export interface LoginResult {
+  success: boolean;
+  message: string;
+  user?: User;
+}
+
+/**
+ * Usuario enriquecido con el rol activo de la sesión.
+ * @usageNotes Retornado por {@link AuthService.getCurrentUser}.
+ */
+export interface CurrentUser extends User {
+  sessionRole: UserRole;
+}
+
+/**
+ * Servicio central de autenticación y gestión de usuarios.
+ * @usageNotes Inyectable global. Gestiona &#x60;localStorage&#x60; (usuarios) y &#x60;sessionStorage&#x60; (sesión).
+ */
+@Injectable({
+  providedIn: &#x27;root&#x27;,
+})
+export class AuthService {
+  constructor(private readonly storage: StorageService) {}
+
+  /**
+   * Crea el usuario administrador precargado si aún no existe.
+   * @returns void
+   * @usageNotes Ejecutado en el &#x60;APP_INITIALIZER&#x60; al arrancar la aplicación.
+   */
+  ensureAdminUser(): void {
+    const users &#x3D; this.getUsers();
+    const adminExists &#x3D; users.some((user) &#x3D;&gt; user.role &#x3D;&#x3D;&#x3D; &#x27;admin&#x27;);
+
+    if (!adminExists) {
+      users.push({
+        id: &#x27;admin-1&#x27;,
+        username: &#x27;admin&#x27;,
+        email: &#x27;admin@sweetpop.cl&#x27;,
+        password: &#x27;Admin123&#x27;,
+        role: &#x27;admin&#x27;,
+        fullName: &#x27;Administrador SweetPop&#x27;,
+        birthdate: &#x27;&#x27;,
+        address: &#x27;&#x27;,
+        signupDate: new Date().toLocaleString(),
+      });
+      this.saveUsers(users);
+    }
+  }
+
+  /**
+   * Obtiene todos los usuarios registrados.
+   * @returns Lista de usuarios desde localStorage.
+   * @usageNotes Base para registro, login y listado de clientes (admin).
+   */
+  getUsers(): User[] {
+    return this.storage.readJson(localStorage, STORAGE_KEYS.users, []);
+  }
+
+  /**
+   * Persiste la lista completa de usuarios.
+   * @param users Usuarios a guardar.
+   * @returns void
+   * @usageNotes Sobrescribe el array completo en &#x60;STORAGE_KEYS.users&#x60;.
+   */
+  saveUsers(users: User[]): void {
+    this.storage.writeJson(localStorage, STORAGE_KEYS.users, users);
+  }
+
+  /**
+   * Busca un usuario por nickname.
+   * @param username Nickname a buscar (sin distinguir mayúsculas).
+   * @returns Usuario encontrado o &#x60;undefined&#x60;.
+   * @usageNotes Usado en registro para evitar duplicados.
+   */
+  findUserByUsername(username: string): User | undefined {
+    const normalized &#x3D; username.trim().toLowerCase();
+    return this.getUsers().find((user) &#x3D;&gt; user.username.toLowerCase() &#x3D;&#x3D;&#x3D; normalized);
+  }
+
+  /**
+   * Busca un usuario por correo electrónico.
+   * @param email Correo a buscar.
+   * @returns Usuario encontrado o &#x60;undefined&#x60;.
+   * @usageNotes Usado en registro y recuperación de contraseña.
+   */
+  findUserByEmail(email: string): User | undefined {
+    const normalized &#x3D; email.trim().toLowerCase();
+    return this.getUsers().find((user) &#x3D;&gt; user.email.toLowerCase() &#x3D;&#x3D;&#x3D; normalized);
+  }
+
+  /**
+   * Busca un usuario por id interno.
+   * @param userId Identificador del usuario.
+   * @returns Usuario encontrado o &#x60;undefined&#x60;.
+   * @usageNotes Usado en perfil y resolución de sesión.
+   */
+  findUserById(userId: string): User | undefined {
+    return this.getUsers().find((user) &#x3D;&gt; user.id &#x3D;&#x3D;&#x3D; userId);
+  }
+
+  /**
+   * Obtiene usuarios con rol client (&#x60;user&#x60;).
+   * @returns Clientes registrados.
+   * @usageNotes Consumido por la página Customers (admin).
+   */
+  getCustomers(): User[] {
+    return this.getUsers().filter((user) &#x3D;&gt; user.role &#x3D;&#x3D;&#x3D; &#x27;user&#x27;);
+  }
+
+  /**
+   * Obtiene la sesión activa desde sessionStorage.
+   * @returns Sesión o &#x60;null&#x60; si no hay login.
+   * @usageNotes Usado por guards y Header para construir navegación.
+   */
+  getSession(): Session | null {
+    return this.storage.readJson(sessionStorage, STORAGE_KEYS.session, null);
+  }
+
+  /**
+   * Guarda la sesión activa en sessionStorage.
+   * @param session Datos de sesión a persistir.
+   * @returns void
+   * @usageNotes Llamado tras un login exitoso.
+   */
+  setSession(session: Session): void {
+    this.storage.writeJson(sessionStorage, STORAGE_KEYS.session, session);
+  }
+
+  /**
+   * Elimina la sesión activa de sessionStorage.
+   * @returns void
+   * @usageNotes Llamado en logout o cuando la sesión deja de ser válida.
+   */
+  clearSession(): void {
+    this.storage.removeItem(sessionStorage, STORAGE_KEYS.session);
+  }
+
+  /**
+   * Valida credenciales y crea sesión si son correctas.
+   * @param usernameOrEmail Nickname o correo del usuario.
+   * @param password Contraseña en texto plano.
+   * @returns Resultado con mensaje y usuario autenticado si fue exitoso.
+   * @usageNotes Invocado desde el formulario de Login.
+   */
+  login(usernameOrEmail: string, password: string): LoginResult {
+    const credential &#x3D; usernameOrEmail.trim();
+    const user &#x3D; this.getUsers().find(
+      (item) &#x3D;&gt;
+        item.username.toLowerCase() &#x3D;&#x3D;&#x3D; credential.toLowerCase() ||
+        item.email.toLowerCase() &#x3D;&#x3D;&#x3D; credential.toLowerCase(),
+    );
+
+    if (!user) {
+      return { success: false, message: &#x27;Usuario o correo no encontrado.&#x27; };
+    }
+
+    if (user.password !&#x3D;&#x3D; password) {
+      return { success: false, message: &#x27;Contraseña incorrecta.&#x27; };
+    }
+
+    this.setSession({
+      userId: user.id,
+      username: user.username,
+      role: user.role,
+      fullName: user.fullName,
+    });
+
+    return { success: true, message: &#x27;Inicio de sesión exitoso.&#x27;, user };
+  }
+
+  /**
+   * Cierra sesión y elimina el borrador de caja.
+   * @returns void
+   * @usageNotes Invocado desde Logout y enlaces de cerrar sesión.
+   */
+  logout(): void {
+    this.clearSession();
+    this.storage.removeItem(sessionStorage, STORAGE_KEYS.boxDraft);
+  }
+
+  /**
+   * Indica si existe una sesión activa.
+   * @returns &#x60;true&#x60; si hay sesión en sessionStorage.
+   * @usageNotes Usado antes de personalizar cajas o acceder al carrito.
+   */
+  isLoggedIn(): boolean {
+    return this.getSession() !&#x3D;&#x3D; null;
+  }
+
+  /**
+   * Comprueba si el usuario en sesión tiene el rol indicado.
+   * @param role Rol a verificar (&#x60;admin&#x60; o &#x60;user&#x60;).
+   * @returns &#x60;true&#x60; si el rol coincide.
+   * @usageNotes Usado en BoxCatalogCards y BoxDraftService.
+   */
+  hasRole(role: UserRole): boolean {
+    const session &#x3D; this.getSession();
+    return session !&#x3D;&#x3D; null &amp;&amp; session.role &#x3D;&#x3D;&#x3D; role;
+  }
+
+  /**
+   * Combina sesión con el usuario completo de localStorage.
+   * @returns Usuario enriquecido o &#x60;null&#x60; si la sesión no es válida.
+   * @usageNotes Consumido por Profile para cargar datos de cuenta.
+   */
+  getCurrentUser(): CurrentUser | null {
+    const session &#x3D; this.getSession();
+    if (!session) {
+      return null;
+    }
+
+    const user &#x3D; this.findUserById(session.userId);
+    if (!user) {
+      this.clearSession();
+      return null;
+    }
+
+    return {
+      ...user,
+      sessionRole: session.role,
+    };
+  }
+
+  /**
+   * Actualiza campos parciales de un usuario existente.
+   * @param userId Id del usuario a modificar.
+   * @param updates Campos a sobrescribir.
+   * @returns &#x60;false&#x60; si el usuario no existe.
+   * @usageNotes Usado en Profile para actualizar la dirección de despacho.
+   */
+  updateUser(userId: string, updates: Partial&lt;User&gt;): boolean {
+    const users &#x3D; this.getUsers();
+    const index &#x3D; users.findIndex((user) &#x3D;&gt; user.id &#x3D;&#x3D;&#x3D; userId);
+
+    if (index &#x3D;&#x3D;&#x3D; -1) {
+      return false;
+    }
+
+    users[index] &#x3D; { ...users[index], ...updates };
+    this.saveUsers(users);
+    return true;
+  }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'LoginResult.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

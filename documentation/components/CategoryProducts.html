@@ -1,0 +1,1341 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>sweetpop-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">sweetpop-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  CategoryProducts</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/shared/category-products/category-products.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Componente reutilizable de productos por categoría con asignación al borrador.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-category-products</code></td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                                <code><a href="https://angular.io/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+                                <code><a href="../components/BoxDraftBar.html" target="_self" >BoxDraftBar</a></code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./category-products.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#alertMessage" >alertMessage</a>
+                            </li>
+                            <li>
+                                <a href="#alertType" >alertType</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#boxDraftService" >boxDraftService</a>
+                            </li>
+                            <li>
+                                <a href="#candies" >candies</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#catalog" >catalog</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#assignProduct" >assignProduct</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#buildProductView" >buildProductView</a>
+                            </li>
+                            <li>
+                                <a href="#getDiscountText" >getDiscountText</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#showAlert" >showAlert</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#category" >category</a>
+                            </li>
+                            <li>
+                                <a href="#nextLabel" >nextLabel</a>
+                            </li>
+                            <li>
+                                <a href="#nextRoute" >nextRoute</a>
+                            </li>
+                            <li>
+                                <a href="#title" >title</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#products" >products</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="category"></a>
+                        <b>category</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#CandyCategory" target="_self" >CandyCategory</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Required : </i>&nbsp;<b>true</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/shared/category-products/category-products.ts:30</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Categoría de dulces a renderizar. @usageNotes Input requerido desde la página contenedora.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="nextLabel"></a>
+                        <b>nextLabel</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/shared/category-products/category-products.ts:36</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Etiqueta del enlace de navegación siguiente. @usageNotes Texto visible del enlace <code>nextRoute</code>.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="nextRoute"></a>
+                        <b>nextRoute</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/shared/category-products/category-products.ts:34</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Ruta opcional del enlace de navegación siguiente. @usageNotes Enlace al final de la lista.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="title"></a>
+                        <b>title</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Required : </i>&nbsp;<b>true</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/shared/category-products/category-products.ts:32</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Título visible de la página de categoría. @usageNotes Mostrado como encabezado principal.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="assignProduct"></a>
+                    <span class="name">
+                        <span ><b>assignProduct</b></span>
+                        <a href="#assignProduct"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>assignProduct(productId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="72"
+                                    class="link-to-prism">src/app/shared/category-products/category-products.ts:72</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Asigna un dulce a la pared activa del borrador.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>productId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Id numérico del dulce en el inventario.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="buildProductView"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>buildProductView</b></span>
+                        <a href="#buildProductView"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>buildProductView(candy: <a href="../interfaces/Candy.html" target="_self">Candy</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="102"
+                                    class="link-to-prism">src/app/shared/category-products/category-products.ts:102</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>candy</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Candy.html" target="_self" >Candy</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>ProductView</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDiscountText"></a>
+                    <span class="name">
+                        <span ><b>getDiscountText</b></span>
+                        <a href="#getDiscountText"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getDiscountText(candy: <a href="../interfaces/Candy.html" target="_self">Candy</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="96"
+                                    class="link-to-prism">src/app/shared/category-products/category-products.ts:96</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Texto de descuento visible en la tarjeta del producto.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>candy</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Candy.html" target="_self" >Candy</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Dulce del catálogo.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Etiqueta de descuento formateada.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="50"
+                                    class="link-to-prism">src/app/shared/category-products/category-products.ts:50</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Carga dulces de la categoría y muestra aviso si no hay borrador activo.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showAlert"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>showAlert</b></span>
+                        <a href="#showAlert"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>showAlert(type: "info" | "success" | "danger" | "warning", message: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="153"
+                                    class="link-to-prism">src/app/shared/category-products/category-products.ts:153</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>type</td>
+                                            <td>
+                                                        <code>&quot;info&quot; | &quot;success&quot; | &quot;danger&quot; | &quot;warning&quot;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>message</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="alertMessage"></a>
+                    <span class="name">
+                        <span ><b>alertMessage</b></span>
+                        <a href="#alertMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/shared/category-products/category-products.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="alertType"></a>
+                    <span class="name">
+                        <span ><b>alertType</b></span>
+                        <a href="#alertType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;info&quot; | &quot;success&quot; | &quot;danger&quot; | &quot;warning&quot; | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/shared/category-products/category-products.ts:42</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="boxDraftService"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>boxDraftService</b></span>
+                        <a href="#boxDraftService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(BoxDraftService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/shared/category-products/category-products.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="candies"></a>
+                    <span class="name">
+                        <span ><b>candies</b></span>
+                        <a href="#candies"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Candy.html" target="_self" >Candy[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/shared/category-products/category-products.ts:41</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="catalog"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>catalog</b></span>
+                        <a href="#catalog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(CatalogService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/shared/category-products/category-products.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="products"></a>
+                        <span class="name"><b>products</b><a href="#products"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>products()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/app/shared/category-products/category-products.ts:62</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Vista enriquecida de productos con estado de asignación. @usageNotes Getter consumido por la plantilla.</p>
+</div>
+
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code>ProductView[]</code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, Input, inject, OnInit } from &#x27;@angular/core&#x27;;
+import { RouterLink } from &#x27;@angular/router&#x27;;
+
+import { Candy, CandyCategory } from &#x27;../../core/models/candy.model&#x27;;
+import { BoxDraftService } from &#x27;../../core/services/box-draft.service&#x27;;
+import { CatalogService } from &#x27;../../core/services/catalog.service&#x27;;
+import { BoxDraftBar } from &#x27;../box-draft-bar/box-draft-bar&#x27;;
+
+/** @ignore */
+interface ProductView {
+  candy: Candy;
+  statusClass: string;
+  statusText: string;
+  buttonLabel: string;
+  disabled: boolean;
+  blocked: boolean;
+}
+
+/**
+ * Componente reutilizable de productos por categoría con asignación al borrador.
+ * @usageNotes Usado por páginas gomitas, chocolates, caramelos y barritas.
+ */
+@Component({
+  selector: &#x27;app-category-products&#x27;,
+  imports: [RouterLink, BoxDraftBar],
+  templateUrl: &#x27;./category-products.html&#x27;,
+})
+export class CategoryProducts implements OnInit {
+  /** Categoría de dulces a renderizar. @usageNotes Input requerido desde la página contenedora. */
+  @Input({ required: true }) category!: CandyCategory;
+  /** Título visible de la página de categoría. @usageNotes Mostrado como encabezado principal. */
+  @Input({ required: true }) title!: string;
+  /** Ruta opcional del enlace de navegación siguiente. @usageNotes Enlace al final de la lista. */
+  @Input() nextRoute?: string;
+  /** Etiqueta del enlace de navegación siguiente. @usageNotes Texto visible del enlace &#x60;nextRoute&#x60;. */
+  @Input() nextLabel?: string;
+
+  protected readonly catalog &#x3D; inject(CatalogService);
+  private readonly boxDraftService &#x3D; inject(BoxDraftService);
+
+  candies: Candy[] &#x3D; [];
+  alertType: &#x27;info&#x27; | &#x27;success&#x27; | &#x27;danger&#x27; | &#x27;warning&#x27; | null &#x3D; null;
+  alertMessage &#x3D; &#x27;&#x27;;
+
+  /**
+   * Carga dulces de la categoría y muestra aviso si no hay borrador activo.
+   * @returns void
+   * @usageNotes Ejecutado al inicializar el componente.
+   */
+  ngOnInit(): void {
+    this.candies &#x3D; this.catalog.getCandiesByCategory(this.category);
+
+    if (!this.boxDraftService.getBoxDraft()) {
+      this.showAlert(
+        &#x27;info&#x27;,
+        &#x27;Selecciona una caja en Cajas antes de asignar dulces.&#x27;,
+      );
+    }
+  }
+
+  /** Vista enriquecida de productos con estado de asignación. @usageNotes Getter consumido por la plantilla. */
+  get products(): ProductView[] {
+    return this.candies.map((candy) &#x3D;&gt; this.buildProductView(candy));
+  }
+
+  /**
+   * Asigna un dulce a la pared activa del borrador.
+   * @param productId Id numérico del dulce en el inventario.
+   * @returns void
+   * @usageNotes Invocado al hacer clic en el botón de asignar de cada tarjeta.
+   */
+  assignProduct(productId: number): void {
+    const result &#x3D; this.boxDraftService.assignCandyToWall(productId);
+
+    if (!result.success) {
+      this.showAlert(result.redirect ? &#x27;warning&#x27; : &#x27;danger&#x27;, result.message);
+      return;
+    }
+
+    this.showAlert(&#x27;success&#x27;, result.message);
+
+    if (result.complete) {
+      this.showAlert(
+        &#x27;success&#x27;,
+        &#x60;${result.message} Ya puedes agregar la caja al carrito.&#x60;,
+      );
+    }
+  }
+
+  /**
+   * Texto de descuento visible en la tarjeta del producto.
+   * @param candy Dulce del catálogo.
+   * @returns Etiqueta de descuento formateada.
+   * @usageNotes Muestra &quot;no disponible&quot; si el descuento es 0.
+   */
+  getDiscountText(candy: Candy): string {
+    return candy.discount &gt; 0
+      ? &#x60;Descuento: ${candy.discount}%&#x60;
+      : &#x27;Descuento: no disponible&#x27;;
+  }
+
+  private buildProductView(candy: Candy): ProductView {
+    const draft &#x3D; this.boxDraftService.getBoxDraft();
+    const available &#x3D; this.boxDraftService.getAvailableStockForDraft(candy.id);
+    const unitsPerWall &#x3D; this.catalog.getWallQuantityBySize(candy.size);
+
+    if (!draft) {
+      return {
+        candy,
+        statusClass: &#x27;&#x27;,
+        statusText: &#x27;&#x27;,
+        buttonLabel: &#x27;Elegir caja primero&#x27;,
+        disabled: true,
+        blocked: false,
+      };
+    }
+
+    const compatible &#x3D; this.catalog.isCandyCompatibleWithBox(candy.size, draft.boxId);
+    const complete &#x3D; this.boxDraftService.isBoxDraftComplete();
+    const nextWall &#x3D; this.boxDraftService.getNextEmptyWall();
+    const nextLabel &#x3D; nextWall ? nextWall.wallIndex : draft.wallsCount;
+
+    let statusClass &#x3D; &#x27;catalog-status-ok&#x27;;
+    let statusText &#x3D; &#x60;Tamaño ${this.catalog.getSizeLabel(candy.size)} · ${unitsPerWall} u. por pared&#x60;;
+
+    if (!compatible) {
+      statusClass &#x3D; &#x27;catalog-status-blocked&#x27;;
+      statusText &#x3D; &#x60;No cabe en ${draft.boxName} (tamaño ${this.catalog.getSizeLabel(candy.size)})&#x60;;
+    } else if (available &lt; unitsPerWall) {
+      statusClass &#x3D; &#x27;catalog-status-blocked&#x27;;
+      statusText &#x3D; &#x27;No disponible en este momento&#x27;;
+    } else if (complete) {
+      statusClass &#x3D; &#x27;catalog-status-info&#x27;;
+      statusText &#x3D; &#x27;Caja completa. Agrega al carrito arriba.&#x27;;
+    }
+
+    const disabled &#x3D; !compatible || available &lt; unitsPerWall || complete;
+    const blocked &#x3D; !compatible || available &lt; unitsPerWall;
+    const buttonLabel &#x3D; complete
+      ? &#x27;Caja completa&#x27;
+      : &#x60;Asignar a pared ${nextLabel} (${unitsPerWall} u.)&#x60;;
+
+    return {
+      candy,
+      statusClass,
+      statusText,
+      buttonLabel,
+      disabled,
+      blocked,
+    };
+  }
+
+  private showAlert(type: &#x27;info&#x27; | &#x27;success&#x27; | &#x27;danger&#x27; | &#x27;warning&#x27;, message: string): void {
+    this.alertType &#x3D; type;
+    this.alertMessage &#x3D; message;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;nav aria-label&#x3D;&quot;breadcrumb&quot;&gt;
+  &lt;ol class&#x3D;&quot;breadcrumb&quot;&gt;
+    &lt;li class&#x3D;&quot;breadcrumb-item&quot;&gt;&lt;a routerLink&#x3D;&quot;/&quot;&gt;Inicio&lt;/a&gt;&lt;/li&gt;
+    &lt;li class&#x3D;&quot;breadcrumb-item&quot;&gt;&lt;a routerLink&#x3D;&quot;/dulces&quot;&gt;Dulces&lt;/a&gt;&lt;/li&gt;
+    &lt;li class&#x3D;&quot;breadcrumb-item active&quot; aria-current&#x3D;&quot;page&quot;&gt;{{ title }}&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/nav&gt;
+
+@if (alertMessage &amp;&amp; alertType) {
+  &lt;div class&#x3D;&quot;alert alert-{{ alertType }} mb-4&quot; role&#x3D;&quot;alert&quot;&gt;{{ alertMessage }}&lt;/div&gt;
+}
+
+&lt;app-box-draft-bar /&gt;
+
+&lt;h1 class&#x3D;&quot;h2 mb-4&quot;&gt;{{ title }}&lt;/h1&gt;
+
+@if (products.length &#x3D;&#x3D;&#x3D; 0) {
+  &lt;p class&#x3D;&quot;text-center py-4&quot;&gt;No hay productos en esta categoría.&lt;/p&gt;
+} @else {
+  &lt;div class&#x3D;&quot;row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4&quot;&gt;
+    @for (product of products; track product.candy.id) {
+      &lt;div class&#x3D;&quot;col&quot;&gt;
+        &lt;article class&#x3D;&quot;card h-100 sweetpop-card&quot;
+          [class.catalog-card-blocked]&#x3D;&quot;product.blocked&quot;
+          [attr.data-product-id]&#x3D;&quot;product.candy.id&quot;&gt;
+          &lt;img [src]&#x3D;&quot;product.candy.image&quot; class&#x3D;&quot;card-img-top&quot; [alt]&#x3D;&quot;product.candy.name&quot;&gt;
+          &lt;div class&#x3D;&quot;card-body&quot;&gt;
+            &lt;h3 class&#x3D;&quot;card-title h5&quot;&gt;{{ product.candy.name }}&lt;/h3&gt;
+            &lt;p class&#x3D;&quot;card-text&quot;&gt;{{ product.candy.description }}&lt;/p&gt;
+            &lt;p class&#x3D;&quot;card-text&quot;&gt;
+              Tamaño {{ catalog.getSizeLabel(product.candy.size) }}.
+              {{ catalog.formatPrice(product.candy.price) }}
+            &lt;/p&gt;
+            &lt;p class&#x3D;&quot;card-text&quot;&gt;{{ getDiscountText(product.candy) }}&lt;/p&gt;
+            &lt;div class&#x3D;&quot;catalog-product-actions mt-2&quot;&gt;
+              @if (product.statusText) {
+                &lt;p class&#x3D;&quot;catalog-meta mb-1&quot; [class]&#x3D;&quot;product.statusClass&quot;&gt;{{ product.statusText }}&lt;/p&gt;
+              }
+              &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-sweetpop btn-sm&quot;
+                [disabled]&#x3D;&quot;product.disabled&quot;
+                (click)&#x3D;&quot;assignProduct(product.candy.id)&quot;&gt;
+                {{ product.buttonLabel }}
+              &lt;/button&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/article&gt;
+      &lt;/div&gt;
+    }
+  &lt;/div&gt;
+}
+
+&lt;nav class&#x3D;&quot;page-links d-flex flex-wrap gap-2 pt-3 border-top border-light border-opacity-25&quot; aria-label&#x3D;&quot;Enlaces del sitio&quot;&gt;
+  &lt;a routerLink&#x3D;&quot;/&quot; class&#x3D;&quot;btn btn-outline-light btn-sm&quot;&gt;Volver al inicio&lt;/a&gt;
+  &lt;a routerLink&#x3D;&quot;/dulces&quot; class&#x3D;&quot;btn btn-outline-light btn-sm&quot;&gt;Volver a dulces&lt;/a&gt;
+  @if (nextRoute &amp;&amp; nextLabel) {
+    &lt;a [routerLink]&#x3D;&quot;nextRoute&quot; class&#x3D;&quot;btn btn-outline-light btn-sm&quot;&gt;{{ nextLabel }}&lt;/a&gt;
+  }
+&lt;/nav&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><nav aria-label="breadcrumb">  <ol class="breadcrumb">    <li class="breadcrumb-item"><a routerLink="/">Inicio</a></li>    <li class="breadcrumb-item"><a routerLink="/dulces">Dulces</a></li>    <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>  </ol></nav>@if (alertMessage && alertType) {  <div class="alert alert-{{ alertType }} mb-4" role="alert">{{ alertMessage }}</div>}<app-box-draft-bar /><h1 class="h2 mb-4">{{ title }}</h1>@if (products.length === 0) {  <p class="text-center py-4">No hay productos en esta categoría.</p>} @else {  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">    @for (product of products; track product.candy.id) {      <div class="col">        <article class="card h-100 sweetpop-card"          [class.catalog-card-blocked]="product.blocked"          [attr.data-product-id]="product.candy.id">          <img [src]="product.candy.image" class="card-img-top" [alt]="product.candy.name">          <div class="card-body">            <h3 class="card-title h5">{{ product.candy.name }}</h3>            <p class="card-text">{{ product.candy.description }}</p>            <p class="card-text">              Tamaño {{ catalog.getSizeLabel(product.candy.size) }}.              {{ catalog.formatPrice(product.candy.price) }}            </p>            <p class="card-text">{{ getDiscountText(product.candy) }}</p>            <div class="catalog-product-actions mt-2">              @if (product.statusText) {                <p class="catalog-meta mb-1" [class]="product.statusClass">{{ product.statusText }}</p>              }              <button type="button" class="btn btn-sweetpop btn-sm"                [disabled]="product.disabled"                (click)="assignProduct(product.candy.id)">                {{ product.buttonLabel }}              </button>            </div>          </div>        </article>      </div>    }  </div>}<nav class="page-links d-flex flex-wrap gap-2 pt-3 border-top border-light border-opacity-25" aria-label="Enlaces del sitio">  <a routerLink="/" class="btn btn-outline-light btn-sm">Volver al inicio</a>  <a routerLink="/dulces" class="btn btn-outline-light btn-sm">Volver a dulces</a>  @if (nextRoute && nextLabel) {    <a [routerLink]="nextRoute" class="btn btn-outline-light btn-sm">{{ nextLabel }}</a>  }</nav></div>'
+    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'Bars', 'selector': 'app-bars'},{'name': 'BoxCatalogCards', 'selector': 'app-box-catalog-cards'},{'name': 'BoxDraftBar', 'selector': 'app-box-draft-bar'},{'name': 'Boxes', 'selector': 'app-boxes'},{'name': 'Candies', 'selector': 'app-candies'},{'name': 'Cart', 'selector': 'app-cart'},{'name': 'CategoryCatalogCards', 'selector': 'app-category-catalog-cards'},{'name': 'CategoryProducts', 'selector': 'app-category-products'},{'name': 'Chocolates', 'selector': 'app-chocolates'},{'name': 'Customers', 'selector': 'app-customers'},{'name': 'Footer', 'selector': 'app-footer'},{'name': 'Gummies', 'selector': 'app-gummies'},{'name': 'HardCandies', 'selector': 'app-hard-candies'},{'name': 'Header', 'selector': 'app-header'},{'name': 'Home', 'selector': 'app-home'},{'name': 'Inventory', 'selector': 'app-inventory'},{'name': 'InventoryForm', 'selector': 'app-inventory-form'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Logout', 'selector': 'app-logout'},{'name': 'NavLinks', 'selector': 'app-nav-links'},{'name': 'Profile', 'selector': 'app-profile'},{'name': 'RecoverPassword', 'selector': 'app-recover-password'},{'name': 'Register', 'selector': 'app-register'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'CategoryProducts'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'CategoryProducts.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

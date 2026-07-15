@@ -1,0 +1,2445 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>sweetpop-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">sweetpop-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  InventoryForm</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/inventory/inventory-form/inventory-form.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Formulario compartido de inventario: alta (<code>/inventario/nuevo</code>) o edición (<code>/inventario/:id</code>).</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-inventory-form</code></td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                                <code><a href="https://angular.io/api/forms/ReactiveFormsModule" target="_blank" >ReactiveFormsModule</a></code>
+                                <code><a href="https://angular.io/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./inventory-form.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#alertMessage" >alertMessage</a>
+                            </li>
+                            <li>
+                                <a href="#alertType" >alertType</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#catalog" >catalog</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#categories" >categories</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#cdr" >cdr</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#fb" >fb</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#inventoryService" >inventoryService</a>
+                            </li>
+                            <li>
+                                <a href="#isEditMode" >isEditMode</a>
+                            </li>
+                            <li>
+                                <a href="#item" >item</a>
+                            </li>
+                            <li>
+                                <a href="#itemForm" >itemForm</a>
+                            </li>
+                            <li>
+                                <a href="#ready" >ready</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#route" >route</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#router" >router</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#sizes" >sizes</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#applyFlashAlert" >applyFlashAlert</a>
+                            </li>
+                            <li>
+                                <a href="#clearAlerts" >clearAlerts</a>
+                            </li>
+                            <li>
+                                <a href="#formatItemPrice" >formatItemPrice</a>
+                            </li>
+                            <li>
+                                <a href="#getStockStatus" >getStockStatus</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#handleHttpError" >handleHttpError</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#initializeForm" >initializeForm</a>
+                            </li>
+                            <li>
+                                <a href="#isInvalid" >isInvalid</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#markReady" >markReady</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onDelete" >onDelete</a>
+                            </li>
+                            <li>
+                                <a href="#onSubmit" >onSubmit</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#saveCreate" >saveCreate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#saveEdit" >saveEdit</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#showAlert" >showAlert</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#pageTitle" >pageTitle</a>
+                                </li>
+                                <li>
+                                    <a href="#breadcrumbLabel" >breadcrumbLabel</a>
+                                </li>
+                                <li>
+                                    <a href="#pageDescription" >pageDescription</a>
+                                </li>
+                                <li>
+                                    <a href="#submitLabel" >submitLabel</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="applyFlashAlert"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>applyFlashAlert</b></span>
+                        <a href="#applyFlashAlert"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>applyFlashAlert()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="314"
+                                    class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:314</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clearAlerts"></a>
+                    <span class="name">
+                        <span ><b>clearAlerts</b></span>
+                        <a href="#clearAlerts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>clearAlerts()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="207"
+                                    class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:207</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Limpia alertas al editar campos.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatItemPrice"></a>
+                    <span class="name">
+                        <span ><b>formatItemPrice</b></span>
+                        <a href="#formatItemPrice"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatItemPrice()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="130"
+                                    class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:130</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Precio formateado del ítem en edición.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Precio en pesos chilenos o cadena vacía.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getStockStatus"></a>
+                    <span class="name">
+                        <span ><b>getStockStatus</b></span>
+                        <a href="#getStockStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getStockStatus(stock: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="109"
+                                    class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:109</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Etiqueta y clase CSS según stock disponible o agotado.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>stock</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Unidades disponibles del producto.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>literal type</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Objeto con <code>label</code> y <code>badgeClass</code> para la plantilla.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleHttpError"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>handleHttpError</b></span>
+                        <a href="#handleHttpError"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>handleHttpError(error: unknown, fallback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="303"
+                                    class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:303</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>error</td>
+                                            <td>
+                                                        <code>unknown</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>fallback</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initializeForm"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>initializeForm</b></span>
+                        <a href="#initializeForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>initializeForm(connectionFailed: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="212"
+                                    class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:212</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>connectionFailed</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isInvalid"></a>
+                    <span class="name">
+                        <span ><b>isInvalid</b></span>
+                        <a href="#isInvalid"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isInvalid(controlName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="121"
+                                    class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:121</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Indica si un control del formulario es inválido y fue tocado.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>controlName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Nombre del control.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p><code>true</code> si debe mostrarse feedback de error.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="markReady"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>markReady</b></span>
+                        <a href="#markReady"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>markReady()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="255"
+                                    class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:255</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Marca el formulario como listo y refresca la vista (app sin Zone.js).</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="94"
+                                    class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:94</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Detecta modo create/edit, verifica conexión y carga el ítem si corresponde.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onDelete"></a>
+                    <span class="name">
+                        <span ><b>onDelete</b></span>
+                        <a href="#onDelete"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onDelete()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="171"
+                                    class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:171</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Elimina el producto en modo edición tras confirmación.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSubmit"></a>
+                    <span class="name">
+                        <span ><b>onSubmit</b></span>
+                        <a href="#onSubmit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSubmit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="138"
+                                    class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:138</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Crea o actualiza el producto según el modo.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saveCreate"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>saveCreate</b></span>
+                        <a href="#saveCreate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>saveCreate(payload: <a href="../miscellaneous/typealiases.html#InventoryItemUpdate" target="_self">InventoryItemUpdate</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="260"
+                                    class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:260</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#InventoryItemUpdate" target="_self" >InventoryItemUpdate</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saveEdit"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>saveEdit</b></span>
+                        <a href="#saveEdit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>saveEdit(payload: <a href="../miscellaneous/typealiases.html#InventoryItemUpdate" target="_self">InventoryItemUpdate</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="281"
+                                    class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:281</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#InventoryItemUpdate" target="_self" >InventoryItemUpdate</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showAlert"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>showAlert</b></span>
+                        <a href="#showAlert"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>showAlert(type: "success" | "danger", message: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="308"
+                                    class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:308</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>type</td>
+                                            <td>
+                                                        <code>&quot;success&quot; | &quot;danger&quot;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>message</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="alertMessage"></a>
+                    <span class="name">
+                        <span ><b>alertMessage</b></span>
+                        <a href="#alertMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="alertType"></a>
+                    <span class="name">
+                        <span ><b>alertType</b></span>
+                        <a href="#alertType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;success&quot; | &quot;danger&quot; | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="catalog"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>catalog</b></span>
+                        <a href="#catalog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(CatalogService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:31</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="categories"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>categories</b></span>
+                        <a href="#categories"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>Object.entries(CATEGORY_LABELS).map(([value, label]) &#x3D;&gt; ({
+    value: value as CandyCategory,
+    label,
+  }))</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cdr"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>cdr</b></span>
+                        <a href="#cdr"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(ChangeDetectorRef)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fb"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>fb</b></span>
+                        <a href="#fb"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(FormBuilder)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="inventoryService"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>inventoryService</b></span>
+                        <a href="#inventoryService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(InventoryService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isEditMode"></a>
+                    <span class="name">
+                        <span ><b>isEditMode</b></span>
+                        <a href="#isEditMode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="item"></a>
+                    <span class="name">
+                        <span ><b>item</b></span>
+                        <a href="#item"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/InventoryItem.html" target="_self" >InventoryItem | null</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="itemForm"></a>
+                    <span class="name">
+                        <span ><b>itemForm</b></span>
+                        <a href="#itemForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.fb.nonNullable.group({
+    name: [&#x27;&#x27;, [Validators.required, Validators.minLength(2)]],
+    category: this.fb.nonNullable.control&lt;CandyCategory&gt;(&#x27;gomitas&#x27;, Validators.required),
+    size: this.fb.nonNullable.control&lt;CandySize&gt;(&#x27;small&#x27;, Validators.required),
+    price: [0, [Validators.required, Validators.min(0)]],
+    image: [&#x27;&#x27;, Validators.required],
+    description: [&#x27;&#x27;, [Validators.required, Validators.minLength(5)]],
+    discount: [0, [Validators.required, Validators.min(0)]],
+    stock: [INITIAL_STOCK, [Validators.required, Validators.min(0)]],
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:54</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ready"></a>
+                    <span class="name">
+                        <span ><b>ready</b></span>
+                        <a href="#ready"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:41</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="route"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>route</b></span>
+                        <a href="#route"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(ActivatedRoute)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="router"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>router</b></span>
+                        <a href="#router"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(Router)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sizes"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>sizes</b></span>
+                        <a href="#sizes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    { value: &#x27;small&#x27;, label: &#x27;pequeño&#x27; },
+    { value: &#x27;medium&#x27;, label: &#x27;medio&#x27; },
+    { value: &#x27;large&#x27;, label: &#x27;grande&#x27; },
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:48</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="pageTitle"></a>
+                        <span class="name"><b>pageTitle</b><a href="#pageTitle"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>pageTitle()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:66</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Título principal según modo.</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="breadcrumbLabel"></a>
+                        <span class="name"><b>breadcrumbLabel</b><a href="#breadcrumbLabel"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>breadcrumbLabel()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:74</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Texto del breadcrumb activo.</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="pageDescription"></a>
+                        <span class="name"><b>pageDescription</b><a href="#pageDescription"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>pageDescription()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:79</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Descripción bajo el título.</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="submitLabel"></a>
+                        <span class="name"><b>submitLabel</b><a href="#submitLabel"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>submitLabel()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">src/app/pages/inventory/inventory-form/inventory-form.ts:86</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Etiqueta del botón principal de envío.</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ChangeDetectorRef, Component, inject, OnInit } from &#x27;@angular/core&#x27;;
+import { FormBuilder, ReactiveFormsModule, Validators } from &#x27;@angular/forms&#x27;;
+import { ActivatedRoute, Router, RouterLink } from &#x27;@angular/router&#x27;;
+
+import { CATEGORY_LABELS, INITIAL_STOCK } from &#x27;../../../core/constants/storage-keys&#x27;;
+import { CandyCategory, CandySize } from &#x27;../../../core/models/candy.model&#x27;;
+import { InventoryItem, InventoryItemUpdate } from &#x27;../../../core/models/inventory-item.model&#x27;;
+import { CatalogService } from &#x27;../../../core/services/catalog.service&#x27;;
+import { InventoryService } from &#x27;../../../core/services/inventory.service&#x27;;
+import {
+  INVENTORY_CONNECTION_ERROR_MESSAGE,
+  inventoryHttpErrorMessage,
+  isApiConnectionError,
+} from &#x27;../../../core/utils/api-connection&#x27;;
+import {
+  consumeInventoryFlash,
+  setInventoryFlash,
+} from &#x27;../../../core/utils/inventory-flash&#x27;;
+
+/**
+ * Formulario compartido de inventario: alta (&#x60;/inventario/nuevo&#x60;) o edición (&#x60;/inventario/:id&#x60;).
+ * @usageNotes Requiere rol &#x60;admin&#x60; vía &#x60;authGuard&#x60;. Título y botones cambian según el modo.
+ */
+@Component({
+  selector: &#x27;app-inventory-form&#x27;,
+  imports: [ReactiveFormsModule, RouterLink],
+  templateUrl: &#x27;./inventory-form.html&#x27;,
+})
+export class InventoryForm implements OnInit {
+  private readonly inventoryService &#x3D; inject(InventoryService);
+  private readonly catalog &#x3D; inject(CatalogService);
+  private readonly route &#x3D; inject(ActivatedRoute);
+  private readonly router &#x3D; inject(Router);
+  private readonly fb &#x3D; inject(FormBuilder);
+  private readonly cdr &#x3D; inject(ChangeDetectorRef);
+
+  isEditMode &#x3D; false;
+  item: InventoryItem | null &#x3D; null;
+  alertType: &#x27;success&#x27; | &#x27;danger&#x27; | null &#x3D; null;
+  alertMessage &#x3D; &#x27;&#x27;;
+  ready &#x3D; false;
+
+  readonly categories &#x3D; Object.entries(CATEGORY_LABELS).map(([value, label]) &#x3D;&gt; ({
+    value: value as CandyCategory,
+    label,
+  }));
+
+  readonly sizes: { value: CandySize; label: string }[] &#x3D; [
+    { value: &#x27;small&#x27;, label: &#x27;pequeño&#x27; },
+    { value: &#x27;medium&#x27;, label: &#x27;medio&#x27; },
+    { value: &#x27;large&#x27;, label: &#x27;grande&#x27; },
+  ];
+
+  itemForm &#x3D; this.fb.nonNullable.group({
+    name: [&#x27;&#x27;, [Validators.required, Validators.minLength(2)]],
+    category: this.fb.nonNullable.control&lt;CandyCategory&gt;(&#x27;gomitas&#x27;, Validators.required),
+    size: this.fb.nonNullable.control&lt;CandySize&gt;(&#x27;small&#x27;, Validators.required),
+    price: [0, [Validators.required, Validators.min(0)]],
+    image: [&#x27;&#x27;, Validators.required],
+    description: [&#x27;&#x27;, [Validators.required, Validators.minLength(5)]],
+    discount: [0, [Validators.required, Validators.min(0)]],
+    stock: [INITIAL_STOCK, [Validators.required, Validators.min(0)]],
+  });
+
+  /** Título principal según modo. */
+  get pageTitle(): string {
+    if (this.isEditMode) {
+      return this.item?.name ?? &#x27;Editar producto&#x27;;
+    }
+    return &#x27;Nuevo producto&#x27;;
+  }
+
+  /** Texto del breadcrumb activo. */
+  get breadcrumbLabel(): string {
+    return this.isEditMode ? (this.item?.name ?? &#x27;Detalle&#x27;) : &#x27;Nuevo producto&#x27;;
+  }
+
+  /** Descripción bajo el título. */
+  get pageDescription(): string {
+    return this.isEditMode
+      ? &#x27;Edita la cantidad en stock y los datos del producto.&#x27;
+      : &#x27;Completa los datos para agregarlo al inventario. El ID numérico lo asigna el servidor.&#x27;;
+  }
+
+  /** Etiqueta del botón principal de envío. */
+  get submitLabel(): string {
+    return this.isEditMode ? &#x27;Guardar cambios&#x27; : &#x27;Crear producto&#x27;;
+  }
+
+  /**
+   * Detecta modo create/edit, verifica conexión y carga el ítem si corresponde.
+   * @returns void
+   */
+  ngOnInit(): void {
+    this.inventoryService.loadInventory().subscribe((loaded) &#x3D;&gt; {
+      if (!loaded) {
+        this.showAlert(&#x27;danger&#x27;, INVENTORY_CONNECTION_ERROR_MESSAGE);
+      }
+
+      this.initializeForm(!loaded);
+    });
+  }
+
+  /**
+   * Etiqueta y clase CSS según stock disponible o agotado.
+   * @param stock Unidades disponibles del producto.
+   * @returns Objeto con &#x60;label&#x60; y &#x60;badgeClass&#x60; para la plantilla.
+   */
+  getStockStatus(stock: number): { label: string; badgeClass: string } {
+    if (stock &gt; 0) {
+      return { label: &#x27;Disponible&#x27;, badgeClass: &#x27;badge-stock-available&#x27; };
+    }
+    return { label: &#x27;Agotado&#x27;, badgeClass: &#x27;badge-stock-empty&#x27; };
+  }
+
+  /**
+   * Indica si un control del formulario es inválido y fue tocado.
+   * @param controlName Nombre del control.
+   * @returns &#x60;true&#x60; si debe mostrarse feedback de error.
+   */
+  isInvalid(controlName: string): boolean {
+    const control &#x3D; this.itemForm.get(controlName);
+    return !!(control &amp;&amp; control.invalid &amp;&amp; control.touched);
+  }
+
+  /**
+   * Precio formateado del ítem en edición.
+   * @returns Precio en pesos chilenos o cadena vacía.
+   */
+  formatItemPrice(): string {
+    return this.item ? this.catalog.formatPrice(this.item.price) : &#x27;&#x27;;
+  }
+
+  /**
+   * Crea o actualiza el producto según el modo.
+   * @returns void
+   */
+  onSubmit(): void {
+    this.clearAlerts();
+
+    if (this.itemForm.invalid) {
+      this.itemForm.markAllAsTouched();
+      this.showAlert(&#x27;danger&#x27;, &#x27;Revisa los campos del formulario e inténtalo de nuevo.&#x27;);
+      return;
+    }
+
+    const values &#x3D; this.itemForm.getRawValue();
+    const payload: InventoryItemUpdate &#x3D; {
+      name: values.name,
+      category: values.category,
+      size: values.size,
+      price: Number(values.price),
+      image: values.image,
+      description: values.description,
+      discount: Number(values.discount),
+      stock: Number(values.stock),
+    };
+
+    if (this.isEditMode) {
+      this.saveEdit(payload);
+      return;
+    }
+
+    this.saveCreate(payload);
+  }
+
+  /**
+   * Elimina el producto en modo edición tras confirmación.
+   * @returns void
+   */
+  onDelete(): void {
+    if (!this.isEditMode || !this.item) {
+      return;
+    }
+
+    const productName &#x3D; this.item.name;
+    const confirmed &#x3D; window.confirm(
+      &#x60;¿Eliminar &quot;${productName}&quot; del inventario? Esta acción no se puede deshacer.&#x60;,
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    this.inventoryService.deleteItem(this.item.id).subscribe({
+      next: (deleted) &#x3D;&gt; {
+        if (!deleted) {
+          this.showAlert(&#x27;danger&#x27;, &#x27;No fue posible eliminar el producto.&#x27;);
+          return;
+        }
+        setInventoryFlash({
+          type: &#x27;success&#x27;,
+          message: &#x60;Producto &quot;${productName}&quot; eliminado correctamente.&#x60;,
+        });
+        void this.router.navigate([&#x27;/inventario&#x27;]);
+      },
+      error: (error: unknown) &#x3D;&gt; {
+        this.handleHttpError(error, &#x27;No fue posible eliminar el producto.&#x27;);
+      },
+    });
+  }
+
+  /**
+   * Limpia alertas al editar campos.
+   * @returns void
+   */
+  clearAlerts(): void {
+    this.alertType &#x3D; null;
+    this.alertMessage &#x3D; &#x27;&#x27;;
+  }
+
+  private initializeForm(connectionFailed: boolean): void {
+    const rawId &#x3D; this.route.snapshot.paramMap.get(&#x27;id&#x27;);
+
+    if (!rawId) {
+      this.isEditMode &#x3D; false;
+      if (!connectionFailed) {
+        this.applyFlashAlert();
+      }
+      this.markReady();
+      return;
+    }
+
+    const id &#x3D; Number(rawId);
+    if (Number.isNaN(id)) {
+      void this.router.navigate([&#x27;/inventario&#x27;]);
+      return;
+    }
+
+    const item &#x3D; this.inventoryService.getInventoryItem(id);
+    if (!item) {
+      void this.router.navigate([&#x27;/inventario&#x27;]);
+      return;
+    }
+
+    this.isEditMode &#x3D; true;
+    this.item &#x3D; item;
+    this.itemForm.patchValue({
+      name: item.name,
+      category: item.category,
+      size: item.size,
+      price: item.price,
+      image: item.image,
+      description: item.description,
+      discount: item.discount,
+      stock: item.stock,
+    });
+    if (!connectionFailed) {
+      this.applyFlashAlert();
+    }
+    this.markReady();
+  }
+
+  /** Marca el formulario como listo y refresca la vista (app sin Zone.js). */
+  private markReady(): void {
+    this.ready &#x3D; true;
+    this.cdr.detectChanges();
+  }
+
+  private saveCreate(payload: InventoryItemUpdate): void {
+    this.inventoryService.createItem(payload).subscribe({
+      next: (created) &#x3D;&gt; {
+        if (!created) {
+          this.showAlert(&#x27;danger&#x27;, &#x27;No fue posible crear el producto.&#x27;);
+          return;
+        }
+
+        // La ruta create y edit son configs distintas: el componente se recrea al navegar.
+        setInventoryFlash({
+          type: &#x27;success&#x27;,
+          message: &#x27;Producto creado correctamente.&#x27;,
+        });
+        void this.router.navigate([&#x27;/inventario&#x27;, created.id], { replaceUrl: true });
+      },
+      error: (error: unknown) &#x3D;&gt; {
+        this.handleHttpError(error, &#x27;No fue posible crear el producto.&#x27;);
+      },
+    });
+  }
+
+  private saveEdit(payload: InventoryItemUpdate): void {
+    if (!this.item) {
+      this.showAlert(&#x27;danger&#x27;, &#x27;No se encontró el producto en inventario.&#x27;);
+      return;
+    }
+
+    const id &#x3D; this.item.id;
+    this.inventoryService.updateItem(id, payload).subscribe({
+      next: (updated) &#x3D;&gt; {
+        if (!updated) {
+          this.showAlert(&#x27;danger&#x27;, &#x27;No fue posible guardar los cambios.&#x27;);
+          return;
+        }
+        this.item &#x3D; this.inventoryService.getInventoryItem(id) ?? this.item;
+        this.showAlert(&#x27;success&#x27;, &#x27;Producto actualizado correctamente.&#x27;);
+      },
+      error: (error: unknown) &#x3D;&gt; {
+        this.handleHttpError(error, &#x27;No fue posible guardar los cambios.&#x27;);
+      },
+    });
+  }
+
+  private handleHttpError(error: unknown, fallback: string): void {
+    this.inventoryService.setConnectionAvailable(!isApiConnectionError(error));
+    this.showAlert(&#x27;danger&#x27;, inventoryHttpErrorMessage(error, fallback));
+  }
+
+  private showAlert(type: &#x27;success&#x27; | &#x27;danger&#x27;, message: string): void {
+    this.alertType &#x3D; type;
+    this.alertMessage &#x3D; message;
+    this.cdr.detectChanges();
+  }
+
+  private applyFlashAlert(): void {
+    const flash &#x3D; consumeInventoryFlash();
+    if (flash) {
+      this.showAlert(flash.type, flash.message);
+    }
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;nav aria-label&#x3D;&quot;breadcrumb&quot;&gt;
+  &lt;ol class&#x3D;&quot;breadcrumb&quot;&gt;
+    &lt;li class&#x3D;&quot;breadcrumb-item&quot;&gt;&lt;a routerLink&#x3D;&quot;/&quot;&gt;Inicio&lt;/a&gt;&lt;/li&gt;
+    &lt;li class&#x3D;&quot;breadcrumb-item&quot;&gt;&lt;a routerLink&#x3D;&quot;/inventario&quot;&gt;Inventario&lt;/a&gt;&lt;/li&gt;
+    &lt;li class&#x3D;&quot;breadcrumb-item active&quot; aria-current&#x3D;&quot;page&quot;&gt;{{ breadcrumbLabel }}&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/nav&gt;
+
+@if (ready) {
+  &lt;div class&#x3D;&quot;row justify-content-center&quot;&gt;
+    &lt;div class&#x3D;&quot;col-lg-8&quot;&gt;
+      &lt;section class&#x3D;&quot;sweetpop-form-card p-4 p-md-5&quot;&gt;
+        &lt;div class&#x3D;&quot;d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4&quot;&gt;
+          &lt;div&gt;
+            &lt;h1 class&#x3D;&quot;h2 mb-2&quot;&gt;{{ pageTitle }}&lt;/h1&gt;
+            &lt;p class&#x3D;&quot;mb-0&quot;&gt;
+              {{ pageDescription }}
+              @if (isEditMode &amp;&amp; item) {
+                &lt;span class&#x3D;&quot;badge ms-2&quot; [class]&#x3D;&quot;getStockStatus(item.stock).badgeClass&quot;&gt;
+                  {{ getStockStatus(item.stock).label }}
+                &lt;/span&gt;
+              }
+            &lt;/p&gt;
+          &lt;/div&gt;
+          &lt;a routerLink&#x3D;&quot;/inventario&quot; class&#x3D;&quot;btn btn-outline-light btn-sm&quot;&gt;Volver al listado&lt;/a&gt;
+        &lt;/div&gt;
+
+        @if (alertMessage) {
+          &lt;div
+            class&#x3D;&quot;alert mb-4&quot;
+            role&#x3D;&quot;alert&quot;
+            [class.alert-success]&#x3D;&quot;alertType &#x3D;&#x3D;&#x3D; &#x27;success&#x27;&quot;
+            [class.alert-danger]&#x3D;&quot;alertType &#x3D;&#x3D;&#x3D; &#x27;danger&#x27;&quot;
+          &gt;
+            {{ alertMessage }}
+          &lt;/div&gt;
+        }
+
+        &lt;form [formGroup]&#x3D;&quot;itemForm&quot; (ngSubmit)&#x3D;&quot;onSubmit()&quot; novalidate&gt;
+          &lt;div class&#x3D;&quot;row g-3&quot;&gt;
+            @if (isEditMode &amp;&amp; item) {
+              &lt;div class&#x3D;&quot;col-12&quot;&gt;
+                &lt;label for&#x3D;&quot;itemId&quot; class&#x3D;&quot;form-label&quot;&gt;ID del producto&lt;/label&gt;
+                &lt;input
+                  type&#x3D;&quot;text&quot;
+                  class&#x3D;&quot;form-control sweetpop-field-readonly&quot;
+                  id&#x3D;&quot;itemId&quot;
+                  [value]&#x3D;&quot;item.id&quot;
+                  readonly
+                  tabindex&#x3D;&quot;-1&quot;
+                &gt;
+              &lt;/div&gt;
+            }
+
+            &lt;div class&#x3D;&quot;col-md-8&quot;&gt;
+              &lt;label for&#x3D;&quot;name&quot; class&#x3D;&quot;form-label&quot;&gt;Nombre &lt;sup&gt;*&lt;/sup&gt;&lt;/label&gt;
+              &lt;input
+                type&#x3D;&quot;text&quot;
+                class&#x3D;&quot;form-control&quot;
+                id&#x3D;&quot;name&quot;
+                formControlName&#x3D;&quot;name&quot;
+                placeholder&#x3D;&quot;Nombre del dulce&quot;
+                [class.is-invalid]&#x3D;&quot;isInvalid(&#x27;name&#x27;)&quot;
+                (input)&#x3D;&quot;clearAlerts()&quot;
+              &gt;
+              &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;Ingresa un nombre válido (mínimo 2 caracteres).&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
+              &lt;label for&#x3D;&quot;stock&quot; class&#x3D;&quot;form-label&quot;&gt;Stock &lt;sup&gt;*&lt;/sup&gt;&lt;/label&gt;
+              &lt;input
+                type&#x3D;&quot;number&quot;
+                class&#x3D;&quot;form-control&quot;
+                id&#x3D;&quot;stock&quot;
+                formControlName&#x3D;&quot;stock&quot;
+                min&#x3D;&quot;0&quot;
+                step&#x3D;&quot;1&quot;
+                [class.is-invalid]&#x3D;&quot;isInvalid(&#x27;stock&#x27;)&quot;
+                (input)&#x3D;&quot;clearAlerts()&quot;
+              &gt;
+              &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;El stock debe ser un número mayor o igual a 0.&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+              &lt;label for&#x3D;&quot;category&quot; class&#x3D;&quot;form-label&quot;&gt;Categoría &lt;sup&gt;*&lt;/sup&gt;&lt;/label&gt;
+              &lt;select
+                class&#x3D;&quot;form-select&quot;
+                id&#x3D;&quot;category&quot;
+                formControlName&#x3D;&quot;category&quot;
+                [class.is-invalid]&#x3D;&quot;isInvalid(&#x27;category&#x27;)&quot;
+                (change)&#x3D;&quot;clearAlerts()&quot;
+              &gt;
+                @for (category of categories; track category.value) {
+                  &lt;option [value]&#x3D;&quot;category.value&quot;&gt;{{ category.label }}&lt;/option&gt;
+                }
+              &lt;/select&gt;
+              &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;Selecciona una categoría.&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+              &lt;label for&#x3D;&quot;size&quot; class&#x3D;&quot;form-label&quot;&gt;Tamaño &lt;sup&gt;*&lt;/sup&gt;&lt;/label&gt;
+              &lt;select
+                class&#x3D;&quot;form-select&quot;
+                id&#x3D;&quot;size&quot;
+                formControlName&#x3D;&quot;size&quot;
+                [class.is-invalid]&#x3D;&quot;isInvalid(&#x27;size&#x27;)&quot;
+                (change)&#x3D;&quot;clearAlerts()&quot;
+              &gt;
+                @for (size of sizes; track size.value) {
+                  &lt;option [value]&#x3D;&quot;size.value&quot;&gt;{{ size.label }}&lt;/option&gt;
+                }
+              &lt;/select&gt;
+              &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;Selecciona un tamaño.&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+              &lt;label for&#x3D;&quot;price&quot; class&#x3D;&quot;form-label&quot;&gt;Precio &lt;sup&gt;*&lt;/sup&gt;&lt;/label&gt;
+              &lt;input
+                type&#x3D;&quot;number&quot;
+                class&#x3D;&quot;form-control&quot;
+                id&#x3D;&quot;price&quot;
+                formControlName&#x3D;&quot;price&quot;
+                min&#x3D;&quot;0&quot;
+                step&#x3D;&quot;1&quot;
+                [class.is-invalid]&#x3D;&quot;isInvalid(&#x27;price&#x27;)&quot;
+                (input)&#x3D;&quot;clearAlerts()&quot;
+              &gt;
+              @if (isEditMode) {
+                &lt;div class&#x3D;&quot;form-text&quot;&gt;Precio actual: {{ formatItemPrice() }}&lt;/div&gt;
+              }
+              &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;El precio debe ser un número mayor o igual a 0.&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+              &lt;label for&#x3D;&quot;image&quot; class&#x3D;&quot;form-label&quot;&gt;Ruta de imagen &lt;sup&gt;*&lt;/sup&gt;&lt;/label&gt;
+              &lt;input
+                type&#x3D;&quot;text&quot;
+                class&#x3D;&quot;form-control&quot;
+                id&#x3D;&quot;image&quot;
+                formControlName&#x3D;&quot;image&quot;
+                placeholder&#x3D;&quot;assets/img/...&quot;
+                [class.is-invalid]&#x3D;&quot;isInvalid(&#x27;image&#x27;)&quot;
+                (input)&#x3D;&quot;clearAlerts()&quot;
+              &gt;
+              &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;La ruta de imagen es obligatoria.&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+              &lt;label for&#x3D;&quot;discount&quot; class&#x3D;&quot;form-label&quot;&gt;Descuento (%) &lt;sup&gt;*&lt;/sup&gt;&lt;/label&gt;
+              &lt;input
+                type&#x3D;&quot;number&quot;
+                class&#x3D;&quot;form-control&quot;
+                id&#x3D;&quot;discount&quot;
+                formControlName&#x3D;&quot;discount&quot;
+                min&#x3D;&quot;0&quot;
+                step&#x3D;&quot;1&quot;
+                [class.is-invalid]&#x3D;&quot;isInvalid(&#x27;discount&#x27;)&quot;
+                (input)&#x3D;&quot;clearAlerts()&quot;
+              &gt;
+              &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;El descuento debe ser un número mayor o igual a 0.&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div class&#x3D;&quot;col-12&quot;&gt;
+              &lt;label for&#x3D;&quot;description&quot; class&#x3D;&quot;form-label&quot;&gt;Descripción &lt;sup&gt;*&lt;/sup&gt;&lt;/label&gt;
+              &lt;textarea
+                class&#x3D;&quot;form-control&quot;
+                id&#x3D;&quot;description&quot;
+                formControlName&#x3D;&quot;description&quot;
+                rows&#x3D;&quot;3&quot;
+                placeholder&#x3D;&quot;Descripción del dulce&quot;
+                [class.is-invalid]&#x3D;&quot;isInvalid(&#x27;description&#x27;)&quot;
+                (input)&#x3D;&quot;clearAlerts()&quot;
+              &gt;&lt;/textarea&gt;
+              &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;Ingresa una descripción (mínimo 5 caracteres).&lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;d-flex flex-wrap justify-content-between gap-2 mt-4&quot;&gt;
+            &lt;button type&#x3D;&quot;submit&quot; class&#x3D;&quot;btn btn-sweetpop&quot;&gt;{{ submitLabel }}&lt;/button&gt;
+            @if (isEditMode) {
+              &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-danger&quot; (click)&#x3D;&quot;onDelete()&quot;&gt;
+                Eliminar producto
+              &lt;/button&gt;
+            }
+            &lt;a routerLink&#x3D;&quot;/inventario&quot; class&#x3D;&quot;btn btn-outline-light&quot;&gt;Cancelar&lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/form&gt;
+      &lt;/section&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+}
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><nav aria-label="breadcrumb">  <ol class="breadcrumb">    <li class="breadcrumb-item"><a routerLink="/">Inicio</a></li>    <li class="breadcrumb-item"><a routerLink="/inventario">Inventario</a></li>    <li class="breadcrumb-item active" aria-current="page">{{ breadcrumbLabel }}</li>  </ol></nav>@if (ready) {  <div class="row justify-content-center">    <div class="col-lg-8">      <section class="sweetpop-form-card p-4 p-md-5">        <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">          <div>            <h1 class="h2 mb-2">{{ pageTitle }}</h1>            <p class="mb-0">              {{ pageDescription }}              @if (isEditMode && item) {                <span class="badge ms-2" [class]="getStockStatus(item.stock).badgeClass">                  {{ getStockStatus(item.stock).label }}                </span>              }            </p>          </div>          <a routerLink="/inventario" class="btn btn-outline-light btn-sm">Volver al listado</a>        </div>        @if (alertMessage) {          <div            class="alert mb-4"            role="alert"            [class.alert-success]="alertType === \'success\'"            [class.alert-danger]="alertType === \'danger\'"          >            {{ alertMessage }}          </div>        }        <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" novalidate>          <div class="row g-3">            @if (isEditMode && item) {              <div class="col-12">                <label for="itemId" class="form-label">ID del producto</label>                <input                  type="text"                  class="form-control sweetpop-field-readonly"                  id="itemId"                  [value]="item.id"                  readonly                  tabindex="-1"                >              </div>            }            <div class="col-md-8">              <label for="name" class="form-label">Nombre <sup>*</sup></label>              <input                type="text"                class="form-control"                id="name"                formControlName="name"                placeholder="Nombre del dulce"                [class.is-invalid]="isInvalid(\'name\')"                (input)="clearAlerts()"              >              <div class="invalid-feedback">Ingresa un nombre válido (mínimo 2 caracteres).</div>            </div>            <div class="col-md-4">              <label for="stock" class="form-label">Stock <sup>*</sup></label>              <input                type="number"                class="form-control"                id="stock"                formControlName="stock"                min="0"                step="1"                [class.is-invalid]="isInvalid(\'stock\')"                (input)="clearAlerts()"              >              <div class="invalid-feedback">El stock debe ser un número mayor o igual a 0.</div>            </div>            <div class="col-md-6">              <label for="category" class="form-label">Categoría <sup>*</sup></label>              <select                class="form-select"                id="category"                formControlName="category"                [class.is-invalid]="isInvalid(\'category\')"                (change)="clearAlerts()"              >                @for (category of categories; track category.value) {                  <option [value]="category.value">{{ category.label }}</option>                }              </select>              <div class="invalid-feedback">Selecciona una categoría.</div>            </div>            <div class="col-md-6">              <label for="size" class="form-label">Tamaño <sup>*</sup></label>              <select                class="form-select"                id="size"                formControlName="size"                [class.is-invalid]="isInvalid(\'size\')"                (change)="clearAlerts()"              >                @for (size of sizes; track size.value) {                  <option [value]="size.value">{{ size.label }}</option>                }              </select>              <div class="invalid-feedback">Selecciona un tamaño.</div>            </div>            <div class="col-md-6">              <label for="price" class="form-label">Precio <sup>*</sup></label>              <input                type="number"                class="form-control"                id="price"                formControlName="price"                min="0"                step="1"                [class.is-invalid]="isInvalid(\'price\')"                (input)="clearAlerts()"              >              @if (isEditMode) {                <div class="form-text">Precio actual: {{ formatItemPrice() }}</div>              }              <div class="invalid-feedback">El precio debe ser un número mayor o igual a 0.</div>            </div>            <div class="col-md-6">              <label for="image" class="form-label">Ruta de imagen <sup>*</sup></label>              <input                type="text"                class="form-control"                id="image"                formControlName="image"                placeholder="assets/img/..."                [class.is-invalid]="isInvalid(\'image\')"                (input)="clearAlerts()"              >              <div class="invalid-feedback">La ruta de imagen es obligatoria.</div>            </div>            <div class="col-md-6">              <label for="discount" class="form-label">Descuento (%) <sup>*</sup></label>              <input                type="number"                class="form-control"                id="discount"                formControlName="discount"                min="0"                step="1"                [class.is-invalid]="isInvalid(\'discount\')"                (input)="clearAlerts()"              >              <div class="invalid-feedback">El descuento debe ser un número mayor o igual a 0.</div>            </div>            <div class="col-12">              <label for="description" class="form-label">Descripción <sup>*</sup></label>              <textarea                class="form-control"                id="description"                formControlName="description"                rows="3"                placeholder="Descripción del dulce"                [class.is-invalid]="isInvalid(\'description\')"                (input)="clearAlerts()"              ></textarea>              <div class="invalid-feedback">Ingresa una descripción (mínimo 5 caracteres).</div>            </div>          </div>          <div class="d-flex flex-wrap justify-content-between gap-2 mt-4">            <button type="submit" class="btn btn-sweetpop">{{ submitLabel }}</button>            @if (isEditMode) {              <button type="button" class="btn btn-danger" (click)="onDelete()">                Eliminar producto              </button>            }            <a routerLink="/inventario" class="btn btn-outline-light">Cancelar</a>          </div>        </form>      </section>    </div>  </div>}</div>'
+    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'Bars', 'selector': 'app-bars'},{'name': 'BoxCatalogCards', 'selector': 'app-box-catalog-cards'},{'name': 'BoxDraftBar', 'selector': 'app-box-draft-bar'},{'name': 'Boxes', 'selector': 'app-boxes'},{'name': 'Candies', 'selector': 'app-candies'},{'name': 'Cart', 'selector': 'app-cart'},{'name': 'CategoryCatalogCards', 'selector': 'app-category-catalog-cards'},{'name': 'CategoryProducts', 'selector': 'app-category-products'},{'name': 'Chocolates', 'selector': 'app-chocolates'},{'name': 'Customers', 'selector': 'app-customers'},{'name': 'Footer', 'selector': 'app-footer'},{'name': 'Gummies', 'selector': 'app-gummies'},{'name': 'HardCandies', 'selector': 'app-hard-candies'},{'name': 'Header', 'selector': 'app-header'},{'name': 'Home', 'selector': 'app-home'},{'name': 'Inventory', 'selector': 'app-inventory'},{'name': 'InventoryForm', 'selector': 'app-inventory-form'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Logout', 'selector': 'app-logout'},{'name': 'NavLinks', 'selector': 'app-nav-links'},{'name': 'Profile', 'selector': 'app-profile'},{'name': 'RecoverPassword', 'selector': 'app-recover-password'},{'name': 'Register', 'selector': 'app-register'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'InventoryForm'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'InventoryForm.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

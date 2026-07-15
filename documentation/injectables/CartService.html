@@ -1,0 +1,1149 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>sweetpop-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">sweetpop-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >CartService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/core/services/cart.service.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Servicio de gestión del carrito y pago simulado.</p>
+
+            </p>
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#deductInventoryForCart" >deductInventoryForCart</a>
+                            </li>
+                            <li>
+                                <a href="#ensureCart" >ensureCart</a>
+                            </li>
+                            <li>
+                                <a href="#getCart" >getCart</a>
+                            </li>
+                            <li>
+                                <a href="#getCartCount" >getCartCount</a>
+                            </li>
+                            <li>
+                                <a href="#getCartGrandTotal" >getCartGrandTotal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#getStockNeededFromCart" >getStockNeededFromCart</a>
+                            </li>
+                            <li>
+                                <a href="#processCartPayment" >processCartPayment</a>
+                            </li>
+                            <li>
+                                <a href="#removeCartItem" >removeCartItem</a>
+                            </li>
+                            <li>
+                                <a href="#saveCart" >saveCart</a>
+                            </li>
+                            <li>
+                                <a href="#validateCartStock" >validateCartStock</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(storage: <a href="../injectables/StorageService.html" target="_self">StorageService</a>, catalog: <a href="../injectables/CatalogService.html" target="_self">CatalogService</a>, inventory: <a href="../injectables/InventoryService.html" target="_self">InventoryService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/core/services/cart.service.ts:17</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>storage</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/StorageService.html" target="_self" >StorageService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>catalog</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CatalogService.html" target="_self" >CatalogService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>inventory</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/InventoryService.html" target="_self" >InventoryService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deductInventoryForCart"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>deductInventoryForCart</b></span>
+                        <a href="#deductInventoryForCart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deductInventoryForCart(cart: <a href="../interfaces/CartItem.html" target="_self">CartItem[]</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="148"
+                                    class="link-to-prism">src/app/core/services/cart.service.ts:148</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>cart</td>
+                                            <td>
+                                                            <code><a href="../interfaces/CartItem.html" target="_self" >CartItem[]</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ensureCart"></a>
+                    <span class="name">
+                        <span ><b>ensureCart</b></span>
+                        <a href="#ensureCart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ensureCart()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="29"
+                                    class="link-to-prism">src/app/core/services/cart.service.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Asegura que exista un carrito vacío en localStorage.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCart"></a>
+                    <span class="name">
+                        <span ><b>getCart</b></span>
+                        <a href="#getCart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCart()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="41"
+                                    class="link-to-prism">src/app/core/services/cart.service.ts:41</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Obtiene las cajas personalizadas del carrito.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/CartItem.html" target="_self" >CartItem[]</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Lista de ítems del carrito.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCartCount"></a>
+                    <span class="name">
+                        <span ><b>getCartCount</b></span>
+                        <a href="#getCartCount"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCartCount()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="60"
+                                    class="link-to-prism">src/app/core/services/cart.service.ts:60</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Cuenta cuántas cajas hay en el carrito.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Cantidad de ítems.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCartGrandTotal"></a>
+                    <span class="name">
+                        <span ><b>getCartGrandTotal</b></span>
+                        <a href="#getCartGrandTotal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCartGrandTotal(cart: <a href="../interfaces/CartItem.html" target="_self">CartItem[]</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="70"
+                                    class="link-to-prism">src/app/core/services/cart.service.ts:70</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Calcula el total general del carrito.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>cart</td>
+                                            <td>
+                                                            <code><a href="../interfaces/CartItem.html" target="_self" >CartItem[]</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>this.getCart()</code>
+                                            </td>
+
+                                            <td>
+                                                    <p>Carrito a evaluar; usa el persistido si se omite.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Suma de totales de cada caja.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getStockNeededFromCart"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>getStockNeededFromCart</b></span>
+                        <a href="#getStockNeededFromCart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getStockNeededFromCart(cart: <a href="../interfaces/CartItem.html" target="_self">CartItem[]</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="134"
+                                    class="link-to-prism">src/app/core/services/cart.service.ts:134</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>cart</td>
+                                            <td>
+                                                            <code><a href="../interfaces/CartItem.html" target="_self" >CartItem[]</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Record&lt;number, number&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="processCartPayment"></a>
+                    <span class="name">
+                        <span ><b>processCartPayment</b></span>
+                        <a href="#processCartPayment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>processCartPayment()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="113"
+                                    class="link-to-prism">src/app/core/services/cart.service.ts:113</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Procesa el pago simulado y vacía el carrito si hay stock suficiente.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/ServiceResult.html" target="_self" >ServiceResult</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Resultado de la operación con mensaje para el usuario.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeCartItem"></a>
+                    <span class="name">
+                        <span ><b>removeCartItem</b></span>
+                        <a href="#removeCartItem"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeCartItem(cartItemId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="80"
+                                    class="link-to-prism">src/app/core/services/cart.service.ts:80</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Elimina una caja del carrito por su id.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>cartItemId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Id único del ítem en el carrito.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saveCart"></a>
+                    <span class="name">
+                        <span ><b>saveCart</b></span>
+                        <a href="#saveCart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>saveCart(cart: <a href="../interfaces/CartItem.html" target="_self">CartItem[]</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="51"
+                                    class="link-to-prism">src/app/core/services/cart.service.ts:51</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Persiste el carrito completo.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>cart</td>
+                                            <td>
+                                                            <code><a href="../interfaces/CartItem.html" target="_self" >CartItem[]</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Ítems del carrito a guardar.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="validateCartStock"></a>
+                    <span class="name">
+                        <span ><b>validateCartStock</b></span>
+                        <a href="#validateCartStock"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>validateCartStock(cart: <a href="../interfaces/CartItem.html" target="_self">CartItem[]</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="91"
+                                    class="link-to-prism">src/app/core/services/cart.service.ts:91</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Valida que el inventario cubra todas las cajas del carrito.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>cart</td>
+                                            <td>
+                                                            <code><a href="../interfaces/CartItem.html" target="_self" >CartItem[]</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Carrito a validar.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/ServiceResult.html" target="_self" >ServiceResult</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Resultado con mensaje de error si falta stock.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+
+import { STORAGE_KEYS } from &#x27;../constants/storage-keys&#x27;;
+import { CartItem } from &#x27;../models/cart-item.model&#x27;;
+import { ServiceResult } from &#x27;../models/service-result.model&#x27;;
+import { CatalogService } from &#x27;./catalog.service&#x27;;
+import { InventoryService } from &#x27;./inventory.service&#x27;;
+import { StorageService } from &#x27;./storage.service&#x27;;
+
+/**
+ * Servicio de gestión del carrito y pago simulado.
+ * @usageNotes Persiste cajas personalizadas en &#x60;localStorage&#x60; (&#x60;STORAGE_KEYS.cart&#x60;).
+ */
+@Injectable({
+  providedIn: &#x27;root&#x27;,
+})
+export class CartService {
+  constructor(
+    private readonly storage: StorageService,
+    private readonly catalog: CatalogService,
+    private readonly inventory: InventoryService,
+  ) {}
+
+  /**
+   * Asegura que exista un carrito vacío en localStorage.
+   * @returns void
+   * @usageNotes Ejecutado en el &#x60;APP_INITIALIZER&#x60; al arrancar la aplicación.
+   */
+  ensureCart(): void {
+    const cart &#x3D; this.storage.readJson&lt;CartItem[] | null&gt;(localStorage, STORAGE_KEYS.cart, null);
+    if (cart &#x3D;&#x3D;&#x3D; null || !Array.isArray(cart)) {
+      this.saveCart([]);
+    }
+  }
+
+  /**
+   * Obtiene las cajas personalizadas del carrito.
+   * @returns Lista de ítems del carrito.
+   * @usageNotes Consumido por la página Cart y el Header (contador).
+   */
+  getCart(): CartItem[] {
+    return this.storage.readJson(localStorage, STORAGE_KEYS.cart, []);
+  }
+
+  /**
+   * Persiste el carrito completo.
+   * @param cart Ítems del carrito a guardar.
+   * @returns void
+   * @usageNotes Sobrescribe el carrito completo en localStorage.
+   */
+  saveCart(cart: CartItem[]): void {
+    this.storage.writeJson(localStorage, STORAGE_KEYS.cart, cart);
+  }
+
+  /**
+   * Cuenta cuántas cajas hay en el carrito.
+   * @returns Cantidad de ítems.
+   * @usageNotes Usado por Header para mostrar &#x60;Carrito (n)&#x60;.
+   */
+  getCartCount(): number {
+    return this.getCart().length;
+  }
+
+  /**
+   * Calcula el total general del carrito.
+   * @param cart Carrito a evaluar; usa el persistido si se omite.
+   * @returns Suma de totales de cada caja.
+   * @usageNotes Mostrado como total a pagar en la página Cart.
+   */
+  getCartGrandTotal(cart: CartItem[] &#x3D; this.getCart()): number {
+    return cart.reduce((sum, item) &#x3D;&gt; sum + item.total, 0);
+  }
+
+  /**
+   * Elimina una caja del carrito por su id.
+   * @param cartItemId Id único del ítem en el carrito.
+   * @returns void
+   * @usageNotes Invocado desde el botón eliminar en Cart.
+   */
+  removeCartItem(cartItemId: string): void {
+    const cart &#x3D; this.getCart().filter((item) &#x3D;&gt; item.cartItemId !&#x3D;&#x3D; cartItemId);
+    this.saveCart(cart);
+  }
+
+  /**
+   * Valida que el inventario cubra todas las cajas del carrito.
+   * @param cart Carrito a validar.
+   * @returns Resultado con mensaje de error si falta stock.
+   * @usageNotes Ejecutado antes de &#x60;processCartPayment&#x60;.
+   */
+  validateCartStock(cart: CartItem[]): ServiceResult {
+    const stockNeeded &#x3D; this.getStockNeededFromCart(cart);
+
+    for (const [productIdKey, quantity] of Object.entries(stockNeeded)) {
+      const productId &#x3D; Number(productIdKey);
+      if (this.inventory.getStock(productId) &lt; quantity) {
+        const candy &#x3D; this.catalog.getCandyById(productId);
+        return {
+          success: false,
+          message: &#x60;${candy ? candy.name : &#x27;Un dulce&#x27;} no está disponible en la cantidad necesaria.&#x60;,
+        };
+      }
+    }
+
+    return { success: true, message: &#x27;&#x27; };
+  }
+
+  /**
+   * Procesa el pago simulado y vacía el carrito si hay stock suficiente.
+   * @returns Resultado de la operación con mensaje para el usuario.
+   * @usageNotes Descuenta inventario y limpia el carrito al confirmar pago.
+   */
+  processCartPayment(): ServiceResult {
+    const cart &#x3D; this.getCart();
+
+    if (cart.length &#x3D;&#x3D;&#x3D; 0) {
+      return { success: false, message: &#x27;Tu carrito está vacío.&#x27; };
+    }
+
+    const validation &#x3D; this.validateCartStock(cart);
+    if (!validation.success) {
+      return validation;
+    }
+
+    this.deductInventoryForCart(cart);
+    this.saveCart([]);
+
+    return {
+      success: true,
+      message: &#x27;¡Pago realizado con éxito! Gracias por tu compra en SweetPop.&#x27;,
+    };
+  }
+
+  private getStockNeededFromCart(cart: CartItem[]): Record&lt;number, number&gt; {
+    const stockNeeded: Record&lt;number, number&gt; &#x3D; {};
+
+    cart.forEach((item) &#x3D;&gt; {
+      item.walls.forEach((wall) &#x3D;&gt; {
+        const quantity &#x3D; wall.quantity ?? this.catalog.getWallQuantityBySize(wall.size!);
+        const productId &#x3D; wall.productId!;
+        stockNeeded[productId] &#x3D; (stockNeeded[productId] ?? 0) + quantity;
+      });
+    });
+
+    return stockNeeded;
+  }
+
+  private deductInventoryForCart(cart: CartItem[]): void {
+    const stockNeeded &#x3D; this.getStockNeededFromCart(cart);
+
+    Object.entries(stockNeeded).forEach(([productIdKey, quantity]) &#x3D;&gt; {
+      const productId &#x3D; Number(productIdKey);
+      const currentStock &#x3D; this.inventory.getStock(productId);
+      this.inventory.updateStock(productId, currentStock - quantity).subscribe();
+    });
+  }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'CartService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
